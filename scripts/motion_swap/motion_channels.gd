@@ -46,6 +46,8 @@ static func description(channel: int) -> String:
 	return "?"
 
 static func compatible(a: int, b: int) -> bool:
+	if a < Channel.LINEAR or a > Channel.PLATFORM or b < Channel.LINEAR or b > Channel.PLATFORM:
+		return false
 	if a == Channel.LINEAR or b == Channel.LINEAR:
 		return a == b
 	# SURFACE and PLATFORM both carry a signed scalar travel command.

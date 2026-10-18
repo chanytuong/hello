@@ -14,7 +14,7 @@ var host: Node = null
 ## How long a received motion owns the host when the host is self-moving
 ## (characters). Machines ignore this: their setting persists until the next
 ## valid change or an explicit lab reset.
-var override_time: float = 2.5
+var override_time: float = 0.65
 
 func _init(host_node: Node = null) -> void:
 	host = host_node
@@ -31,6 +31,10 @@ func read_motion() -> Vector2:
 
 func apply_motion(_motion: Vector2) -> void:
 	pass
+
+## Modifier adjustment must not restart an AI/player override timer.
+func adjust_motion(change: Vector2) -> void:
+	apply_motion(read_motion() + change)
 
 ## One line for the debug overlay: the value AND its meaning.
 func describe() -> String:

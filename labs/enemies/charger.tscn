@@ -18,6 +18,7 @@ collision_layer = 4
 collision_mask = 769
 script = ExtResource("1")
 hp = 5
+heavy = true
 body_color = Color(0.95, 0.45, 0.2, 1)
 swapped_color = Color(0.72, 0.55, 1, 1)
 touch_knockback = 240.0

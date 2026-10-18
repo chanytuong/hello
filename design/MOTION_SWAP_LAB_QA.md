@@ -1,5 +1,9 @@
 # MOTION SWAP LAB — QA and playtest handoff
 
+> Superseded controls, tuning and zone layout: see
+> [MOTION_SWAP_CHAOS_FINAL_QA.md](MOTION_SWAP_CHAOS_FINAL_QA.md).
+> This earlier implementation report remains as historical evidence.
+
 **Build:** Neverlookback prototype, Godot **4.7.2** (Windows, Compatibility renderer).
 **Active ability:** **Motion Swap** — a two-target exchange of *current motion*.
 **Blink is retired and removed** from the project (no input action, no manager, no

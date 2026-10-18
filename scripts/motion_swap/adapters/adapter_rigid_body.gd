@@ -24,6 +24,8 @@ func apply_motion(motion: Vector2) -> void:
 	# swallow the received motion.
 	host.sleeping = false
 	host.linear_velocity = motion
+	if host.has_method("record_contact_motion"):
+		host.record_contact_motion(motion)
 
 func describe() -> String:
 	var m := read_motion()

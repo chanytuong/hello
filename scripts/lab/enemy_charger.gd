@@ -10,7 +10,7 @@ class_name LabChargerEnemy
 
 enum State { IDLE, WINDUP, CHARGE, STUN, RECOVER }
 
-@export var charge_speed: float = 520.0
+@export var charge_speed: float = 600.0
 @export var windup_time: float = 0.5
 @export var charge_time: float = 1.5
 @export var stun_time: float = 0.9
@@ -63,8 +63,8 @@ func _ai_step(delta: float) -> void:
 				state = State.WINDUP
 				_state_t = windup_time
 		State.WINDUP:
-			var blink := int(Time.get_ticks_msec() / 90) % 2 == 0
-			body_color = Color(1.0, 0.25, 0.25) if blink else Color(0.95, 0.45, 0.2)
+			var pulse := _state_t > windup_time * 0.5
+			body_color = Color(1.0, 0.25, 0.25) if pulse else Color(0.95, 0.45, 0.2)
 			velocity.x = 0.0
 			_draw_telegraph()
 			if _state_t <= 0.0:

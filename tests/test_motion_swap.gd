@@ -162,6 +162,7 @@ func _test_exchange_is_atomic_and_two_way() -> void:
 	ta.setup(a, NLBMotionRigidBodyAdapter.new(a), "CRATE A")
 	tb.setup(b, NLBMotionRigidBodyAdapter.new(b), "CRATE B")
 	var ctrl := NLBMotionSwapController.new()
+	ctrl.overdrive_enabled = false # this suite isolates the faithful exchange
 	root.add_child(ctrl)
 	_spawned.append(ctrl)
 	_check(ta.is_valid() and tb.is_valid(), "both crate targets are valid in-scene")
@@ -176,6 +177,7 @@ func _test_exchange_is_atomic_and_two_way() -> void:
 	# Opposed movers: a head-on pair must actually reverse, not cancel.
 	a.linear_velocity = Vector2(300, 0)
 	b.linear_velocity = Vector2(-300, 0)
+	ctrl.reset_state()
 	ctrl.exchange(ta, tb)
 	_check(a.linear_velocity == Vector2(-300, 0) and b.linear_velocity == Vector2(300, 0),
 		"opposed movers reverse through each other's motion")

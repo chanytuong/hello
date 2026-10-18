@@ -11,11 +11,11 @@ enum State { HOLD, AIM, RECOVER }
 
 const ProjectileScene: PackedScene = preload("res://labs/objects/lab_projectile.tscn")
 
-@export var fire_cycle: float = 2.4
+@export var fire_cycle: float = 1.15
 @export var aim_time: float = 0.65
 @export var lock_time: float = 0.22
 @export var recover_time: float = 0.4
-@export var projectile_speed: float = 230.0
+@export var projectile_speed: float = 1200.0
 ## A turret holds its ground and only fires at what it can SEE. 620 px keeps its
 ## attention inside its own zone: it covers the zone B floor (920..2160) and the
 ## two teaching crates, but it cannot reach back into zone A's patrol lane.
@@ -25,6 +25,7 @@ const ProjectileScene: PackedScene = preload("res://labs/objects/lab_projectile.
 var state: int = State.HOLD
 var _state_t: float = 0.0
 var _locked_dir: Vector2 = Vector2.LEFT
+var _muzzle_flash: float = 0.0
 
 @onready var aim_line: Line2D = $AimLine
 @onready var muzzle: Marker2D = $Muzzle
@@ -41,6 +42,8 @@ func ai_state_name() -> String:
 	return "RECOVER"
 
 func _ai_step(delta: float) -> void:
+	_muzzle_flash = maxf(_muzzle_flash - delta, 0.0)
+	queue_redraw()
 	_apply_gravity(delta)
 	velocity.x = 0.0  # a turret holds its ground; its velocity is ~zero by design
 	_state_t -= delta
@@ -99,6 +102,12 @@ func _fire() -> void:
 	p.source = self
 	container.add_child(p)
 	p.launch(muzzle.global_position, _locked_dir * projectile_speed)
+	_muzzle_flash = 0.055
+	queue_redraw()
+
+func _draw() -> void:
+	if _muzzle_flash > 0.0:
+		draw_line(muzzle.position, muzzle.position + _locked_dir * 18.0, Color(1.0, 0.85, 0.5), 3.0)
 
 func _reset_ai() -> void:
 	state = State.HOLD

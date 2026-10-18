@@ -3,18 +3,9 @@ class_name LabEnemy
 ## Shared body for every lab enemy: gravity, collisions, hp, hit feedback and —
 ## the important one — THE MOTION-SWAP OVERRIDE CONTRACT.
 ##
-## While a received motion owns this body (`swap_override_t > 0`):
-##   * the AI does not run at all, so it cannot overwrite the exchanged motion,
-##   * horizontal velocity is HELD at exactly the exchanged value (no friction,
-##     no steering), so what was exchanged is what the object does,
-##   * gravity keeps acting and move_and_slide keeps resolving collisions, so a
-##     zero exchange means "no controllable motion", never a frozen body,
-##   * nothing is teleported, and nothing is restored afterwards.
-## When the window ends the subclass decides how the AI resumes — always from
-## the position the body actually reached.
-##
-## Subclasses implement `_ai_step(delta)` and may hook `_on_swapped()` /
-## `_on_swap_override_end()` / `_reset_ai()`.
+## A short received-motion window suspends AI acceleration. Gravity and contact
+## solves continue, and collision responses are never overwritten next frame.
+## After recovery, each existing AI resumes from its current position.
 
 signal died
 signal impact(strength: float)   # wall/body impacts worth a camera beat
@@ -27,8 +18,15 @@ signal impact(strength: float)   # wall/body impacts worth a camera beat
 @export var touch_knockback: float = 130.0
 @export_group("Motion Swap")
 ## How long a received motion owns this body before the AI resumes.
-@export var swap_override_duration: float = 2.5
+@export var swap_override_duration: float = 0.65
 @export var gravity: float = 1400.0
+@export_group("Contact impact thresholds")
+@export var heavy: bool = false
+@export var impact_stagger_speed: float = 220.0
+@export var impact_damage_speed: float = 430.0
+@export var impact_lethal_speed: float = 680.0
+@export var human_projectile_kill_speed: float = 480.0
+@export var impact_stun_duration: float = 0.30
 
 var swap_override_t: float = 0.0
 var swapped_motion: Vector2 = Vector2.ZERO
@@ -50,6 +48,7 @@ func _ready() -> void:
 	add_to_group("enemies")
 	add_to_group("fighters")
 	add_to_group("lab_enemies")
+	collision_mask |= 2 | 4 # real player/enemy and enemy/enemy contacts
 	if not spawned:
 		spawn_position = global_position
 	if body_vis != null:
@@ -124,6 +123,9 @@ func _physics_process(delta: float) -> void:
 		swap_override_t = maxf(swap_override_t - delta, 0.0)
 		if swap_override_t <= 0.0:
 			_on_swap_override_end()
+	elif _stagger_t > 0.0:
+		_apply_gravity(delta)
+		velocity.x = move_toward(velocity.x, 0.0, 900.0 * delta)
 	else:
 		_ai_step(delta)
 	# Exchange knockback lives OUTSIDE the movement arms so a hit can always
@@ -134,17 +136,16 @@ func _physics_process(delta: float) -> void:
 		var pl := player_node()
 		if pl != null:
 			_touch_box.knockback = Vector2(signf(pl.global_position.x - global_position.x) * touch_knockback, 0.0)
-	if is_on_wall() and absf(velocity.x) > 300.0:
-		impact.emit(absf(velocity.x))
-		velocity.x = 0.0
+	var incoming := velocity
 	move_and_slide()
+	NLBImpactResponse.solve_slides(self, incoming)
 	_update_body_visual()
 	_update_indicator()
 
-## The override arm: exchanged horizontal motion is HELD, gravity is real.
+## The override arm integrates received motion, with gravity and real collisions.
 func _drive_swapped_motion(delta: float) -> void:
-	velocity.x = swapped_motion.x
-	if not is_on_floor():
+	# Integrate the received velocity. Never reassert it after a collision.
+	if not is_on_floor() or velocity.y < 0.0:
 		velocity.y += gravity * delta
 	elif velocity.y > 0.0:
 		velocity.y = 0.0
@@ -167,7 +168,48 @@ func motion_swap_apply(motion: Vector2, duration: float) -> void:
 	_on_swapped(motion)
 
 func is_swap_selectable() -> bool:
-	return _alive and health != null and health.hp > 0
+	return _alive and health != null and health.hp > 0 and not is_queued_for_deletion()
+
+func receive_contact_motion(motion: Vector2) -> void:
+	if not _alive:
+		return
+	velocity += motion * (0.65 if heavy else 1.0)
+	swap_override_t = maxf(swap_override_t, 0.25)
+
+func receive_motion_impact(speed: float, normal: Vector2, other: Object, incoming: Vector2) -> void:
+	if not _alive:
+		return
+	if swap_target != null:
+		swap_target.clear_overdrive()
+	if speed >= impact_stagger_speed:
+		_stagger_t = maxf(_stagger_t, impact_stun_duration)
+		_flash_t = 0.08
+		impact.emit(speed)
+	var human_hit := other is NLBPlayer and (other as NLBPlayer).living_projectile
+	var damage_amount := 0
+	if speed >= impact_lethal_speed or (human_hit and speed >= human_projectile_kill_speed):
+		damage_amount = 3 if heavy else health.max_hp
+	elif speed >= impact_damage_speed:
+		damage_amount = 2
+	elif speed >= impact_stagger_speed:
+		damage_amount = 1
+	if damage_amount > 0:
+		health.damage(damage_amount)
+	# A real wall removes its normal component; empty flight never comes here.
+	if other is StaticBody2D and absf(normal.x) > 0.5:
+		velocity = incoming.slide(normal)
+		swap_override_t = 0.0
+		_on_swap_override_end()
+
+func reset_motion() -> void:
+	velocity = Vector2.ZERO
+	swapped_motion = Vector2.ZERO
+	swap_override_t = 0.0
+	_kb = Vector2.ZERO
+	_stagger_t = 0.0
+	if swap_target != null:
+		swap_target.clear_overdrive()
+	_on_swap_override_end()
 
 func fall_distance() -> float:
 	return global_position.y - spawn_position.y
@@ -239,6 +281,8 @@ func reset_state() -> void:
 	if not is_instance_valid(self):
 		return
 	global_position = spawn_position
+	if swap_target != null:
+		swap_target.clear_overdrive()
 	velocity = Vector2.ZERO
 	swapped_motion = Vector2.ZERO
 	swap_override_t = 0.0

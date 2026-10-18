@@ -5,8 +5,8 @@ class_name NLBPlayer
 ## Rhythm rules (see cancel matrix in docs): buffered everything, dash
 ## cancels swing RECOVERY only, swings slide and bite on connect.
 ## Motion Swap is a WORLD mechanic: it never freezes or teleports the player.
-## This controller only gained one carrier hook (`carry_motion`), so conveyor
-## belts and moving platforms can move Iven through the same collision pass.
+## The lab opts into velocity exchange and a short forced-motion arm. Normal
+## run/jump/skid/roll tuning and the approved visual clips remain shared.
 
 signal jumped
 signal dashed
@@ -32,6 +32,104 @@ var _previous_input: float = 0.0
 ## every frame by the carrier and cleared here, so a stopped belt cannot keep
 ## carrying. Never touches `velocity`: carrying is not the player's own motion.
 var carry_motion: Vector2 = Vector2.ZERO
+
+@export_group("Motion Swap launch")
+@export var swap_launch_duration: float = 0.24
+@export var swap_launch_drag: float = 650.0
+@export var living_projectile_threshold: float = 480.0
+@export var wall_stun_duration: float = 0.28
+@export var crate_impact_damage_speed: float = 520.0
+var swap_override_t: float = 0.0
+var motion_stun_t: float = 0.0
+var living_projectile: bool = false
+var swap_target: NLBMotionSwapTarget = null
+var motion_swap_enabled: bool = false
+
+func enable_motion_swap() -> void:
+	if swap_target != null:
+		return
+	motion_swap_enabled = true
+	collision_mask |= 4 | 256 | 512
+	swap_target = NLBMotionSwapTarget.new()
+	swap_target.name = "SwapTarget"
+	swap_target.anchor_offset = Vector2(0, -30)
+	swap_target.display_name = "IVEN"
+	add_child(swap_target)
+	swap_target.adapter = NLBMotionCharacterAdapter.new(self)
+
+func motion_swap_read() -> Vector2:
+	return velocity
+
+func is_swap_selectable() -> bool:
+	return health != null and health.hp > 0 and not is_queued_for_deletion()
+
+func motion_swap_apply(motion: Vector2, _duration: float) -> void:
+	velocity = motion
+	swap_override_t = swap_launch_duration
+	motion_stun_t = 0.0
+	living_projectile = motion.length() >= living_projectile_threshold
+	roll_remaining = 0.0
+	move_state = MoveState.NORMAL
+	_dash_buf = 0.0
+	_jump_buf = 0.0
+	# Orientation follows real received motion; no new drawings or animation lock.
+	if absf(motion.x) > 8.0:
+		facing = 1 if motion.x > 0.0 else -1
+
+func receive_contact_motion(motion: Vector2) -> void:
+	if motion_stun_t > 0.0:
+		return
+	velocity += motion
+	swap_override_t = maxf(swap_override_t, 0.12)
+
+func motion_overdrive_changed() -> void:
+	if swap_override_t > 0.0:
+		living_projectile = velocity.length() >= living_projectile_threshold
+
+func receive_motion_impact(speed: float, normal: Vector2, other: Object, incoming: Vector2) -> void:
+	if swap_target != null:
+		swap_target.clear_overdrive()
+	if living_projectile and speed >= living_projectile_threshold:
+		if other is StaticBody2D and absf(normal.x) > 0.5:
+			motion_stun_t = wall_stun_duration
+			swap_override_t = 0.0
+			velocity = incoming.slide(normal) * 0.30
+		else:
+			velocity = incoming.slide(normal) + normal * speed * 0.08
+			swap_override_t = minf(swap_override_t, 0.08)
+		living_projectile = false
+	elif other is RigidBody2D and speed >= crate_impact_damage_speed:
+		motion_stun_t = maxf(motion_stun_t, 0.16)
+		health.damage(1) # a death/reset signal clears the stun too
+
+func _motion_forced_physics(delta: float) -> bool:
+	if swap_override_t <= 0.0 and motion_stun_t <= 0.0:
+		living_projectile = false
+		return false
+	var old_velocity := velocity
+	_tick_timers(delta)
+	_apply_gravity(delta)
+	if motion_stun_t > 0.0:
+		motion_stun_t = maxf(motion_stun_t - delta, 0.0)
+		velocity.x = move_toward(velocity.x, 0.0, friction * delta)
+		_dash_buf = 0.0
+		_jump_buf = 0.0
+	else:
+		swap_override_t = maxf(swap_override_t - delta, 0.0)
+		velocity.x = move_toward(velocity.x, 0.0, swap_launch_drag * delta)
+		# Dodge/jump are deliberate early recovery after the short initial launch.
+		if swap_override_t < swap_launch_duration - 0.10 and (Input.is_action_just_pressed("dash") or Input.is_action_just_pressed("jump")):
+			swap_override_t = 0.0
+			living_projectile = false
+	if carry_motion != Vector2.ZERO:
+		move_and_collide(carry_motion)
+		carry_motion = Vector2.ZERO
+	var incoming := velocity
+	move_and_slide()
+	NLBImpactResponse.solve_slides(self, incoming)
+	if movement_visual != null:
+		movement_visual.advance(delta, 0.0, false, old_velocity)
+	return true
 
 ## --- perception-weapon experiment ---------------------------------------
 ## The player does NOT know what it is holding. The prop writes exactly two
@@ -262,6 +360,8 @@ func is_attack_busy() -> bool:
 	return _atk_t >= 0.0
 
 func _physics_process(delta: float) -> void:
+	if motion_swap_enabled and _motion_forced_physics(delta):
+		return
 	if movement_preview:
 		_movement_physics(delta)
 		return
@@ -337,6 +437,8 @@ func _movement_physics(delta: float) -> void:
 	move_and_slide()
 	if not is_on_floor():
 		roll_remaining = 0.0 # a ground roll cannot hang over a ledge
+	if motion_swap_enabled:
+		NLBImpactResponse.solve_slides(self, before_velocity)
 	var released_at_speed := dir == 0.0 and _previous_input != 0.0 and absf(before_velocity.x) > 200.0
 	movement_visual.advance(delta, dir, released_at_speed, before_velocity)
 	_previous_input = dir
@@ -345,6 +447,12 @@ func reset_movement(at: Vector2) -> void:
 	# Test-room reset; no gameplay teleport or physics change.
 	global_position = at
 	velocity = Vector2.ZERO
+	swap_override_t = 0.0
+	motion_stun_t = 0.0
+	living_projectile = false
+	carry_motion = Vector2.ZERO
+	if swap_target != null:
+		swap_target.clear_overdrive()
 	roll_remaining = 0.0
 	_dash_cd = 0.0
 	_dash_buf = 0.0

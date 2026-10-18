@@ -21,6 +21,12 @@ func apply_motion(motion: Vector2) -> void:
 		return
 	host.motion_swap_apply(motion, override_time)
 
+func adjust_motion(change: Vector2) -> void:
+	if available():
+		host.velocity += change
+		if host.has_method("motion_overdrive_changed"):
+			host.motion_overdrive_changed()
+
 func describe() -> String:
 	var m := read_motion()
 	return "CHARACTER v=(%.0f, %.0f)" % [m.x, m.y]

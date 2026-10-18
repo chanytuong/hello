@@ -26,7 +26,7 @@ const RETIRE_TIME := 0.14
 @export var team: int = Team.LAB
 @export var damage: int = 1
 @export var knockback: Vector2 = Vector2(200.0, -70.0)
-@export var max_life: float = 6.0
+@export var max_life: float = 2.0
 @export var radius: float = 7.0
 @export var color: Color = Color(0.85, 0.95, 0.35)
 
@@ -35,6 +35,8 @@ var life: float = 6.0
 ## Who fired this shot (the cannon uses it to cap its own live pellets).
 var source: Node = null
 
+var _sweep: ShapeCast2D
+var last_hit: Object = null
 var _parked_t: float = 0.0
 var _retiring: bool = false
 var _retire_t: float = 0.0
@@ -56,17 +58,25 @@ func _ready() -> void:
 	if visual != null:
 		visual.color = color
 		visual.pivot_offset = visual.size * 0.5
+	# Damage is routed exactly once from the swept contact, never a discrete Area overlap.
 	if hit_box != null:
-		if team == Team.ENEMY:
-			hit_box.damage = damage
-			hit_box.knockback = knockback
-			hit_box.collision_layer = 64
-			hit_box.collision_mask = 128
-			hit_box.begin()
-		else:
-			hit_box.end()
-			hit_box.collision_layer = 0
-			hit_box.collision_mask = 0
+		hit_box.end()
+		hit_box.collision_layer = 0
+		hit_box.collision_mask = 0
+	_sweep = ShapeCast2D.new()
+	_sweep.name = "BulletSweep"
+	var shape := CircleShape2D.new()
+	shape.radius = radius # original physical radius; aim slop lives in the controller
+	_sweep.shape = shape
+	_sweep.collision_mask = collision_mask
+	_sweep.collide_with_areas = false
+	_sweep.max_results = 1
+	_sweep.margin = 0.01
+	add_child(_sweep)
+	if source is CollisionObject2D:
+		_sweep.add_exception(source as CollisionObject2D)
+	if visual != null:
+		visual.visible = false # thin tracer replaces the oversized square, not its hitbox
 	if swap_target != null:
 		swap_target.adapter = NLBMotionProjectileAdapter.new(self)
 		swap_target.display_name = "SHOT" if team == Team.ENEMY else "PELLET"
@@ -100,7 +110,22 @@ func _physics_process(delta: float) -> void:
 		if _retire_t <= 0.0:
 			queue_free()
 		return
+	# Sweep the entire displacement BEFORE moving; thin walls cannot fit between samples.
+	_sweep.target_position = velocity * delta
+	_sweep.force_shapecast_update()
+	if _sweep.is_colliding():
+		last_hit = _sweep.get_collider(0)
+		global_position += velocity * delta * _sweep.get_closest_collision_safe_fraction()
+		if team == Team.ENEMY and last_hit is NLBPlayer:
+			var victim := last_hit as NLBPlayer
+			var hurt := victim.get_node_or_null("HurtBox") as NLBHurtBox
+			if hurt != null:
+				hurt.take_hit(damage, velocity.normalized() * 160.0)
+		_retire()
+		queue_redraw()
+		return
 	global_position += velocity * delta
+	queue_redraw()
 	life -= delta
 	if velocity.length() < PARKED_SPEED:
 		_parked_t += delta
@@ -115,9 +140,16 @@ func _physics_process(delta: float) -> void:
 	if life <= 0.0 or _parked_t >= PARKED_LIFE:
 		_retire()
 		return
-	var bodies := get_overlapping_bodies()
-	if not bodies.is_empty():
-		_retire()
+
+func _draw() -> void:
+	var alpha := clampf(_retire_t / RETIRE_TIME, 0.0, 1.0) if _retiring else 1.0
+	var tint := Color(color, alpha)
+	if velocity.length() >= PARKED_SPEED:
+		var direction := velocity.normalized()
+		draw_line(-direction * 26.0, direction * 4.0, tint, 1.5)
+		draw_line(-direction * 6.0, direction * 3.0, Color(1.0, 0.95, 0.8, alpha), 2.0)
+	else:
+		draw_circle(Vector2.ZERO, 3.0 * (1.0 - 0.5 * _parked_t / PARKED_LIFE), tint)
 
 func _retire() -> void:
 	if _retiring:

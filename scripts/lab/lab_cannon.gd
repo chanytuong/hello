@@ -2,7 +2,7 @@ extends Node2D
 class_name LabCannon
 ## Test cannon — zone B's pellet source.
 ##
-## Fires slow LAB pellets (Team.LAB = 0 damage) straight along the barrel on a
+## Fires fast, selectable LAB rounds (Team.LAB = 0 damage) straight along the barrel on a
 ## fixed cadence. It exists to be swapped with: catch a pellet in flight and
 ## give its velocity to a crate, or watch a parked pellet deflate. It never
 ## homes, it never leads its target, and it keeps at most `max_alive` of its
@@ -11,7 +11,7 @@ class_name LabCannon
 const ProjectileScene: PackedScene = preload("res://labs/objects/lab_projectile.tscn")
 
 @export var direction: Vector2 = Vector2.LEFT
-@export var speed: float = 200.0
+@export var speed: float = 1200.0
 @export var interval: float = 1.7
 @export var max_alive: int = 4
 @export var muzzle_offset: Vector2 = Vector2(-26.0, 0.0)
@@ -48,10 +48,10 @@ func fire() -> LabProjectile:
 	var p := ProjectileScene.instantiate() as LabProjectile
 	p.team = LabProjectile.Team.LAB
 	p.color = Color(0.85, 0.95, 0.35)
-	p.max_life = 6.0
+	p.max_life = 2.0
 	p.source = self
 	container.add_child(p)
-	p.launch(global_position + muzzle_offset.rotated(direction.angle()), direction.normalized() * speed)
+	p.launch(global_position + direction.normalized() * 28.0 + Vector2(0, -9), direction.normalized() * speed)
 	_t = interval
 	_flash = 0.12
 	return p
@@ -75,7 +75,9 @@ func _draw() -> void:
 	draw_rect(Rect2(-26 if side < 0 else 0, -14, 26, 10), barrel_color, true)
 	draw_rect(Rect2(-26 if side < 0 else 0, -14, 26, 10), barrel_color.darkened(0.4), false, 1.0)
 	if _flash > 0.0:
-		draw_circle(Vector2(muzzle_offset.x, muzzle_offset.y), 9.0, Color(1.0, 0.95, 0.4, _flash / 0.12))
+		draw_line(Vector2(side * 26.0, -9), Vector2(side * 42.0, -9), Color(1.0, 0.95, 0.4, _flash / 0.12), 2.0)
+	elif _t < 0.25:
+		draw_line(Vector2(side * 26.0, -9), Vector2(side * 180.0, -9), Color(1.0, 0.5, 0.35, 0.4), 1.0)
 	if _font != null:
 		draw_string(_font, Vector2(-40, -32), "PELLETS %d/%d" % [_count_mine(), max_alive],
 			HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(0.75, 0.85, 0.95, 0.85))

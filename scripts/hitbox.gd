@@ -51,7 +51,11 @@ func _on_area_entered(a: Area2D) -> void:
 	if not monitoring:
 		return
 	if continuous:
-		return  # tick loop handles it; avoids physics-callback damage
+		# A fast body may cross a hazard between two tick samples. Defer the
+		# first contact hit out of the physics flush; epoch marks + iframes still
+		# prevent a second hit from the periodic overlap loop.
+		_try_hit.call_deferred(a)
+		return
 	_try_hit(a)
 
 func _on_area_exited(a: Area2D) -> void:
@@ -62,6 +66,8 @@ func _strike_latched() -> void:
 		_try_hit(a)
 
 func _try_hit(a: Area2D) -> void:
+	if not monitoring or not is_instance_valid(a):
+		return
 	var hb := a as NLBHurtBox
 	if hb == null:
 		return

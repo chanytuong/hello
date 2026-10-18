@@ -2,10 +2,10 @@ extends Node2D
 class_name NLBMotionSwapLab
 ## MOTION SWAP TEST LAB — one industrial facility, six connected zones.
 ##
-##   A  basic exchange      PATROL + crates: swap a walk into a crate
-##   B  projectiles         GUNNER + a test cannon: swap a shot in flight
-##   C  charge & collision  CHARGER + crates: committed runs, hard stops
-##   D  machinery           two BELTs + a LIFT: SURFACE and PLATFORM speeds
+##   A  bullet to enemy     fast gunner shots, patrol, impact wall
+##   B  charger to crate    committed runs and physical crate chains
+##   C  human projectile    Iven launch, normal target, cannon and crash wall
+##   D  projectile to Iven  leftward cannon, two belts and a lift
 ##   E  plate & gate        LIFT + BELT + crate: make the plate open the gate
 ##   F  mixed encounter     everything at once, ending at the finish line
 ##
@@ -51,7 +51,7 @@ var overlay: LabDebugOverlay = null
 
 var completed: bool = false
 var checkpoint_title: String = "ZONE A"
-var checkpoint_pos: Vector2 = Vector2(120, 599)
+var checkpoint_pos: Vector2 = Vector2(650, 599)
 
 var _zones: Array[Node2D] = []
 var _enemy_entries: Array[Dictionary] = []
@@ -59,14 +59,30 @@ var _pending_spawns: Array[Dictionary] = []
 var _plate_bindings: Array[Dictionary] = []
 var _scan_t: float = 0.0
 var _msg: String = ""
+var motion_feedback: LabMotionFeedback
+@export_group("Impact feedback")
+@export var hitstop_enabled: bool = true
+@export var hitstop_real_seconds: float = 0.028
+@export var camera_shake_pixels: float = 1.8
+@export var trace_impacts: bool = false
+var _hitstop_deadline: int = 0
+var _shake_left: float = 0.0
+var _last_real_tick: int = 0
+const ZONE_SPAWNS: Array[Vector2] = [Vector2(650, 599), Vector2(1800, 599), Vector2(3000, 599), Vector2(4200, 599), Vector2(5500, 599), Vector2(7080, 599)]
 
 func _ready() -> void:
+	Engine.time_scale = 1.0
 	_stamp_helper_classes()
 	_build_world()
 	_setup_player()
 	_setup_camera()
 	_setup_controller()
 	_setup_overlay()
+	motion_feedback = LabMotionFeedback.new()
+	motion_feedback.name = "MotionFeedback"
+	motion_feedback.z_index = 6
+	add_child(motion_feedback)
+	_last_real_tick = Time.get_ticks_usec()
 
 ## Touching the class names here documents which helper scripts this scene
 ## depends on and makes a missing file a load error, not a subtle silent skip.
@@ -89,6 +105,7 @@ func _setup_player() -> void:
 	# The lab is the one place crates and machines must be solid for Iven:
 	# standing on a lift, being carried by a belt, pushing a crate.
 	player.collision_mask |= PLAYER_MASK_ADD
+	player.enable_motion_swap()
 	if player.health != null:
 		player.health.died.connect(_on_player_died)
 
@@ -109,13 +126,44 @@ func _setup_camera() -> void:
 
 func _setup_controller() -> void:
 	controller = $Controller as NLBMotionSwapController
+	controller.swap_executed.connect(_on_swap_executed)
+	controller.feedback.connect(func(text: String, _ok: bool) -> void: _say(text))
+
+func _on_swap_executed(_a: NLBMotionSwapTarget, _b: NLBMotionSwapTarget) -> void:
+	_hitstop_deadline = 0
+	_shake_left = 0.06
+
+func _exit_tree() -> void:
+	Engine.time_scale = 1.0
+
+func show_motion_impact(point: Vector2, normal: Vector2, speed: float) -> void:
+	if motion_feedback != null:
+		motion_feedback.impact_at(point, normal, speed)
+	_shake_left = 0.09
+	if hitstop_enabled and speed >= 430.0 and controller != null and not controller.is_selecting():
+		_hitstop_deadline = Time.get_ticks_usec() + int(hitstop_real_seconds * 1000000.0)
+		Engine.time_scale = 0.04
+
+func visit_zone(index: int) -> void:
+	if index < 0 or index >= _zones.size():
+		return
+	controller.reset_state()
+	_hitstop_deadline = 0
+	Engine.time_scale = 1.0
+	checkpoint_title = "ZONE " + String.chr(65 + index)
+	checkpoint_pos = ZONE_SPAWNS[index]
+	place_player(checkpoint_pos)
+	reset_zone()
+	var cam := player.get_node_or_null("LabCamera") as Camera2D
+	if cam != null:
+		cam.reset_smoothing()
 
 func _setup_overlay() -> void:
 	overlay = $HUD as LabDebugOverlay
 	overlay.lab = self
 	overlay.controller = controller
 	overlay.player = player
-	_say("MOTION SWAP LAB — six zones. F1 toggles this overlay.")
+	_say("MOTION SWAP LAB · F4: Human Projectile · F1: details")
 
 func _say(text: String) -> void:
 	_msg = text
@@ -125,9 +173,22 @@ func _say(text: String) -> void:
 # --------------------------------------------------------------------- input
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event.is_echo():
+		return
+	for i in 6:
+		if event.is_action_pressed("lab_zone_" + String.chr(97 + i)):
+			visit_zone(i)
+			get_viewport().set_input_as_handled()
+			return
+	if event.is_action_pressed("lab_overdrive_toggle"):
+		controller.overdrive_enabled = not controller.overdrive_enabled
+		_say("OVERDRIVE " + ("ON" if controller.overdrive_enabled else "OFF"))
+		get_viewport().set_input_as_handled()
+		return
 	if event.is_action_pressed("lab_debug_toggle"):
 		if overlay != null:
-			overlay.visible = not overlay.visible
+			overlay.debug_expanded = not overlay.debug_expanded
+			controller.debug_values = overlay.debug_expanded
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("lab_reset_zone"):
 		reset_zone()
@@ -139,14 +200,20 @@ func _unhandled_input(event: InputEvent) -> void:
 		respawn_enemies()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("restart"):
-		get_tree().reload_current_scene()
+		controller.reset_state()
+		_hitstop_deadline = 0
+		Engine.time_scale = 1.0
 		get_viewport().set_input_as_handled()
+		get_tree().reload_current_scene()
 
 # --------------------------------------------------------------- reset tools
 
 ## 1 — everything in the zone the player is standing in goes back to its
 ## authored state: positions, machine speeds, plates, gates, dead enemies.
 func reset_zone() -> void:
+	controller.reset_state()
+	_hitstop_deadline = 0
+	Engine.time_scale = 1.0
 	var zone := current_zone()
 	if zone == null:
 		_say("RESET ZONE: no zone found")
@@ -157,6 +224,13 @@ func reset_zone() -> void:
 	for entry in _enemy_entries:
 		if entry.zone == zone and not is_instance_valid(entry.node):
 			_spawn_enemy_entry(entry, true)
+	_pending_spawns = _pending_spawns.filter(func(p: Dictionary) -> bool: return p.entry.zone != zone)
+	for p in get_tree().get_nodes_in_group("lab_projectiles"):
+		p.retire_now()
+	var index := _zones.find(zone)
+	if index >= 0:
+		place_player(ZONE_SPAWNS[index])
+	player.health.reset()
 	if controller != null:
 		controller.cancel_selection()
 	print("[LAB] reset zone %s" % zone.name)
@@ -166,6 +240,10 @@ func reset_zone() -> void:
 ## to their authored speeds, characters and crates drop the received motion in
 ## place, and live shots are retired. Nothing teleports.
 func reset_targets() -> void:
+	controller.reset_state()
+	_hitstop_deadline = 0
+	Engine.time_scale = 1.0
+	player.reset_movement(player.global_position)
 	for n in get_tree().get_nodes_in_group("lab_machines"):
 		if n.has_method("reset_motion"):
 			n.reset_motion()
@@ -185,6 +263,9 @@ func reset_targets() -> void:
 
 ## 3 — every enemy back to its spawn point, alive, full hp.
 func respawn_enemies() -> void:
+	controller.reset_state()
+	_hitstop_deadline = 0
+	Engine.time_scale = 1.0
 	var n := 0
 	for entry in _enemy_entries:
 		if is_instance_valid(entry.node):
@@ -209,6 +290,19 @@ func _selection_text() -> String:
 # ------------------------------------------------------------ runtime upkeep
 
 func _process(delta: float) -> void:
+	var now := Time.get_ticks_usec()
+	var real_delta := float(now - _last_real_tick) / 1000000.0
+	_last_real_tick = now
+	_shake_left = maxf(_shake_left - real_delta, 0.0)
+	var cam := player.get_node_or_null("LabCamera") as Camera2D
+	if cam != null:
+		cam.offset = Vector2(sin(float(now) * 0.00019), cos(float(now) * 0.00023)) * camera_shake_pixels * minf(_shake_left / 0.09, 1.0)
+	if _hitstop_deadline > 0:
+		if controller.is_selecting():
+			_hitstop_deadline = 0 # tactical controller now owns the clock
+		elif now >= _hitstop_deadline:
+			_hitstop_deadline = 0
+			Engine.time_scale = 1.0
 	_tick_pending(delta)
 	_scan_t -= delta
 	if _scan_t > 0.0:
@@ -256,6 +350,8 @@ func _on_player_died() -> void:
 func _respawn_player(reason: String) -> void:
 	if player == null:
 		return
+	_hitstop_deadline = 0
+	Engine.time_scale = 1.0
 	place_player(checkpoint_pos)
 	if player.health != null:
 		player.health.reset()
@@ -299,7 +395,12 @@ func place_player(at: Vector2) -> void:
 	player.velocity = Vector2.ZERO
 
 func _on_enemy_impact(strength: float, enemy: LabEnemy) -> void:
-	_say("%s slammed into a wall at %.0f px/s." % [enemy.type_label(), strength])
+	_say("%s IMPACT" % enemy.type_label())
+	if trace_impacts:
+		print("IMPACT %s %.0f px/s" % [enemy.type_label(), strength])
+
+func _on_enemy_down(label: String) -> void:
+	_say("%s DOWN" % label)
 
 func _on_plate_changed(pressed_now: bool, latched: bool, plate: LabPressurePlate) -> void:
 	for b in _plate_bindings:
@@ -439,6 +540,7 @@ func _enemy(scene: PackedScene, zone: Node2D, pos: Vector2, label: String, confi
 	if config.is_valid():
 		config.call(e)
 	e.impact.connect(_on_enemy_impact.bind(e))
+	e.died.connect(_on_enemy_down.bind(label))
 	_enemy_entries.append({
 		"scene": scene, "pos": pos, "zone": zone, "node": e,
 		"config": config, "label": label,
@@ -454,6 +556,7 @@ func _spawn_enemy_entry(entry: Dictionary, announce: bool) -> void:
 	if cfg.is_valid():
 		cfg.call(e)
 	e.impact.connect(_on_enemy_impact.bind(e))
+	e.died.connect(_on_enemy_down.bind(String(entry.label)))
 	entry.node = e
 	if announce:
 		_say("%s respawned." % entry.label)
@@ -533,77 +636,76 @@ func _cannon(zone: Node2D, pos: Vector2, dir: Vector2, speed: float) -> LabCanno
 # ------------------------------------------------------------------ zone A
 
 func _build_zone_a(world: Node2D) -> void:
-	var z := _zone_node(world, "A", "BASIC EXCHANGE", 0.0, 1200.0)
+	var z := _zone_node(world, "A", "BULLET TO ENEMY", 0.0, 1200.0)
 	_solid(z, "Ground", Rect2(0, FLOOR_Y, 1200, 120))
 	_solid(z, "LowWall", Rect2(1090, FLOOR_Y - 100, 20, 100), ROCK_FILL)
-	_zone_card(z, Vector2(70, 388), "ZONE A · BASIC EXCHANGE", [
-		"1. Click the PATROL (A), then a CRATE (B).",
-		"   The crate runs the walk; the patrol takes the crate's standstill.",
-		"2. Enemies draw their speed as an arrow (and lose that arrow when they",
-		"   hold a standstill); F1 lists every velocity in the room.",
+	_zone_card(z, Vector2(70, 330), "A · BULLET TO ENEMY", [
+		"E slows the world. Click a fast SHOT, then the PATROL.",
+		"Its received direction is exact. The wall supplies the damage.",
+		"Q / RMB chooses Iven in either slot. E / Esc cancels.",
+		"F2–F7 jump to tests · 1 retry · F1 details · F8 Overdrive A/B",
 	])
-	_checkpoint(z, 70, "ZONE A", Vector2(120, 599))
-	_enemy(PATROL_SCENE, z, Vector2(400, 599), "PATROL A", func(e: LabEnemy) -> void:
-		(e as LabPatrolEnemy).configure_patrol(300.0, 700.0))
-	_crate(z, Vector2(820, 580))
-	_crate(z, Vector2(950, 580))
+	_checkpoint(z, 70, "ZONE A", Vector2(650, 599))
+	_enemy(GUNNER_SCENE, z, Vector2(350, 599), "GUNNER A")
+	_enemy(PATROL_SCENE, z, Vector2(830, 599), "PATROL A", func(e: LabEnemy) -> void:
+		(e as LabPatrolEnemy).configure_patrol(780.0, 940.0))
+	_crate(z, Vector2(180, 580))
+	_crate(z, Vector2(240, 580))
 
 # ------------------------------------------------------------------ zone B
 
 func _build_zone_b(world: Node2D) -> void:
-	var z := _zone_node(world, "B", "PROJECTILES", 1200.0, 2500.0)
+	var z := _zone_node(world, "B", "CHARGER TO CRATE", 1200.0, 2500.0)
 	_solid(z, "Ground", Rect2(1200, FLOOR_Y, 1300, 120))
-	_solid(z, "Perch", Rect2(1430, 420, 220, 16), ROCK_FILL)
-	_solid(z, "CannonPlinth", Rect2(2360, FLOOR_Y - 20, 60, 20), ROCK_FILL)
-	_zone_card(z, Vector2(1240, 388), "ZONE B · PROJECTILES", [
-		"Shots fly the direction they were fired — they never home.",
-		"Click a SHOT in flight (A), then a crate (B): the crate flies,",
-		"the shot parks, shrinks and deflates on its own.",
-		"A crate in the line of fire eats the shot.",
+	_solid(z, "Perch", Rect2(2370, FLOOR_Y - 100, 20, 100), ROCK_FILL)
+	_zone_card(z, Vector2(1240, 340), "B · CHARGER TO CRATE", [
+		"Let the CHARGER rush. E · Charger · CRATE.",
+		"The charge stops. The crate hits the gunner or another crate.",
+		"A wall, a body, or a pressure plate can end the chain. 1 retries.",
 	])
-	_checkpoint(z, 1250, "ZONE B", Vector2(1300, 599))
-	_enemy(GUNNER_SCENE, z, Vector2(1540, 419), "GUNNER B")
-	_crate(z, Vector2(1850, 580))
+	_checkpoint(z, 1250, "ZONE B", Vector2(1800, 599))
+	_enemy(CHARGER_SCENE, z, Vector2(1500, 599), "CHARGER B")
+	_enemy(GUNNER_SCENE, z, Vector2(2230, 599), "GUNNER B")
 	_crate(z, Vector2(1980, 580))
-	_cannon(z, Vector2(2390, FLOOR_Y - 40), Vector2.LEFT, 200.0)
+	_crate(z, Vector2(2120, 580))
 
 # ------------------------------------------------------------------ zone C
 
 func _build_zone_c(world: Node2D) -> void:
-	var z := _zone_node(world, "C", "CHARGE & COLLISION", 2500.0, 3700.0)
+	var z := _zone_node(world, "C", "HUMAN PROJECTILE", 2500.0, 3700.0)
 	_solid(z, "Ground", Rect2(2500, FLOOR_Y, 1200, 120))
-	_solid(z, "ChargeStop", Rect2(3620, FLOOR_Y - 100, 20, 100), ROCK_FILL)
-	_hazard(z, Rect2(3120, FLOOR_Y - 12, 120, 12))
-	_zone_card(z, Vector2(2540, 388), "ZONE C · CHARGE & COLLISION", [
-		"The CHARGER commits to a direction during its telegraph —",
-		"it can never re-aim. Swap its charge into a crate to launch it,",
-		"or swap a crate's standstill into the charger to stop it dead.",
+	_solid(z, "ChargeStop", Rect2(3480, FLOOR_Y - 100, 20, 100), ROCK_FILL)
+	_zone_card(z, Vector2(2540, 340), "C · HUMAN PROJECTILE", [
+		"Let the CHARGER rush RIGHT. E · click Charger · Q.",
+		"Hit the patrol at speed. Near the wall, take a RIGHT shot with Q.",
+		"The open lane to the left is safe for recovery. 1 resets this zone.",
 	])
-	_checkpoint(z, 2550, "ZONE C", Vector2(2600, 599))
-	_enemy(CHARGER_SCENE, z, Vector2(2760, 599), "CHARGER C")
-	_crate(z, Vector2(3420, 580))
-	_crate(z, Vector2(3420, 540))
+	_checkpoint(z, 2550, "ZONE C", Vector2(3000, 599))
+	_enemy(CHARGER_SCENE, z, Vector2(2860, 599), "CHARGER C")
+	_enemy(PATROL_SCENE, z, Vector2(3100, 599), "PATROL C", func(e: LabEnemy) -> void:
+		(e as LabPatrolEnemy).configure_patrol(3090.0, 3120.0)
+		(e as LabPatrolEnemy).speed = 35.0)
+	_crate(z, Vector2(3300, 580))
+	_cannon(z, Vector2(3340, 560), Vector2.RIGHT, 1200.0)
 
 # ------------------------------------------------------------------ zone D
 
 func _build_zone_d(world: Node2D) -> void:
-	var z := _zone_node(world, "D", "MACHINERY", 3700.0, 5150.0)
+	var z := _zone_node(world, "D", "PROJECTILE TO IVEN / MACHINERY", 3700.0, 5150.0)
 	_solid(z, "GroundWest", Rect2(3700, FLOOR_Y, 300, 120))
 	_conveyor(z, 4000.0, 120.0, 300.0, "A")
 	_solid(z, "GroundMid", Rect2(4300, FLOOR_Y, 200, 120))
 	_conveyor(z, 4500.0, -120.0, 300.0, "B")
 	_solid(z, "GroundEast", Rect2(4800, FLOOR_Y, 200, 120))
 	_solid(z, "LiftLedge", Rect2(5000, 400, 300, 16), ROCK_FILL)
-	_zone_card(z, Vector2(3740, 388), "ZONE D · MACHINERY", [
-		"A BELT carries a SURFACE speed, the LIFT a PLATFORM speed.",
-		"Same channel = exchangeable. What they were handed STICKS.",
-		"Swap belt A's +120 into belt B to send its crate the other way,",
-		"or steal a negative speed from belt B to bring the lift down.",
+	_zone_card(z, Vector2(3740, 330), "D · PROJECTILE TO IVEN", [
+		"The test cannon fires LEFT at 1200 px/s. E · SHOT · Q.",
+		"Iven launches LEFT. Order never changes the direction.",
+		"Belt / lift commands swap with machines and persist until reset.",
 	])
-	_checkpoint(z, 3750, "ZONE D", Vector2(3800, 599))
-	_enemy(PATROL_SCENE, z, Vector2(3900, 599), "PATROL D", func(e: LabEnemy) -> void:
-		(e as LabPatrolEnemy).configure_patrol(3760.0, 3980.0))
-	_crate(z, Vector2(4200, 580))
+	_checkpoint(z, 3750, "ZONE D", Vector2(4200, 599))
+	_cannon(z, Vector2(4520, 560), Vector2.LEFT, 1200.0)
+	_crate(z, Vector2(4370, 580))
 	_crate(z, Vector2(4700, 580))
 	var lift := _platform(z, Vector2(4860, 560), Vector2(0, -1), 160.0, 80.0,
 		Vector2(140, 16), "LIFT")
@@ -623,7 +725,7 @@ func _build_zone_e(world: Node2D) -> void:
 	_solid(z, "CorridorCeiling", Rect2(6240, 320, 220, 160), ROCK_FILL)
 	var gate := _gate(z, Vector2(6300, FLOOR_Y - 120), Vector2(20, 120))
 	gate.name = "ZoneEGate"
-	_zone_card(z, Vector2(5190, 388), "ZONE E · PLATE & GATE", [
+	_zone_card(z, Vector2(5190, 300), "ZONE E · PLATE & GATE", [
 		"A crate is parked on the LIFT. The belt is stopped. The plate latches.",
 		"1. Swap the BELT speed (+120) into the LIFT: the crate rides across.",
 		"2. Swap them again: the belt drives the crate onto the plate.",
@@ -650,7 +752,7 @@ func _build_zone_f(world: Node2D) -> void:
 	_solid(z, "RightWall", Rect2(7800, -240, 40, 960), ROCK_FILL)
 	_hazard(z, Rect2(7300, FLOOR_Y - 12, 120, 12))
 	_conveyor(z, 7560.0, -100.0, 200.0, "F")
-	_zone_card(z, Vector2(6450, 388), "ZONE F · MIXED ENCOUNTER", [
+	_zone_card(z, Vector2(6450, 330), "ZONE F · MIXED ENCOUNTER", [
 		"Everything at once: the turret aims, the patrol walks, the charger commits,",
 		"the belt runs against you. Swap, dodge, and reach the far wall.",
 	])
