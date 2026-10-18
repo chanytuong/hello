@@ -1,0 +1,86 @@
+extends SceneTree
+## BUG 1 Phase C + BUG 2 stress: attack spam + hug melee + jump spam.
+## Manual R-restarts at random offsets. Counts death/restart cycles.
+## Flags non-jump upward spikes; prints EVERY script error context.
+## Goal: 10+ death/restart cycles, attack-during-windup/shot/death coverage.
+
+var _frames: int = 0
+var _events: int = 0
+var _prev_vy: float = 0.0
+var _last_jump_fire: int = -1000
+var _deaths: int = 0
+var _was_dead: bool = false
+var _restarts: int = 0
+var _attacks: int = 0
+
+func _init() -> void:
+	var main = load("res://scenes/main.tscn").instantiate()
+	get_root().add_child(main)
+	# Make in-harness restart behave like the real game (reload needs this).
+	current_scene = main
+
+func _p() -> NLBPlayer:
+	return get_first_node_in_group("player") as NLBPlayer
+
+func _on_jump() -> void:
+	_last_jump_fire = _frames
+
+func _physics_process(_delta: float) -> bool:
+	_frames += 1
+	var p := _p()
+	if p == null:
+		print("PHASE-C: PLAYER GONE at f=%d (deaths=%d restarts=%d)" % [_frames, _deaths, _restarts])
+		return false  # keep running; reload should bring a new one
+	if _frames == 1:
+		p.jumped.connect(_on_jump)
+	# Hug melee (or mid-room if dead/gone), spam swing + jump.
+	var m: Node2D = null
+	for e in get_nodes_in_group("enemies"):
+		if e is NLBMeleeChaser:
+			m = e
+	if m != null and p.health.hp > 0:
+		if p.global_position.x < m.global_position.x - 10.0:
+			Input.action_press("move_right")
+			Input.action_release("move_left")
+		else:
+			Input.action_press("move_left")
+			Input.action_release("move_right")
+	if _frames % 13 == 0:
+		Input.action_press("attack")
+	if _frames % 13 == 4:
+		Input.action_release("attack")
+	if _frames % 29 == 0:
+		Input.action_press("jump")
+	if _frames % 29 == 5:
+		Input.action_release("jump")
+	if _frames % 37 == 0:
+		Input.action_press("attack")
+		_attacks += 1
+	if _frames % 37 == 3:
+		Input.action_release("attack")
+	if _frames % 211 == 100:
+		Input.action_press("restart")
+		_restarts += 1
+	if _frames % 211 == 103:
+		Input.action_release("restart")
+	if p.health.hp <= 0 and not _was_dead:
+		_was_dead = true
+		_deaths += 1
+		print("DEATH #%d f=%d (attacks=%d restarts=%d)" % [_deaths, _frames, _attacks, _restarts])
+	if p.health.hp > 0:
+		_was_dead = false
+	var vy: float = p.velocity.y
+	var dv: float = vy - _prev_vy
+	var near_jump: bool = (_frames - _last_jump_fire) <= 5
+	if dv < -250.0 and not near_jump and vy < -100.0 and _events < 8:
+		_events += 1
+		print("ANOMALY #%d f=%d vy=%.0f dvy=%.0f grounded=%s hp=%d" % [
+			_events, _frames, vy, dv, str(p.is_on_floor()), p.health.hp])
+	_prev_vy = vy
+	if _frames >= 8000:
+		print("PHASE-C: done frames=%d deaths=%d restarts=%d attacks=%d anomalies=%d" % [
+			_frames, _deaths, _restarts, _attacks, _events])
+		Engine.time_scale = 1.0
+		quit(0)
+		return true
+	return false

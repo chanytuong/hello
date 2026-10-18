@@ -1,0 +1,167 @@
+extends SceneTree
+## Feel audit probe: measures the five quality-gate criteria from the LIVE game.
+## S1 hit-vs-miss divergence  S2 body separation  S3 dash->attack gesture
+## S5 launch safety
+## Read-only: mutates positions to stage scenarios, changes no game code.
+
+var _f: int = 0
+var _main: Node
+var _phase: int = 0
+var _pf: int = 0
+
+# S1 sampling
+var _miss_log: Array = []
+var _hit_log: Array = []
+var _hit_enemy_log: Array = []
+var _sep_log: Array = []
+var _dash_log: Array = []
+var _min_vy: float = 0.0
+
+func _init() -> void:
+	_main = load("res://scenes/main.tscn").instantiate()
+	get_root().add_child(_main)
+	current_scene = _main
+
+func _p() -> NLBPlayer:
+	return get_first_node_in_group("player") as NLBPlayer
+
+func _melee() -> NLBMeleeChaser:
+	for e in get_nodes_in_group("enemies"):
+		if e is NLBMeleeChaser:
+			return e
+	return null
+
+func _snap(p: NLBPlayer, x: float) -> void:
+	_park_prop()
+	p.global_position = Vector2(x, 599)
+	p.velocity = Vector2.ZERO
+	p.move_state = NLBPlayer.MoveState.NORMAL
+	p._atk_t = -1.0
+	p._dash_cd = 0.0
+	p._dash_buf = 0.0
+	p._dash_t = 0.0
+	p._atk_cd = 0.0
+	p._atk_buf = 0.0
+	p._struck_from_dash = false
+	p.body_vis.rotation = 0.0
+	p.body_vis.scale = Vector2.ONE
+
+## Arena now has a walk-over pickup; this probe measures bare hands, so park
+## it 400px up where dy puts it outside the pickup window.
+func _park_prop() -> void:
+	var prop := get_first_node_in_group("props")
+	if prop != null:
+		prop.global_position = Vector2(1190, 200)
+
+func _process(_delta: float) -> bool:
+	return false
+
+func _physics_process(_delta: float) -> bool:
+	_f += 1
+	_pf += 1
+	var p := _p()
+	var g := _main as NLBGame
+	match _phase:
+		0:  # --- S1a MISS: swing in empty air, sample everything
+			if _pf == 1:
+				_snap(p, 300.0)
+			if _pf == 5:
+				Input.action_press("attack")
+			if _pf == 7:
+				Input.action_release("attack")
+			if _pf >= 5 and _pf <= 60:
+				_miss_log.append(_sample(p, g))
+			if _pf == 60:
+				print("S1_MISS %s" % str(_miss_log))
+				_next()
+		1:  # --- S1b HIT: swing into the melee chaser
+			if _pf == 1:
+				_snap(p, 300.0)
+				var m := _melee()
+				m.global_position = Vector2(352, 599)
+				m.velocity = Vector2.ZERO
+				m._kb = Vector2.ZERO
+				m.ai_state = NLBMeleeChaser.AIState.CHASE
+				m._cd = 99.0  # stop it entering WINDUP so the test is clean
+			if _pf == 5:
+				Input.action_press("attack")
+			if _pf == 7:
+				Input.action_release("attack")
+			if _pf >= 5 and _pf <= 60:
+				_hit_log.append(_sample(p, g))
+				var m2 := _melee()
+				if m2 != null:
+					_hit_enemy_log.append({
+						"f": _pf, "x": snappedf(m2.global_position.x, 1.0),
+						"vx": snappedf(m2.velocity.x, 1.0),
+						"sc": str(m2.body_vis.scale), "col": str(m2.body_vis.color)})
+			if _pf == 60:
+				print("S1_HIT %s" % str(_hit_log))
+				print("S1_ENEMY %s" % str(_hit_enemy_log))
+				_next()
+		2:  # --- S2 SEPARATION: fully overlapped bodies
+			if _pf == 1:
+				_snap(p, 500.0)
+				var m := _melee()
+				m.global_position = Vector2(502, 599)
+				m.velocity = Vector2.ZERO
+				m._kb = Vector2.ZERO
+				m._cd = 99.0
+				Input.action_press("move_right")
+			if _pf >= 1 and _pf <= 90:
+				var m3 := _melee()
+				_min_vy = minf(_min_vy, p.velocity.y)
+				_sep_log.append({"f": _pf,
+					"gap": snappedf(m3.global_position.x - p.global_position.x, 1.0),
+					"py": snappedf(p.global_position.y, 1.0),
+					"vy": snappedf(p.velocity.y, 1.0),
+					"vx": snappedf(p.velocity.x, 1.0)})
+			if _pf == 90:
+				Input.action_release("move_right")
+				print("S2_SEP %s" % str(_sep_log))
+				print("S2_MIN_VY %s" % str(_min_vy))
+				_next()
+		3:  # --- S3 DASH->ATTACK: one gesture
+			if _pf == 1:
+				_snap(p, 300.0)
+				Input.action_press("move_right")
+				Input.action_press("dash")
+			if _pf == 3:
+				Input.action_release("dash")
+			if _pf == 6:
+				Input.action_press("attack")
+			if _pf == 8:
+				Input.action_release("attack")
+			if _pf >= 1 and _pf <= 40:
+				_dash_log.append({"f": _pf, "st": p.move_state,
+					"atk": snappedf(p._atk_t, 0.001),
+					"vx": snappedf(p.velocity.x, 1.0),
+					"col": str(p.body_vis.color),
+					"sc": str(p.body_vis.scale),
+					"rot": snappedf(p.body_vis.rotation, 0.01),
+					"dash_struck": p._struck_from_dash})
+			if _pf == 40:
+				Input.action_release("move_right")
+				print("S3_DASH %s" % str(_dash_log))
+				_next()
+		4:
+			print("PROBE_DONE")
+			quit(0)
+			return true
+	return false
+
+func _sample(p: NLBPlayer, g: NLBGame) -> Dictionary:
+	return {"f": _pf,
+		"atk": snappedf(p._atk_t, 0.001),
+		"vx": snappedf(p.velocity.x, 1.0),
+		"vy": snappedf(p.velocity.y, 1.0),
+		"body": str(p.body_vis.color),
+		"pose_sc": str(p.body_vis.scale),
+		"pose_rot": snappedf(p.body_vis.rotation, 0.01),
+		"ts": snappedf(Engine.time_scale, 0.001),
+		"shake": snappedf(g._shake, 0.01),
+		"camoff": str(g.camera.offset)}
+
+func _next() -> void:
+	_phase += 1
+	_pf = 0

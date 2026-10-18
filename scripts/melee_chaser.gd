@@ -1,0 +1,159 @@
+extends CharacterBody2D
+class_name NLBMeleeChaser
+## Pressure chaser with an explicit telegraph flow:
+## CHASE -> WINDUP (0.4s, flashing) -> STRIKE (hitbox live, small lunge)
+## -> RECOVER -> CHASE. Plus always-on touch damage gated by victim iframes.
+## Single authored state (the old A/B speed toggle belonged to Blink).
+
+signal died
+
+enum AIState { CHASE, WINDUP, STRIKE, RECOVER }
+
+@export var speed: float = 150.0
+@export var gravity: float = 1400.0
+@export var attack_range: float = 48.0
+@export var windup_time: float = 0.4
+@export var strike_time: float = 0.12
+@export var recover_time: float = 0.4
+@export var attack_cooldown: float = 1.0
+@export var vertical_tolerance: float = 70.0
+
+var ai_state: int = AIState.CHASE
+
+const RECOIL_TIME := 0.18   # visual only; movement stagger stays at _stagger_t
+
+var _state_t: float = 0.0
+var _cd: float = 0.0
+var _flash_t: float = 0.0
+var _stagger_t: float = 0.0  # micro-stagger on hit: brief CHASE slow, no state change
+var _recoil_t: float = 0.0   # counts DOWN from RECOIL_TIME; instant onset on contact
+var _recoil_dir: float = 1.0 # direction the blow is carrying; set by the knockback
+var _kb: Vector2 = Vector2.ZERO  # shove velocity; steering re-derives base motion every frame so this must live outside `velocity`
+
+@onready var body_vis: ColorRect = $Body
+@onready var touch_box: NLBHitBox = $TouchHitBox
+@onready var slam_box: NLBHitBox = $SlamHitBox
+@onready var health: NLBHealth = $Health
+
+func _ready() -> void:
+	add_to_group("enemies")
+	add_to_group("fighters")
+	if body_vis != null:
+		body_vis.pivot_offset = Vector2(16, 20)
+	touch_box.begin()  # continuous touch damage for life of enemy
+	touch_box.knockback = Vector2.ZERO  # set per-hit below (directional)
+	health.changed.connect(_on_damaged)
+	health.died.connect(func() -> void:
+		died.emit()
+		queue_free())
+
+func apply_knockback(kb: Vector2) -> void:
+	_kb = kb
+	if kb.x != 0.0:
+		# The blow's own direction decides which way the body recoils, so the
+		# pose and the displacement can never disagree.
+		_recoil_dir = signf(kb.x)
+		_recoil_t = RECOIL_TIME
+
+func _on_damaged(_cur: int, _maximum: int) -> void:
+	# PHASE 10: 0.07 -> 0.03. The white flash covered the first 40% of the
+	# recoil, so the FX hid the body pose it was supposed to be announcing -
+	# a uniform colour change with an unchanged silhouette. Two frames is
+	# enough to mark the contact frame; after that the recoil owns the read.
+	_flash_t = 0.03
+	_stagger_t = 0.09
+	_recoil_t = RECOIL_TIME  # the enemy must LOOK hit on the contact frame itself
+
+func _physics_process(delta: float) -> void:
+	_cd -= delta
+	if not is_on_floor():
+		velocity.y += gravity * delta
+	else:
+		velocity.y = 0.0
+	var player := get_tree().get_first_node_in_group("player") as Node2D
+	if player == null:
+		velocity.x = 0.0
+		move_and_slide()
+		return
+	var dx: float = player.global_position.x - global_position.x
+	var dy: float = player.global_position.y - global_position.y
+	_flash_t -= delta
+	_stagger_t -= delta
+	_recoil_t = maxf(_recoil_t - delta, 0.0)
+	# Touch shove always points away from the chaser's center.
+	touch_box.knockback = Vector2(signf(dx) * 120.0, 0.0)
+	match ai_state:
+		AIState.CHASE:
+			_set_body_color(Color(0.9, 0.3, 0.45))
+			if absf(dx) <= attack_range and absf(dy) <= vertical_tolerance and _cd <= 0.0:
+				_enter(AIState.WINDUP)
+			elif _stagger_t > 0.0:
+				velocity.x *= 0.15  # staggered: barely drifts, then resumes
+			else:
+				velocity.x = signf(dx) * speed if absf(dx) > attack_range * 0.7 else move_toward(velocity.x, 0.0, 800.0 * delta)
+		AIState.WINDUP:
+			velocity.x = 0.0
+			_set_body_color(Color(1.0, 0.25, 0.25) if int(Time.get_ticks_msec() / 90) % 2 == 0 else Color(0.9, 0.3, 0.45))
+			if _state_t <= 0.0:
+				_enter(AIState.STRIKE)
+				slam_box.knockback = Vector2(signf(dx) * 170.0, -50.0)
+				slam_box.begin()
+		AIState.STRIKE:
+			velocity.x = signf(dx) * speed * 0.6  # committed lunge, no steering
+			_set_body_color(Color(1.0, 0.6, 0.2))
+			if _state_t <= 0.0:
+				slam_box.end()
+				_enter(AIState.RECOVER)
+				_cd = attack_cooldown
+		AIState.RECOVER:
+			velocity.x = move_toward(velocity.x, 0.0, 800.0 * delta)
+			_set_body_color(Color(0.7, 0.35, 0.4))
+			if _state_t <= 0.0:
+				_enter(AIState.CHASE)
+	_state_t -= delta
+	_kb = _kb.move_toward(Vector2.ZERO, 1400.0 * delta)
+	velocity += _kb
+	move_and_slide()
+	_apply_pose()
+
+func _set_body_color(c: Color) -> void:
+	if body_vis == null:
+		return
+	body_vis.color = Color.WHITE if _flash_t > 0.0 else c
+
+## PHASE 7: the enemy LOOKS hit before/while it moves. Displacement alone
+## reads as "it got pushed"; a directional lean + squash reads as "it got
+## hurt". Applied to the ColorRect ONLY - rotation/scale never touch the
+## transform, the velocity or the collision shape, so there is no launch,
+## no ragdoll and no spin. Instant onset on the contact frame, linear settle
+## over RECOIL_TIME (a moving hold, not a dead pose).
+func _apply_pose() -> void:
+	if body_vis == null:
+		return
+	if _recoil_t <= 0.0:
+		body_vis.rotation = 0.0
+		body_vis.scale = Vector2.ONE
+		return
+	var raw := clampf(_recoil_t / RECOIL_TIME, 0.0, 1.0)
+	# HOLD the extreme for the first ~20% of the recoil window (~0.036s of
+	# held pose, on top of any hitstop) and only then let it release. The
+	# old linear decay started fading on the very frame it appeared, so the
+	# contact pose was never actually READ - the reaction looked like a
+	# flicker rather than a body being struck.
+	var e := clampf(raw * 1.25, 0.0, 1.0)
+	# Whip away from the blow (~24deg at full), squash along the axis of
+	# impact and stretch across it - the classic side-on impact shape.
+	body_vis.rotation = 0.42 * _recoil_dir * e
+	body_vis.scale = Vector2(1.0 + 0.28 * e, 1.0 - 0.34 * e)
+
+func _enter(next: int) -> void:
+	ai_state = next
+	match next:
+		AIState.WINDUP:
+			_state_t = windup_time
+		AIState.STRIKE:
+			_state_t = strike_time
+		AIState.RECOVER:
+			_state_t = recover_time
+		_:
+			_state_t = 0.0

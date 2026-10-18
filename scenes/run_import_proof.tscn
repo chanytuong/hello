@@ -1,0 +1,52 @@
+; ISOLATED Godot import proof for the RUN keyframe pipeline.
+;
+; This scene is a TEST HARNESS, not gameplay.  It deliberately does not touch
+; scenes/player.tscn, scenes/arena.tscn or scripts/player.gd.
+;
+; What it demonstrates:
+;   * AnimatedSprite2D + SpriteFrames (res://art/run/run_proof.tres)
+;   * NEAREST texture filtering (set project-wide in project.godot:
+;     rendering/textures/canvas_textures/default_texture_filter=0)
+;   * correct ground alignment: the sprite is drawn with centered=false, so the
+;     cell's top-left sits at the node position and cell row 126 (the ground
+;     row) lands exactly on the yellow line at local y = 0
+;   * pivot: both proven frames have bbox centre x = 31, the cell's own pivot
+;     column, so the character aligns with the scene origin with no offset
+;   * loop timing: the production cycle is 18 frames @ 30 fps; an authored
+;     18-frame SpriteFrames at speed_scale 1.0 plays back at the real speed.
+;     This proof has 2 of 18 frames and is NOT the run cycle.
+;
+; Open just this scene and press F6, or:
+;   godot --headless res://scenes/run_import_proof.tscn
+
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="SpriteFrames" path="res://art/run/run_proof.tres" id="1_frames"]
+
+[node name="RunImportProof" type="Node2D"]
+
+; ---- ground line: the character's feet must land exactly on this ----------
+[node name="GroundLine" type="Line2D" parent="."]
+points = PackedVector2Array(-280, 0, 280, 0)
+width = 2.0
+default_color = Color(1, 0.86, 0.25, 1)
+
+; ---- the animated sprite -------------------------------------------------
+[node name="RunSprite" type="AnimatedSprite2D" parent="."]
+; row 126 of the 64x128 cell is the ground row, so lifting the node by 126
+; puts the feet exactly on GroundLine.  centered=false keeps the whole cell
+; drawn below the origin - no half-pixel offset from a centre pivot.
+position = Vector2(0, -126)
+sprite_frames = ExtResource("1_frames")
+animation = &"default"
+centered = false
+speed_scale = 1.0
+
+[node name="Label" type="Label" parent="."]
+offset_left = -280.0
+offset_top = -250.0
+offset_right = 140.0
+offset_bottom = -226.0
+theme_override_colors/font_color = Color(0.85, 0.85, 0.9, 1)
+theme_override_font_sizes/font_size = 12
+text = "RUN keyframe pipeline proof - 2 of 18 frames (f06 contact / f10 push-off)"
