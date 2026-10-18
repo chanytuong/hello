@@ -2,7 +2,7 @@ extends CharacterBody2D
 class_name NLBMeleeChaser
 ## Pressure chaser with an explicit telegraph flow:
 ## CHASE -> WINDUP (0.4s, flashing) -> STRIKE (hitbox live, small lunge)
-## -> RECOVER -> CHASE. Plus always-on touch damage gated by victim iframes.
+## -> RECOVER -> CHASE. Only the intended STRIKE window damages Iven.
 ## Single authored state (the old A/B speed toggle belonged to Blink).
 
 signal died
@@ -40,7 +40,7 @@ func _ready() -> void:
 	add_to_group("fighters")
 	if body_vis != null:
 		body_vis.pivot_offset = Vector2(16, 20)
-	touch_box.begin()  # continuous touch damage for life of enemy
+	touch_box.end()  # proximity and body contact are not attacks
 	touch_box.knockback = Vector2.ZERO  # set per-hit below (directional)
 	health.changed.connect(_on_damaged)
 	health.died.connect(func() -> void:

@@ -1,5 +1,7 @@
 # Movement integration — ready for human playtest
 
+> Historical tuning: [Movement and combat foundation repair](MOVEMENT_COMBAT_FOUNDATION_QA.md) supersedes this report's roll duration, travel, cancellation and air-use behavior, with current tests and recordings.
+
 2026-10-18, Asia/Saigon. **Playable Godot prototype; human feel and visual approval pending.**
 F5 now opens `labs/motion_swap_lab.tscn` (the active ability's lab — see
 `design/MOTION_SWAP_LAB_QA.md`); the movement scene in this document is

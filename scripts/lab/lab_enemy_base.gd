@@ -14,8 +14,6 @@ signal impact(strength: float)   # wall/body impacts worth a camera beat
 @export var hp: int = 3
 @export var body_color: Color = Color(0.9, 0.3, 0.45)
 @export var swapped_color: Color = Color(0.72, 0.55, 1.0)
-## Push a body touching this enemy gets. Direction is derived every frame.
-@export var touch_knockback: float = 130.0
 @export_group("Motion Swap")
 ## How long a received motion owns this body before the AI resumes.
 @export var swap_override_duration: float = 0.65
@@ -70,11 +68,12 @@ func _ready() -> void:
 		swap_target.adapter = adapter
 		if swap_target.display_name == "TARGET":
 			swap_target.display_name = type_label()
-	# Touch damage is shared: every lab enemy hurts on contact, gated by the
-	# victim's iframes. The direction is re-derived each frame below.
+	# Body presence is never an attack. Only Charger explicitly arms this
+	# existing component, and its damage requires real physical contact.
 	_touch_box = get_node_or_null("TouchHitBox") as NLBHitBox
 	if _touch_box != null:
-		_touch_box.begin()
+		_touch_box.end()
+	platform_floor_layers &= ~6 # characters are not moving platforms
 	_reset_ai()
 
 func set_spawn(pos: Vector2) -> void:
@@ -132,10 +131,6 @@ func _physics_process(delta: float) -> void:
 	# move the body, even while a swapped motion owns it.
 	_kb = _kb.move_toward(Vector2.ZERO, 1400.0 * delta)
 	velocity += _kb
-	if _touch_box != null:
-		var pl := player_node()
-		if pl != null:
-			_touch_box.knockback = Vector2(signf(pl.global_position.x - global_position.x) * touch_knockback, 0.0)
 	var incoming := velocity
 	move_and_slide()
 	NLBImpactResponse.solve_slides(self, incoming)
@@ -176,7 +171,7 @@ func receive_contact_motion(motion: Vector2) -> void:
 	velocity += motion * (0.65 if heavy else 1.0)
 	swap_override_t = maxf(swap_override_t, 0.25)
 
-func receive_motion_impact(speed: float, normal: Vector2, other: Object, incoming: Vector2) -> void:
+func receive_motion_impact(speed: float, normal: Vector2, other: Object, incoming: Vector2, context: Dictionary = {}) -> void:
 	if not _alive:
 		return
 	if swap_target != null:
@@ -194,7 +189,10 @@ func receive_motion_impact(speed: float, normal: Vector2, other: Object, incomin
 	elif speed >= impact_stagger_speed:
 		damage_amount = 1
 	if damage_amount > 0:
-		health.damage(damage_amount)
+		var info := context.duplicate()
+		info.merge({"kind": "impact", "source": str(other.get_path()) if other is Node else str(other),
+			"velocity": incoming, "normal": normal, "closing_speed": speed}, true)
+		health.damage(damage_amount, info)
 	# A real wall removes its normal component; empty flight never comes here.
 	if other is StaticBody2D and absf(normal.x) > 0.5:
 		velocity = incoming.slide(normal)

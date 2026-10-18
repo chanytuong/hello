@@ -12,6 +12,7 @@ class_name NLBHazard
 
 func _ready() -> void:
 	add_to_group("hazards")
+	hit_box.damage_kind = &"hazard"
 	_apply_visual()
 	if active:
 		hit_box.begin()

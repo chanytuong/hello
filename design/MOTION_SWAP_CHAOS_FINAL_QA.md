@@ -1,5 +1,7 @@
 # Motion Swap Chaos — implementation and verified handoff
 
+> Historical tuning: [Movement and combat foundation repair](MOVEMENT_COMBAT_FOUNDATION_QA.md) supersedes this report's roll, enemy-contact and Zone F behavior, with current tests and recordings.
+
 2026-10-18 · Godot 4.7.2 stable, Windows, Compatibility / ANGLE.
 
 **Implemented in the existing project.** E tactical selection, exact two-way

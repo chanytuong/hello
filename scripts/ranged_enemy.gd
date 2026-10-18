@@ -39,7 +39,7 @@ const ProjectileScene: PackedScene = preload("res://scenes/projectile.tscn")
 func _ready() -> void:
 	add_to_group("enemies")
 	add_to_group("fighters")
-	touch_box.begin()
+	touch_box.end() # detection/body contact never causes damage
 	touch_box.knockback = Vector2.ZERO  # set per-frame below (directional)
 	if body_vis != null:
 		body_vis.pivot_offset = Vector2(15, 19)

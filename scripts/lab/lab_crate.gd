@@ -48,7 +48,7 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 func _resolve_contact(other: Object, point: Vector2, normal: Vector2, incoming: Vector2, other_velocity: Vector2) -> void:
 	NLBImpactResponse.resolve(self, other, point, normal, incoming, other_velocity)
 
-func receive_motion_impact(_speed: float, _normal: Vector2, _other: Object, _incoming: Vector2) -> void:
+func receive_motion_impact(_speed: float, _normal: Vector2, _other: Object, _incoming: Vector2, _context: Dictionary = {}) -> void:
 	if swap_target != null:
 		swap_target.clear_overdrive()
 

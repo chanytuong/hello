@@ -9,7 +9,10 @@ var life: float = 3.0
 
 func _ready() -> void:
 	add_to_group("projectiles")
-	hit_box.begin()  # continuous: hurts on touch until it expires or lands
+	hit_box.continuous = false # one projectile, one damage epoch
+	hit_box.damage_kind = &"projectile"
+	hit_box.landed.connect(queue_free)
+	hit_box.begin()
 
 func launch(pos: Vector2, vel: Vector2) -> void:
 	global_position = pos

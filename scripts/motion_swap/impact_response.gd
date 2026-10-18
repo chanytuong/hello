@@ -30,18 +30,33 @@ static func resolve(mover: Node2D, other: Object, point: Vector2, normal: Vector
 	var key := "%d:%d" % [mini(mover.get_instance_id(), other.get_instance_id()), maxi(mover.get_instance_id(), other.get_instance_id())]
 	if frame - int(_pair_frames.get(key, -100)) < 10:
 		return 0.0
+	# One contact has one damage authority. A committed Charger attack owns
+	# ordinary Iven contact; a self-launched Iven instead resolves as impact.
+	if mover.has_method("try_contact_attack") and mover.try_contact_attack(other, point, normal, incoming, other_velocity):
+		_pair_frames[key] = frame
+		return closing
+	if other.has_method("try_contact_attack") and other.try_contact_attack(mover, point, -normal, other_velocity, incoming):
+		_pair_frames[key] = frame
+		return closing
+	# Ordinary run / roll contact is solid separation, not a kinetic attack.
+	# Attack windows above use their own closing-speed rule, including a charge
+	# catching a player who is running away at ordinary movement speed.
+	if mover is CharacterBody2D and other is CharacterBody2D and closing < 480.0:
+		return 0.0
 	_pair_frames[key] = frame
+	var mover_context := {"contact": point, "normal": normal, "velocity": incoming, "other_velocity": other_velocity}
+	var other_context := {"contact": point, "normal": -normal, "velocity": other_velocity, "other_velocity": incoming}
 	# Resolve a human projectile's victim before the player's recovery clears that state.
 	if mover.is_in_group("player"):
 		if other.has_method("receive_motion_impact"):
-			other.receive_motion_impact(closing, -normal, mover, other_velocity)
+			other.receive_motion_impact(closing, -normal, mover, other_velocity, other_context)
 		if mover.has_method("receive_motion_impact"):
-			mover.receive_motion_impact(closing, normal, other, incoming)
+			mover.receive_motion_impact(closing, normal, other, incoming, mover_context)
 	else:
 		if mover.has_method("receive_motion_impact"):
-			mover.receive_motion_impact(closing, normal, other, incoming)
+			mover.receive_motion_impact(closing, normal, other, incoming, mover_context)
 		if other.has_method("receive_motion_impact"):
-			other.receive_motion_impact(closing, -normal, mover, other_velocity)
+			other.receive_motion_impact(closing, -normal, mover, other_velocity, other_context)
 	# Transfer only contact-normal momentum, never aim at a third object.
 	if other is RigidBody2D and not mover is RigidBody2D:
 		var rigid := other as RigidBody2D

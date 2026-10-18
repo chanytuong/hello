@@ -7,7 +7,7 @@ func _run() -> void:
 	check(lab._zones.size() == 6, "six original zones retained")
 	check(get_nodes_in_group("lab_enemies").size() == 9, "nine reused Patrol/Gunner/Charger instances")
 	check(get_nodes_in_group("crates").size() == 11, "eleven physical crates")
-	check(get_nodes_in_group("lab_machines").size() == 6, "six compatible machines retained")
+	check(get_nodes_in_group("lab_machines").size() == 5, "five compatible machines in zones A-E retained")
 	check(get_nodes_in_group("lab_plates").size() == 1 and get_nodes_in_group("lab_gates").size() == 1, "plate/gate puzzle retained")
 	check(player.swap_target != null and player.swap_target.is_valid(), "Iven registered as a target")
 	var cam := player.get_node("LabCamera") as Camera2D
@@ -42,7 +42,7 @@ func _run() -> void:
 	Input.action_release("dash")
 	check(player.roll_remaining > 0.0 and player.movement_visual.state == "DODGE_ROLL", "DODGE ROLL still enters approved clip")
 	await step(44)
-	check(player.roll_remaining == 0.0 and absf(player.global_position.x - x) > 150.0, "dodge completes without motion lock")
+	check(player.roll_remaining == 0.0 and absf(player.global_position.x - x) >= 95.0 and absf(player.global_position.x - x) <= 105.0, "final dodge completes without motion lock")
 	# Machinery command exchange and the actual crate -> plate -> gate chain.
 	await fresh(Vector2(5900, 599))
 	var belt := lab.get_node("World/ZoneE/BeltE") as LabConveyor
@@ -87,8 +87,11 @@ func _run() -> void:
 	await step(30)
 	check(player.global_position.y < y - 20 and player.is_on_floor(), "moving platform carries Iven without overriding motion-swap velocity", {"rise": y - player.global_position.y})
 	# Hazards still use the normal hurtbox route during a self launch.
-	await fresh(Vector2(7260, 599))
-	var p := shot(Vector2(7210, 440), Vector2(900, 0))
+	# Zone F no longer has unavoidable floor spikes: isolate the same hazard
+	# route here so its immunity regression does not depend on arena layout.
+	await fresh(Vector2(2700, 599))
+	lab._hazard(lab.get_node("World/ZoneC"), Rect2(2740, 588, 120, 12))
+	var p := shot(Vector2(2650, 440), Vector2(900, 0))
 	var hp := player.health.hp
 	key(KEY_E)
 	key(KEY_Q)

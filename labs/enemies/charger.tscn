@@ -21,7 +21,6 @@ hp = 5
 heavy = true
 body_color = Color(0.95, 0.45, 0.2, 1)
 swapped_color = Color(0.72, 0.55, 1, 1)
-touch_knockback = 240.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -22)
@@ -52,7 +51,9 @@ position = Vector2(0, -22)
 collision_layer = 64
 collision_mask = 128
 script = ExtResource("2")
-continuous = true
+continuous = false
+manual_contact_only = true
+damage_kind = &"enemy_attack"
 tick = 0.2
 
 [node name="Shape" type="CollisionShape2D" parent="TouchHitBox"]

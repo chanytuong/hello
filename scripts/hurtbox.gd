@@ -10,11 +10,11 @@ func _ready() -> void:
 func health_node() -> NLBHealth:
 	return get_parent().get_node_or_null("Health") as NLBHealth
 
-func take_hit(amount: int, kb: Vector2 = Vector2.ZERO) -> bool:
+func take_hit(amount: int, kb: Vector2 = Vector2.ZERO, context: Dictionary = {}) -> bool:
 	var h := health_node()
 	if h == null:
 		return false
-	if not h.damage(amount):
+	if not h.damage(amount, context):
 		return false
 	var owner := get_parent()
 	# Clean rule: damage drops pending jump intent. A buffer pressed before

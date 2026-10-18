@@ -120,7 +120,9 @@ func _physics_process(delta: float) -> void:
 			var victim := last_hit as NLBPlayer
 			var hurt := victim.get_node_or_null("HurtBox") as NLBHurtBox
 			if hurt != null:
-				hurt.take_hit(damage, velocity.normalized() * 160.0)
+				hurt.take_hit(damage, velocity.normalized() * 160.0, {"kind": "projectile",
+					"source": str(get_path()), "emitter": str(source.get_path()) if is_instance_valid(source) else "test",
+					"velocity": velocity, "contact": _sweep.get_collision_point(0), "normal": _sweep.get_collision_normal(0)})
 		_retire()
 		queue_redraw()
 		return

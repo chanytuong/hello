@@ -18,6 +18,7 @@ enum State { IDLE, WINDUP, CHARGE, STUN, RECOVER }
 @export var trigger_range: float = 560.0
 @export var vertical_tolerance: float = 96.0
 @export var brake_accel: float = 1600.0
+@export var charge_attack_knockback: float = 180.0
 
 var state: int = State.IDLE
 var _state_t: float = 0.0
@@ -70,6 +71,7 @@ func _ai_step(delta: float) -> void:
 			if _state_t <= 0.0:
 				state = State.CHARGE
 				_state_t = charge_time
+				_touch_box.begin()
 				telegraph.visible = false
 		State.CHARGE:
 			body_color = Color(1.0, 0.75, 0.25)
@@ -79,9 +81,11 @@ func _ai_step(delta: float) -> void:
 				impact.emit(absf(charge_speed))
 				state = State.STUN
 				_state_t = stun_time
+				_touch_box.end()
 			elif _state_t <= 0.0:
 				state = State.RECOVER
 				_state_t = recover_time
+				_touch_box.end()
 		State.STUN:
 			body_color = Color(0.8, 0.8, 0.9)
 			velocity.x = move_toward(velocity.x, 0.0, brake_accel * 1.5 * delta)
@@ -112,6 +116,8 @@ func _draw_telegraph() -> void:
 	telegraph.add_point(Vector2(_locked_dir * 128.0, y + 9.0))
 
 func _on_swap_override_end() -> void:
+	if _touch_box != null:
+		_touch_box.end()
 	# A charge that was interrupted is OVER: the body resumes from where the
 	# override left it, in RECOVER, not by resuming the committed run.
 	if state == State.CHARGE or state == State.WINDUP:
@@ -122,5 +128,46 @@ func _reset_ai() -> void:
 	state = State.IDLE
 	_state_t = 0.0
 	_locked_dir = 1.0
+	if _touch_box != null:
+		_touch_box.manual_contact_only = true
+		_touch_box.continuous = false
+		_touch_box.damage_kind = &"enemy_attack"
+		_touch_box.end()
 	if telegraph != null:
 		telegraph.visible = false
+
+func _on_swapped(_motion: Vector2) -> void:
+	if _touch_box != null:
+		_touch_box.end() # an interrupted charge cannot keep dealing attack damage
+
+func _on_damaged(current: int, maximum: int) -> void:
+	super._on_damaged(current, maximum)
+	if state == State.CHARGE or state == State.WINDUP:
+		state = State.RECOVER
+		_state_t = recover_time
+		if _touch_box != null:
+			_touch_box.end()
+
+func receive_motion_impact(speed: float, normal: Vector2, other: Object, incoming: Vector2, context: Dictionary = {}) -> void:
+	var charge_wall := state == State.CHARGE and other is StaticBody2D and absf(normal.x) > 0.5
+	super.receive_motion_impact(speed, normal, other, incoming, context)
+	# Generic impact damage/override cleanup happens during the contact solve,
+	# before next tick's is_on_wall(). Keep the promised charge-crash stun.
+	if charge_wall and _alive:
+		state = State.STUN
+		_state_t = stun_time
+		_touch_box.end()
+
+func try_contact_attack(victim: Object, point: Vector2, normal: Vector2, incoming: Vector2, victim_velocity: Vector2) -> bool:
+	if not victim is NLBPlayer or not _alive or state != State.CHARGE or swap_override_t > 0.0 or _stagger_t > 0.0:
+		return false
+	var p := victim as NLBPlayer
+	if p.living_projectile or not _touch_box.monitoring:
+		return false
+	if normal.x * _locked_dir > -0.5 or (incoming.x - victim_velocity.x) * _locked_dir < 200.0:
+		return false # only the committed forward face can strike
+	_touch_box.strike_contact(p, {"kind": "enemy_attack", "source": str(get_path()) + "/Charge",
+		"velocity": incoming, "source_velocity": incoming, "other_velocity": victim_velocity, "contact": point, "normal": normal,
+		"closing_speed": maxf(0.0, -(incoming - victim_velocity).dot(normal)),
+		"knockback": -normal * charge_attack_knockback})
+	return true # even a gated/repeated attack contact must not also count as impact

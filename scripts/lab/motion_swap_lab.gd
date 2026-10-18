@@ -7,7 +7,7 @@ class_name NLBMotionSwapLab
 ##   C  human projectile    Iven launch, normal target, cannon and crash wall
 ##   D  projectile to Iven  leftward cannon, two belts and a lift
 ##   E  plate & gate        LIFT + BELT + crate: make the plate open the gate
-##   F  mixed encounter     everything at once, ending at the finish line
+##   F  action arena        two gunners, one charger, two crates and cover
 ##
 ## Design rules the lab itself obeys:
 ##   * Ground is continuous and every gap is jumpable (jump h = 128 px, air
@@ -746,23 +746,41 @@ func _build_zone_e(world: Node2D) -> void:
 # ------------------------------------------------------------------ zone F
 
 func _build_zone_f(world: Node2D) -> void:
-	var z := _zone_node(world, "F", "MIXED ENCOUNTER", 6400.0, 7840.0)
+	var z := _zone_node(world, "F", "ACTION ARENA", 6400.0, 7840.0)
 	_solid(z, "Ground", Rect2(6400, FLOOR_Y, 1440, 120))
-	_solid(z, "Perch", Rect2(6700, 420, 200, 16), ROCK_FILL)
+	_solid(z, "LeftPerch", Rect2(6640, 480, 120, 16), ROCK_FILL)
+	_solid(z, "RightPerch", Rect2(7540, 480, 120, 16), ROCK_FILL)
+	# Jumpable cover stops a committed charge and catches shots/physical throws.
+	_solid(z, "ImpactCover", Rect2(7330, 516, 32, 84), ROCK_FILL)
 	_solid(z, "RightWall", Rect2(7800, -240, 40, 960), ROCK_FILL)
-	_hazard(z, Rect2(7300, FLOOR_Y - 12, 120, 12))
-	_conveyor(z, 7560.0, -100.0, 200.0, "F")
-	_zone_card(z, Vector2(6450, 330), "ZONE F · MIXED ENCOUNTER", [
-		"Everything at once: the turret aims, the patrol walks, the charger commits,",
-		"the belt runs against you. Swap, dodge, and reach the far wall.",
+	_zone_card(z, Vector2(6510, 280), "ZONE F · ACTION ARENA", [
+		"2 GUNNERS / 1 CHARGER / 2 CRATES · 1: reset · F7: return here",
+		"Red aim locks before firing. Orange arrow commits the charge.",
+		"Move off the locked line; E slows time. Swap a shot into a body or crate.",
+		"Jump the low cover or use it to stop a charge. Shift: short ground / air roll.",
 	])
-	_checkpoint(z, 6450, "ZONE F", Vector2(6500, 599))
-	_enemy(GUNNER_SCENE, z, Vector2(6790, 419), "GUNNER F")
-	_enemy(PATROL_SCENE, z, Vector2(7000, 599), "PATROL F", func(e: LabEnemy) -> void:
-		(e as LabPatrolEnemy).configure_patrol(6880.0, 7150.0))
-	_enemy(CHARGER_SCENE, z, Vector2(7520, 599), "CHARGER F")
-	_crate(z, Vector2(6600, 580))
-	_crate(z, Vector2(7420, 580))
+	_checkpoint(z, 6450, "ZONE F", ZONE_SPAWNS[5])
+	# Stagger the two existing telegraph cycles. Reset and respawn reapply these
+	# authored values, so the opening is reproducible, with time to read and move.
+	# Inner edges keep each downward-facing muzzle clear of its own perch.
+	_enemy(GUNNER_SCENE, z, Vector2(6750, 479), "GUNNER F LEFT", func(e: LabEnemy) -> void:
+		var g := e as LabGunnerEnemy
+		g.fire_cycle = 1.6
+		g.aim_time = 0.75
+		g.muzzle.position.x = 30.0
+		var barrel := g.get_node("Body/Barrel") as ColorRect
+		barrel.offset_left = 21.0
+		barrel.offset_right = 55.0
+		g._reset_ai())
+	_enemy(GUNNER_SCENE, z, Vector2(7555, 479), "GUNNER F RIGHT", func(e: LabEnemy) -> void:
+		var g := e as LabGunnerEnemy
+		g.fire_cycle = 2.4
+		g.aim_time = 0.8
+		g._reset_ai())
+	_enemy(CHARGER_SCENE, z, Vector2(7540, 599), "CHARGER F", func(e: LabEnemy) -> void:
+		(e as LabChargerEnemy).windup_time = 0.65)
+	_crate(z, Vector2(6860, 580))
+	_crate(z, Vector2(7720, 580))
 	var finish := Area2D.new()
 	finish.name = "FinishLine"
 	finish.position = Vector2(7774, FLOOR_Y - 150)

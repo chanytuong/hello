@@ -166,12 +166,19 @@ func _case(scenario: int, direction: int) -> void:
 		_check("JUMP" in states and part.any(func(r): return r.vy > 0.0 and not r.floor), "ledge fall uses airborne visual")
 	if scenario in [4, 5, 8]:
 		_check("DODGE_ROLL" in states, "processed roll plays")
-		_check(states[-1] == ("RUN" if scenario == 4 else "IDLE"), "roll exits using current input")
+		# Check the actual transition; a longer replay can later reach a wall,
+		# especially when headless catch-up advances several ticks per sample.
+		var exit_state := ""
+		for k in range(1, part.size()):
+			if part[k-1].state == "DODGE_ROLL" and part[k].state != "DODGE_ROLL":
+				exit_state = part[k].state
+				break
+		_check(exit_state == ("RUN" if scenario == 4 else "IDLE"), "roll exits using current input")
 		_check(part.filter(func(r): return r.state == "DODGE_ROLL").any(func(r): return r.frame == 20), "roll reaches last source drawing")
 	if scenario == 5:
 		var roll_rows := part.filter(func(r): return r.state == "DODGE_ROLL")
-		var travel: float = absf(roll_rows[-1].x - roll_rows[0].x) + 280.0/60.0
-		_check(absf(travel - 196.0) < 5.0, "single physics trajectory approximately 196 px")
+		var travel: float = absf(roll_rows[-1].x - roll_rows[0].x) + player.roll_speed/60.0
+		_check(travel >= 95.0 and travel <= 105.0, "single final-roll trajectory stays within 95–105 px")
 		for k in range(1, part.size()):
 			if part[k-1].state == "DODGE_ROLL" and part[k].state != "DODGE_ROLL":
 				_check(part[k].state == "IDLE", "no forced run flash at idle roll exit")

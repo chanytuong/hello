@@ -20,7 +20,8 @@ enum MoveState { NORMAL, DASH }
 ## original dash/visual behavior; both paths share the same run/jump physics.
 @export_group("Movement prototype")
 @export var movement_preview: bool = false
-@export var roll_duration: float = 0.7
+@export var roll_duration: float = 0.29
+@export var roll_speed: float = 333.3333333 # 100 px across 18 active ticks at 60 Hz
 var roll_remaining: float = 0.0
 var roll_direction: int = 1
 var movement_visual: Node2D
@@ -50,6 +51,7 @@ func enable_motion_swap() -> void:
 		return
 	motion_swap_enabled = true
 	collision_mask |= 4 | 256 | 512
+	platform_floor_layers &= ~4 # enemy detection/contact cannot carry Iven as a platform
 	swap_target = NLBMotionSwapTarget.new()
 	swap_target.name = "SwapTarget"
 	swap_target.anchor_offset = Vector2(0, -30)
@@ -86,7 +88,7 @@ func motion_overdrive_changed() -> void:
 	if swap_override_t > 0.0:
 		living_projectile = velocity.length() >= living_projectile_threshold
 
-func receive_motion_impact(speed: float, normal: Vector2, other: Object, incoming: Vector2) -> void:
+func receive_motion_impact(speed: float, normal: Vector2, other: Object, incoming: Vector2, context: Dictionary = {}) -> void:
 	if swap_target != null:
 		swap_target.clear_overdrive()
 	if living_projectile and speed >= living_projectile_threshold:
@@ -100,11 +102,22 @@ func receive_motion_impact(speed: float, normal: Vector2, other: Object, incomin
 		living_projectile = false
 	elif other is RigidBody2D and speed >= crate_impact_damage_speed:
 		motion_stun_t = maxf(motion_stun_t, 0.16)
-		health.damage(1) # a death/reset signal clears the stun too
+		var info := context.duplicate()
+		info.merge({"kind": "impact", "source": str(other.get_path()), "velocity": incoming,
+			"normal": normal, "closing_speed": speed}, true)
+		health.damage(1, info)
 
 func _motion_forced_physics(delta: float) -> bool:
 	if swap_override_t <= 0.0 and motion_stun_t <= 0.0:
 		living_projectile = false
+		return false
+	# Hand the SAME update to normal movement; do not consume a new action and
+	# then return before it can execute. Wall self-stun remains a commitment.
+	if motion_stun_t <= 0.0 and swap_override_t < swap_launch_duration - 0.10 and (Input.is_action_just_pressed("dash") or Input.is_action_just_pressed("jump")):
+		swap_override_t = 0.0
+		living_projectile = false
+		if swap_target != null:
+			swap_target.clear_overdrive()
 		return false
 	var old_velocity := velocity
 	_tick_timers(delta)
@@ -117,10 +130,6 @@ func _motion_forced_physics(delta: float) -> bool:
 	else:
 		swap_override_t = maxf(swap_override_t - delta, 0.0)
 		velocity.x = move_toward(velocity.x, 0.0, swap_launch_drag * delta)
-		# Dodge/jump are deliberate early recovery after the short initial launch.
-		if swap_override_t < swap_launch_duration - 0.10 and (Input.is_action_just_pressed("dash") or Input.is_action_just_pressed("jump")):
-			swap_override_t = 0.0
-			living_projectile = false
 	if carry_motion != Vector2.ZERO:
 		move_and_collide(carry_motion)
 		carry_motion = Vector2.ZERO
@@ -407,26 +416,29 @@ func _movement_physics(delta: float) -> void:
 	_movement_jumped = false
 	_tr_was_floor = was_floor
 	var dir := Input.get_axis("move_left", "move_right")
-	if dir != 0.0 and roll_remaining <= 0.0:
+	if dir != 0.0:
 		facing = 1 if dir > 0.0 else -1
 	# Reuse existing input buffer/coyote/cut/gravity/acceleration/reversal.
 	_update_jump(delta, dir)
 	roll_remaining = maxf(0.0, roll_remaining - delta)
-	if was_rolling and roll_remaining <= 0.0 and not _movement_jumped and dir == 0.0:
-		velocity.x = 0.0 # finish an idle-origin roll in idle, without a run flash
-	if Input.is_action_just_pressed("dash"):
-		_dash_buf = dash_buffer
+	if was_rolling and roll_remaining <= 0.0 and not _movement_jumped:
+		velocity.x = dir * run_speed # resume intended RUN / IDLE speed without overshoot or recovery
+	var fresh_roll := Input.is_action_just_pressed("dash")
+	var fresh_direction := dir != 0.0 and (dir != _previous_input or Input.is_action_just_pressed("move_left") or Input.is_action_just_pressed("move_right"))
+	var released_direction := dir == 0.0 and _previous_input != 0.0
+	if was_rolling and (fresh_direction or released_direction) and not fresh_roll:
+		roll_remaining = 0.0
+		velocity.x = dir * run_speed # immediate intentional reversal, no residual roll drive
 	if _movement_jumped:
 		_dash_buf = 0.0 # simultaneous jump wins; never queue a surprise roll
-	elif _dash_buf > 0.0 and _dash_cd <= 0.0 and roll_remaining <= 0.0 and was_floor:
+	elif fresh_roll:
 		roll_direction = facing if dir == 0.0 else (1 if dir > 0.0 else -1)
 		facing = roll_direction
 		roll_remaining = roll_duration
-		_dash_cd = dash_cooldown
 		_dash_buf = 0.0
 		dashed.emit() # existing movement notification; no immunity or attack
 	if roll_remaining > 0.0:
-		velocity.x = float(roll_direction) * run_speed
+		velocity.x = float(roll_direction) * roll_speed # assignment, never accumulated impulses
 		facing = roll_direction
 	# Carrier step FIRST, through the same collision solver: a belt can never
 	# push Iven through a wall, and being carried stays separate from `velocity`
@@ -434,12 +446,11 @@ func _movement_physics(delta: float) -> void:
 	if carry_motion != Vector2.ZERO:
 		move_and_collide(carry_motion)
 		carry_motion = Vector2.ZERO
+	var incoming := velocity
 	move_and_slide()
-	if not is_on_floor():
-		roll_remaining = 0.0 # a ground roll cannot hang over a ledge
 	if motion_swap_enabled:
-		NLBImpactResponse.solve_slides(self, before_velocity)
-	var released_at_speed := dir == 0.0 and _previous_input != 0.0 and absf(before_velocity.x) > 200.0
+		NLBImpactResponse.solve_slides(self, incoming)
+	var released_at_speed := not was_rolling and dir == 0.0 and _previous_input != 0.0 and absf(before_velocity.x) > 200.0
 	movement_visual.advance(delta, dir, released_at_speed, before_velocity)
 	_previous_input = dir
 
