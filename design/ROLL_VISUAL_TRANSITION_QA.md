@@ -1,5 +1,7 @@
 # Roll visual transition repair
 
+> Superseded presentation: [Dodge roll V2 QA](DODGE_ROLL_V2_REDESIGN_QA.md) creates a new compact native Action and phase-specific unfolds, with 0.35 s post-end/cancel cooldown. This report and its media preserve the previous candidate.
+
 2026-10-18 · Godot 4.7.2 stable · Windows / Compatibility / ANGLE.
 
 **Implemented as an animation-integration candidate; human visual approval remains pending.** Entry now uses existing authored bridge poses, return resumes the matched run stride, cancellation unfolds over at most two visual updates, and repeated roll presses no longer rewind the current tumble. Approved gameplay tuning is unchanged. No M1/M2, combat, VFX or map work was added.

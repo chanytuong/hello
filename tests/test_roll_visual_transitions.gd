@@ -171,13 +171,13 @@ func verify_results() -> void:
 			check(row.roll > 0.0 and absf(row.velocity[0]) > 333.0 and row.clip.begins_with("ROLL_IN_"), event.case + ": movement starts immediately with an existing entry pose")
 		elif event.kind == "cancel":
 			check(row.roll == 0.0 and row.state != "DODGE_ROLL", event.case + ": gameplay and logical visual state cancel immediately")
-			var settled: Dictionary = rows[event.index + 2]
-			check(str(settled.clip).begins_with(row.state + "_"), event.case + ": target drawing reached within two visual updates")
+			var settled: Dictionary = rows[event.index + 3]
+			check(str(settled.clip).begins_with(row.state + "_"), event.case + ": target drawing reached within three visual updates")
 		elif event.kind == "repeat":
 			var previous: Dictionary = rows[event.index - 1]
-			check(row.roll > previous.roll and row.clip == "DODGE_ROLL_right" and row.drawing > previous.drawing,
-				event.case + ": fresh roll input does not rewind the tumble")
+			check(row.roll < previous.roll and row.clip == "DODGE_ROLL_right" and row.drawing > previous.drawing,
+				event.case + ": unavailable roll input does not extend or rewind the tumble")
 		elif event.kind == "natural_exit":
 			check(row.state == "RUN" and row.velocity[0] * row.facing == player.run_speed, event.case + ": no gameplay recovery")
-			check(rows[event.index + 2].clip.begins_with("RUN_") and rows[event.index + 2].drawing >= 13,
+			check(rows[event.index + 3].clip.begins_with("RUN_") and rows[event.index + 3].drawing >= 13,
 				event.case + ": return uses the matching existing run stride")

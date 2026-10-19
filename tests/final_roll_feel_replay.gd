@@ -88,7 +88,10 @@ func _run() -> void:
 	Input.action_press("jump")
 	await observe(1)
 	metrics.jump_cancel = sample()
-	await observe(5)
+	# A jump-cancelled roll now has a real cooldown. Keep ordinary jump physics
+	# running until readiness before testing the separate valid air-roll case.
+	while not player.can_movement_roll():
+		await observe(1)
 	set_phase("JUMP > AIR ROLL > AIR CONTROL")
 	var vy := player.velocity.y
 	var budget := player._air_dashes
@@ -128,8 +131,8 @@ func _run() -> void:
 		check(metrics.jump_cancel.roll == 0.0 and metrics.jump_cancel.vy < -600.0 and metrics.jump_cancel.state == "JUMP", "valid jump immediately cancels roll")
 		check(metrics.air_roll.roll > 0.0 and metrics.air_roll.state == "DODGE_ROLL" and metrics.air_roll.vy >= metrics.air_vy_before and metrics.air_budget_before == metrics.air_budget_after, "air roll preserves gravity and jump budget")
 		check(metrics.air_cancel.roll == 0.0 and metrics.air_cancel.vx == -player.run_speed and metrics.air_cancel.state == "JUMP", "air control and pose resume immediately")
-		check(starts[0] == 5 and peak <= player.roll_speed + 0.01, "five repeated rolls never stack velocity")
-		check(frames[-1] == 20, "roll reaches final source drawing before immediate exit")
+		check(starts[0] == 1 and peak <= player.roll_speed + 0.01, "five rapid presses cannot extend roll or stack velocity")
+		check(frames[-1] == 17, "roll reaches final V2 drawing before immediate exit")
 	FileAccess.open(output_dir() + "results.json", FileAccess.WRITE).store_string(JSON.stringify({"stage": stage, "metrics": metrics, "checks": checks, "failures": failures, "assertions": receipts, "samples": rows}, "\t"))
 	print("FINAL_ROLL_REPLAY: " + JSON.stringify({"stage": stage, "metrics": metrics, "checks": checks, "failures": failures}))
 	lab.queue_free()

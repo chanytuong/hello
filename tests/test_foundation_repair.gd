@@ -96,7 +96,7 @@ func test_roll_foundation() -> void:
 		await roll_press()
 		max_speed = maxf(max_speed, absf(player.velocity.x))
 		await step(2)
-	check(starts[0] == 5 and max_speed <= player.roll_speed + 0.01, "ROLL to ROLL is immediate and never stacks speed", {"starts": starts[0], "max_speed": max_speed})
+	check(starts[0] == 1 and max_speed <= player.roll_speed + 0.01, "rapid retries cannot extend roll or stack speed", {"starts": starts[0], "max_speed": max_speed})
 	await prepare(Vector2(3430, 599))
 	await roll_press()
 	await step(20)

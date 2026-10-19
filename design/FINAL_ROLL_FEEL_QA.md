@@ -1,5 +1,7 @@
 # Final roll feel tuning
 
+> Current roll prototype: [Dodge roll V2 QA](DODGE_ROLL_V2_REDESIGN_QA.md) retains the measured 100 px tuning and adds a 0.35 s post-end/cancel cooldown plus a new native Action. Unlimited repeats below are historical.
+
 > Subsequent visual repair: [Roll visual transition QA](ROLL_VISUAL_TRANSITION_QA.md) replaces the transition presentation described here. The approved 0.29 s / approximately 100 px controller tuning is preserved.
 
 2026-10-18 · `E:\neverlookback` · Godot 4.7.2 stable · Windows / Compatibility / ANGLE.

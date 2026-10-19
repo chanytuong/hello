@@ -1,5 +1,7 @@
 # Movement and combat foundation repair
 
+> Current roll prototype: [Dodge roll V2 QA](DODGE_ROLL_V2_REDESIGN_QA.md) supersedes roll repeat/readiness and presentation below. Damage, Motion Swap and collision rules remain the foundation baseline.
+
 > Later roll tuning: [Final roll feel QA](FINAL_ROLL_FEEL_QA.md) supersedes this report's 80 px / 0.24 s roll specification. Damage, Motion Swap and collision rules below remain the foundation baseline.
 
 2026-10-18 · `E:\neverlookback` · Godot 4.7.2 stable · Windows / Compatibility / ANGLE.

@@ -174,7 +174,7 @@ func _case(scenario: int, direction: int) -> void:
 				exit_state = part[k].state
 				break
 		_check(exit_state == ("RUN" if scenario == 4 else "IDLE"), "roll exits using current input")
-		_check(part.filter(func(r): return r.state == "DODGE_ROLL").any(func(r): return r.frame == 20), "roll reaches last source drawing")
+		_check(part.filter(func(r): return r.state == "DODGE_ROLL").any(func(r): return r.frame == 17), "roll reaches last V2 drawing")
 	if scenario == 5:
 		var roll_rows := part.filter(func(r): return r.state == "DODGE_ROLL")
 		var travel: float = absf(roll_rows[-1].x - roll_rows[0].x) + player.roll_speed/60.0

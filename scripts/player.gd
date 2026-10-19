@@ -22,9 +22,13 @@ enum MoveState { NORMAL, DASH }
 @export var movement_preview: bool = false
 @export var roll_duration: float = 0.29
 @export var roll_speed: float = 333.3333333 # 100 px across 18 active ticks at 60 Hz
+@export var roll_cooldown: float = 0.35 # starts on completion or cancellation
 var roll_remaining: float = 0.0
+var roll_cooldown_remaining: float = 0.0
 var roll_direction: int = 1
 var movement_visual: Node2D
+## Opt-in review driver; null in all existing movement/Motion Swap scenes.
+var movement_attack_preview: Node = null
 var _movement_jumped: bool = false
 var _previous_input: float = 0.0
 ## Carrier hook (movement mode only): a conveyor belt or moving platform writes
@@ -70,7 +74,7 @@ func motion_swap_apply(motion: Vector2, _duration: float) -> void:
 	swap_override_t = swap_launch_duration
 	motion_stun_t = 0.0
 	living_projectile = motion.length() >= living_projectile_threshold
-	roll_remaining = 0.0
+	_end_movement_roll()
 	move_state = MoveState.NORMAL
 	_dash_buf = 0.0
 	_jump_buf = 0.0
@@ -369,6 +373,9 @@ func is_attack_busy() -> bool:
 	return _atk_t >= 0.0
 
 func _physics_process(delta: float) -> void:
+	# One game-time physics authority, including tactical slow motion/forced motion.
+	if movement_preview:
+		roll_cooldown_remaining = maxf(0.0, roll_cooldown_remaining - delta)
 	if motion_swap_enabled and _motion_forced_physics(delta):
 		return
 	if movement_preview:
@@ -406,7 +413,16 @@ func _physics_process(delta: float) -> void:
 
 func _on_movement_jump() -> void:
 	_movement_jumped = true
+	_end_movement_roll()
+
+func can_movement_roll() -> bool:
+	return roll_remaining <= 0.0 and roll_cooldown_remaining <= 0.000001
+
+func _end_movement_roll() -> void:
+	if roll_remaining <= 0.0:
+		return
 	roll_remaining = 0.0
+	roll_cooldown_remaining = maxf(roll_cooldown_remaining, roll_cooldown)
 
 func _movement_physics(delta: float) -> void:
 	var before_velocity := velocity
@@ -416,22 +432,28 @@ func _movement_physics(delta: float) -> void:
 	_movement_jumped = false
 	_tr_was_floor = was_floor
 	var dir := Input.get_axis("move_left", "move_right")
+	if is_instance_valid(movement_attack_preview):
+		dir = movement_attack_preview.before_movement(delta, dir)
 	if dir != 0.0:
 		facing = 1 if dir > 0.0 else -1
 	# Reuse existing input buffer/coyote/cut/gravity/acceleration/reversal.
 	_update_jump(delta, dir)
-	roll_remaining = maxf(0.0, roll_remaining - delta)
+	if roll_remaining > 0.0:
+		if roll_remaining <= delta:
+			_end_movement_roll()
+		else:
+			roll_remaining -= delta
 	if was_rolling and roll_remaining <= 0.0 and not _movement_jumped:
 		velocity.x = dir * run_speed # resume intended RUN / IDLE speed without overshoot or recovery
 	var fresh_roll := Input.is_action_just_pressed("dash")
 	var fresh_direction := dir != 0.0 and (dir != _previous_input or Input.is_action_just_pressed("move_left") or Input.is_action_just_pressed("move_right"))
 	var released_direction := dir == 0.0 and _previous_input != 0.0
-	if was_rolling and (fresh_direction or released_direction) and not fresh_roll:
-		roll_remaining = 0.0
+	if roll_remaining > 0.0 and (fresh_direction or released_direction):
+		_end_movement_roll()
 		velocity.x = dir * run_speed # immediate intentional reversal, no residual roll drive
 	if _movement_jumped:
 		_dash_buf = 0.0 # simultaneous jump wins; never queue a surprise roll
-	elif fresh_roll:
+	elif fresh_roll and can_movement_roll():
 		roll_direction = facing if dir == 0.0 else (1 if dir > 0.0 else -1)
 		facing = roll_direction
 		roll_remaining = roll_duration
@@ -451,7 +473,11 @@ func _movement_physics(delta: float) -> void:
 	if motion_swap_enabled:
 		NLBImpactResponse.solve_slides(self, incoming)
 	var released_at_speed := not was_rolling and dir == 0.0 and _previous_input != 0.0 and absf(before_velocity.x) > 200.0
+	if is_instance_valid(movement_attack_preview) and movement_attack_preview.busy():
+		released_at_speed = false
 	movement_visual.advance(delta, dir, released_at_speed, before_velocity)
+	if is_instance_valid(movement_attack_preview):
+		movement_attack_preview.present()
 	_previous_input = dir
 
 func reset_movement(at: Vector2) -> void:
@@ -465,6 +491,7 @@ func reset_movement(at: Vector2) -> void:
 	if swap_target != null:
 		swap_target.clear_overdrive()
 	roll_remaining = 0.0
+	roll_cooldown_remaining = 0.0 # explicit room retry, not an action cancel
 	_dash_cd = 0.0
 	_dash_buf = 0.0
 	_jump_buf = 0.0
