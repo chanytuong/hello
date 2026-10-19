@@ -20,6 +20,7 @@ enum MoveState { NORMAL, DASH }
 ## original dash/visual behavior; both paths share the same run/jump physics.
 @export_group("Movement prototype")
 @export var movement_preview: bool = false
+@export var m1_combo_enabled: bool = false
 @export var roll_duration: float = 0.29
 @export var roll_speed: float = 333.3333333 # 100 px across 18 active ticks at 60 Hz
 @export var roll_cooldown: float = 0.35 # starts on completion or cancellation
@@ -27,7 +28,7 @@ var roll_remaining: float = 0.0
 var roll_cooldown_remaining: float = 0.0
 var roll_direction: int = 1
 var movement_visual: Node2D
-## Opt-in review driver; null in all existing movement/Motion Swap scenes.
+## Optional attack driver; movement-only scenes leave this null.
 var movement_attack_preview: Node = null
 var _movement_jumped: bool = false
 var _previous_input: float = 0.0
@@ -70,6 +71,8 @@ func is_swap_selectable() -> bool:
 	return health != null and health.hp > 0 and not is_queued_for_deletion()
 
 func motion_swap_apply(motion: Vector2, _duration: float) -> void:
+	if is_instance_valid(movement_attack_preview) and movement_attack_preview.has_method("cancel_for"):
+		movement_attack_preview.cancel_for("motion_swap")
 	velocity = motion
 	swap_override_t = swap_launch_duration
 	motion_stun_t = 0.0
@@ -338,6 +341,10 @@ func _ready() -> void:
 		movement_visual.name = "IvenVisual"
 		add_child(movement_visual)
 		jumped.connect(_on_movement_jump)
+		if m1_combo_enabled:
+			var combo := preload("res://scripts/combat/m1_combo.gd").new()
+			combo.name = "M1Combo"
+			add_child(combo)
 	else:
 		_setup_sprite()
 
@@ -362,6 +369,8 @@ func clear_jump_intent() -> void:
 	_jump_buf = 0.0
 
 func _on_damaged(_cur: int, _maximum: int) -> void:
+	if is_instance_valid(movement_attack_preview) and movement_attack_preview.has_method("cancel_for"):
+		movement_attack_preview.cancel_for("damage")
 	_hurt_t = 0.12
 	_tr_dmg = true
 	_tr_log("DAMAGE_RECEIVED", {"hp": _cur, "vy": velocity.y, "grounded": is_on_floor()})
@@ -370,6 +379,8 @@ func total_attack_time() -> float:
 	return attack_startup + attack_active + attack_recovery
 
 func is_attack_busy() -> bool:
+	if is_instance_valid(movement_attack_preview):
+		return movement_attack_preview.busy()
 	return _atk_t >= 0.0
 
 func _physics_process(delta: float) -> void:
@@ -377,6 +388,8 @@ func _physics_process(delta: float) -> void:
 	if movement_preview:
 		roll_cooldown_remaining = maxf(0.0, roll_cooldown_remaining - delta)
 	if motion_swap_enabled and _motion_forced_physics(delta):
+		if is_instance_valid(movement_attack_preview) and movement_attack_preview.has_method("cancel_for"):
+			movement_attack_preview.cancel_for("forced_motion")
 		return
 	if movement_preview:
 		_movement_physics(delta)
@@ -481,6 +494,8 @@ func _movement_physics(delta: float) -> void:
 	_previous_input = dir
 
 func reset_movement(at: Vector2) -> void:
+	if is_instance_valid(movement_attack_preview):
+		movement_attack_preview.reset()
 	# Test-room reset; no gameplay teleport or physics change.
 	global_position = at
 	velocity = Vector2.ZERO

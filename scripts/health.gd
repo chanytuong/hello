@@ -13,6 +13,9 @@ static var damage_records: Array[Dictionary] = []
 
 @export var max_hp: int = 3
 @export var iframes: float = 0.5
+## Short melee immunity permits distinct combo strikes; same-strike dedup stays
+## in the existing HitBox's Health guard. Other damage keeps its original rule.
+@export var melee_iframes: float = 0.06
 
 var hp: int = -1  # -1 = unprimed; primed lazily (see _ensure)
 var _primed: bool = false
@@ -45,7 +48,7 @@ func damage(amount: int, context: Dictionary = {}) -> bool:
 	if hp <= 0:
 		died.emit()
 	else:
-		_invuln = iframes
+		_invuln = minf(iframes,melee_iframes) if context.get("kind","")=="m1" else iframes
 		changed.emit(hp, max_hp)
 	return true
 

@@ -1,0 +1,28 @@
+{
+  "mcp": {
+	"timeout": {
+	  "startup": 120000,
+	  "catalog": 60000
+	},
+	"servers": {
+	  "excalidraw": {
+		"type": "local",
+		"command": [
+		  "npx",
+		  "-y",
+          "mcp-excalidraw-server"
+		]
+	  },
+	  "pixelorama": {
+		"type": "local",
+		"command": [
+		  "node",
+		  "E:/neverlookback/tools/pixelorama-mcp/mcp-server/dist/index.js"
+		],
+		"environment": {
+		  "PIX_MCP_BRIDGE_URL": "http://127.0.0.1:7373"
+		}
+	  }
+	}
+  }
+}

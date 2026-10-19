@@ -35,6 +35,7 @@ var _kb: Vector2 = Vector2.ZERO
 var _flash_t: float = 0.0
 var _stagger_t: float = 0.0
 var _alive: bool = true
+var _combat_hitstop_left := 0.0
 var _indicator: Line2D
 var _touch_box: NLBHitBox = null
 
@@ -50,6 +51,7 @@ func _ready() -> void:
 	if not spawned:
 		spawn_position = global_position
 	if body_vis != null:
+		body_vis.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		body_vis.pivot_offset = body_vis.size * 0.5
 	if health != null:
 		health.max_hp = hp
@@ -114,6 +116,10 @@ func retire() -> void:
 
 func _physics_process(delta: float) -> void:
 	if not _alive:
+		return
+	if _combat_hitstop_left>0.000001:
+		_combat_hitstop_left=maxf(0.0,_combat_hitstop_left-delta)
+		_update_body_visual()
 		return
 	_flash_t = maxf(_flash_t - delta, 0.0)
 	_stagger_t = maxf(_stagger_t - delta, 0.0)
@@ -220,6 +226,9 @@ func apply_knockback(kb: Vector2) -> void:
 	if swap_override_t <= 0.0:
 		_flash_t = 0.05
 
+func apply_combat_hitstop(seconds: float) -> void:
+	_combat_hitstop_left=maxf(_combat_hitstop_left,seconds)
+
 func _on_damaged(_cur: int, _maximum: int) -> void:
 	_flash_t = 0.06
 
@@ -276,6 +285,7 @@ func _update_indicator() -> void:
 # ------------------------------------------------------------- reset (lab API)
 
 func reset_state() -> void:
+	_combat_hitstop_left=0.0
 	if not is_instance_valid(self):
 		return
 	global_position = spawn_position

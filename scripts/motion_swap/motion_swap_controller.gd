@@ -60,6 +60,7 @@ var _fx: Array = []          # {pos: Vector2, t: float, ok: bool}
 const FX_TIME := 0.35
 
 func _ready() -> void:
+	add_to_group("motion_swap_controller")
 	z_index = 5  # indicators must read over bodies, under the HUD
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
