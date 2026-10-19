@@ -1,0 +1,16 @@
+# Iven pixel style rules — draft, not production approved
+
+2026-10-19. Applies to the [isolated visual benchmark](../artifacts/iven_pixel_optimized_redesign/README.md). Human visual review is required before using these rules for conversion.
+
+1. **Identity:** retain Iven's coat/hood mass, diagonal linen/sash, loose trousers, bracers, gloves and substantial boots. Keep his existing proportions and 2D crimson flame. Simplify wear, seams and hardware before removing identity landmarks.
+2. **Source first:** prefer an editable rest-space modifier, broad material region or lighting correction that improves every frame. Original mesh, weights, Armature, head mask, materials and all Actions remain preserved. No Decimate, remesh, reweight or bone edit in this pass.
+3. **Camera and size:** use the exact saved RESEARCH_Y75_P00 matrix and orthographic scale2.2200000286. Body cells remain82×82 with fixed pivot[40.499926203,75.579576591]. Render both actual model facings. Never refit a troublesome pose or substitute a side camera.
+4. **Color hierarchy:** cool blue-gray coat; darker trousers; charcoal-blue boots; neutral linen/bracers; quiet violet-gray gloves; small desaturated belt accents. Flame remains the saturated warm focus. Preserve internal value separation; avoid an all-dark body.
+5. **Shading:** broad three-band material ramps under one stable directional key. No texture micro-wear, normal-map relief, moving specular, AO speckle, bloom or dither in the experimental source render. Do not infer beauty from the resulting21-color count.
+6. **Native edges:** AA off, transparent binary alpha, no blur, nearest integer enlargement. Preserve deliberate stair steps and limb gaps. Do not add one black contour around everything; it can close the fist/torso and leg gaps at this size.
+7. **Clusters:** consolidate isolated hardware glints and material-label flecks while keeping pose information. Preserve knuckles, useful knee planes, boot soles and broad sash accents. Inspect native size before deciding a one-pixel detail is noise.
+8. **Pixelorama:** keep OLD and NEW3D references in separate hidden layers. Put local corrections in the editable final layer; log exact coordinates and reasons. Do not invent a filter/API, quantize blindly or repaint a different silhouette in every frame. The current ten held-pose refinements are samples, not a completed repaint of the movement library.
+9. **Temporal review:** inspect the complete unchanged18-frame RUN at30fps, its endpoint, both directions and slow playback. Keep the palette, light, density, camera and pivot constant. Expected motion-related pixel changes are not automatically flicker; watch for isolated light toggles and changing material identity.
+10. **Composition:** derive neck placement and axis from the evaluated existing pose. Reuse the existing flame atlas, shader and controller. Any common review padding is outside the unchanged body cell and applies equally to all comparison conditions.
+
+Review order: silhouette → material masses → native body/flame hierarchy → motion → small pixel corrections. A larger sheet is a diagnostic aid; native gameplay scale remains the acceptance view. No active Godot sprite or gameplay controller is replaced by this draft.

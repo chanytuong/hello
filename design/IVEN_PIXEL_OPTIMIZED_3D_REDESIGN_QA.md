@@ -1,0 +1,44 @@
+# Iven pixel-optimized visual redesign — human review required
+
+2026-10-19 · Asia/Saigon · isolated benchmark, **not production approved**
+
+The new source variant replaces noisy texture/cavity/specular detail with broad cool material regions, controlled three-band shading and gentle costume smoothing. The existing crimson flame remains the warm focus. Actual Blender renders, Pixelorama cels and an isolated Godot comparison are delivered. **No active sprite, rig, movement/combat controller or approved Action is replaced.**
+
+Start with [the native comparison](../artifacts/iven_pixel_optimized_redesign/ABC_NATIVE.png), [right4× dark](../artifacts/iven_pixel_optimized_redesign/ABC_RIGHT_DARK_4X.png), [left4× medium](../artifacts/iven_pixel_optimized_redesign/ABC_LEFT_MEDIUM_4X.png), [palette studies](../artifacts/iven_pixel_optimized_redesign/THREE_BODY_PALETTES.png) and [RUN comparison video](../artifacts/iven_pixel_optimized_redesign/RUN_CYCLE_COMPARISON.mp4). The [package README](../artifacts/iven_pixel_optimized_redesign/README.md) links the editable Blender/PXO files, complete Godot preview, native GIF, slow footage and evidence.
+
+Preparation: checkpoint **ab40bfa**, relevant local character/pixel-art/Blender/Godot skills read, no applicable AGENTS.md found. [Research and actual installed workflow](../artifacts/iven_pixel_optimized_redesign/RESEARCH_AND_PIPELINE.md) records primary sources, inspected reference images and the BlenderToPixels template audit. The archive contains a .blend compositor template, not an addon. This pass retains the established native export/camera contract and uses a source-level Eevee material experiment; it does not import that template's different camera,128px resolution, fog or dithering.
+
+| Condition | Actual content |
+|---|---|
+| A — OLD | Fresh render from the current original M1 library, original production geometry/materials, Workbench settings. No rejected old pose substituted. |
+| B — NEW3D | Separate render-only mesh copy; fixed material regions, three-band shader, controlled directional key, output dithering off; no image quantization. |
+| C — FINAL study | B plus31 specific Pixelorama corrections across the ten held poses. Alpha unchanged. Moving RUN cels remain B; they are not represented as fully hand-polished frames. |
+
+The controlled poses are IDLE=`IVEN_RUN_SKID_STOP`f13, RUN extreme=`RUN_COMPULSIVE_PURSUIT`f1, JUMP=`JUMP_AIR`f1, compact ROLL=`IVEN_DODGE_ROLL_V2`f8, M1 contact=`IVEN_M1_1`f2.2. Both real model facings are rendered. A/B/C share each exact pose, saved camera, framing and scale. Native82×82 body cells and pivot[40.499926203,75.579576591] are retained. A common96×112 review canvas accommodates the unchanged flame without changing the body camera or density.
+
+Geometry change: the original single costume mesh offers no safely removable independent decorative objects. It is retained. The new visual copy adds one **non-applied Smooth modifier**, factor.6 /12 iterations, before Armature; its49,911-vertex mask excludes dominant hand/finger, foot/toe, neck/head regions and the lowest geometry. No Decimate, remesh, retopology, new bones, weights, constraints, shape keys or anatomy enlargement. Stored rest coordinates/topology/UVs are exact copies; evaluated costume form intentionally changes. Across24 full-mesh samples, maximum intended change is13.4456mm, p99 at most7.1535mm—about half a native pixel at the maximum. Protected rigid foot/toe vertices differ by0.0mm.
+
+Materials: seven stable rest-space regions—coat, linen, trousers, boots, gloves, bracers, belt—replace micro-wear and seam color noise. Original materials and packed maps remain in the file. Normal/specular relief, AO, bloom, per-frame palette adaptation and output dither are absent from B. The default is Slate / Linen; Smoke / Steel and Dust / Teal are retained as alternatives. [Palette rationale](IVEN_FLAME_BODY_PALETTE_STUDY.md), [draft source/pixel rules](IVEN_PIXEL_STYLE_RULES_DRAFT.md). Automatic UV/anatomy region classification is a starting mask, not a claim of artist-perfect boundaries.
+
+| Gate | Result / practical limit |
+|---|---|
+| Rig / original library | **PASS:**101 original bones, hierarchy/rest/orientations, constraints, root/object transforms, original meshes, UVs, all original vertex groups/weights, modifiers and packed maps match. All15 Action curve hashes exact; zero new Actions. One additional render-only smoothing group must not be included in bone-weight normalization. |
+| Camera | **PASS:** actual RESEARCH_Y75_P00 matrix has maximum element error0.0; orthographic scale2.2200000286. No Euler approximation, refit or camera research. |
+| Saved native reproducibility | **PASS:** fresh Blender3.6.23 reopening reproduces all five right-facing B PNGs exactly,0 changed pixels. A tiny mesh-transform decomposition drift discovered during checking was corrected by restoring original stored transform channels before delivery. |
+| Five-pose deformation | Finite full mesh, preserved skin and no obvious new joint tear in inspected images. Small costume softening changes the silhouette by5–10 pixels in the held poses. No mathematical all-surface collision-free claim; inherited coat/sash limits remain. |
+| Silhouette / identity | Coat/hood, sash, loose trousers and boots remain recognizable in the comparison. Across48 samples the largest A/B alpha difference is18 pixels; minimum silhouette IoU.98265. These are comparison controls, not proof of artistic acceptance. |
+| Palette / pixel edges | B uses the declared21 colors and binary alpha in every sample. The flame uses its actual five-color atlas unchanged. Perceived body/flame harmony still needs human review. |
+| RUN temporal test |18 unique frames /0.60s /30fps per direction, plus repeat endpoint. B endpoint PNGs are byte-identical. The inherited geometric endpoint error is0.0008225mm in both original and variant. Some tiny band/edge toggles remain at4×; no claim that all pixel flicker is solved. |
+| Pixelorama | **PASS as an editable refinement proof:** real1.2.3 / API9 / native PXO save/reopen/export,48 cels,3 layers. All48 reopened exports exact.31 local edits, zero alpha edits; no blind quantizer or invented CLI. |
+| Godot / attachment | Actual standalone Godot4.7.2 capture; same native scale, nearest filtering, original pivot and existing flame script/shader/atlas copied byte-for-byte. All48 approved attachment records reused exactly. Movement keeps its existing upright flame angles; roll/M1 use their existing angles. Raw bone neck measurements differ by at most0.000011px from approved data and round identically. |
+| Production readiness | **PENDING HUMAN VISUAL APPROVAL.** No active conversion or gameplay integration. |
+
+Actual outputs were opened: native A/B/C board, large comparisons against both backgrounds, palette board, Pixelorama B/C inspection, full-size contact/roll details, decoded normal and slow video boards, and all36 decoded native GIF frames. This is image/frame examination, not a claim of manually watching every encoded video frame or conducting a gameplay performance benchmark. All three delivered MP4 files pass full FFmpeg decode. Godot used ANGLE after the Intel driver warning; its capture-complete receipt records576 fixed60Hz logical frames /288 captured30fps frames. Main gameplay tests were not rerun because existing runtime files are unchanged.
+
+Manual refinement is intentionally bounded: right IDLE/RUN/JUMP/ROLL/M1 need3/2/3/3/3 executed pixel operations; left need4/3/2/4/4. All moving RUN cels need0 executed edits in this benchmark. [Exact coordinates, before/after RGBA and reasons](../artifacts/iven_pixel_optimized_redesign/PIXELORAMA_MANUAL_EDITS.json), [editor workflow and remaining source work](../artifacts/iven_pixel_optimized_redesign/PIXELORAMA_WORKFLOW.md). The held RUN polish is not inserted into the moving loop.
+
+Remaining issues for review: the glove and bracer values are still close in the extended punch; compact JUMP inherits limb overlap; knee/boot bands can change by a few pixels in RUN; small belt/sash material-label flecks remain; the original costume's intersections are not repaired. The next smallest source iteration would strengthen glove/bracer separation and hand-review fixed material boundaries, then rerender. Do not commit to repainting every frame or alter Actions to conceal these limitations.
+
+[Preservation receipt](../artifacts/iven_pixel_optimized_redesign/PROTECTED_VERIFICATION.json): **7,768 protected files,0 changed,0 missing**, including original libraries, existing flame assets, active art, controllers and earlier work. The isolated artifact directory is .gdignore-protected from main-project import. No new M1/M2, combat mechanics, physics, head design, camera, map or mass conversion.
+
+**STOP. Please review the Slate / Linen body, the alternative palettes and the native RUN test before approving any production conversion.**
