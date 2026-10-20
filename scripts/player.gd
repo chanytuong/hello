@@ -22,6 +22,7 @@ enum MoveState { NORMAL, DASH }
 @export var movement_preview: bool = false
 @export var m1_combo_enabled: bool = false
 @export var m1_rebuild_enabled: bool = false
+@export var m1_natural_enabled: bool = false
 @export var roll_duration: float = 0.29
 @export var roll_speed: float = 333.3333333 # 100 px across 18 active ticks at 60 Hz
 @export var roll_cooldown: float = 0.35 # starts on completion or cancellation
@@ -342,8 +343,8 @@ func _ready() -> void:
 		movement_visual.name = "IvenVisual"
 		add_child(movement_visual)
 		jumped.connect(_on_movement_jump)
-		if m1_combo_enabled or m1_rebuild_enabled:
-			var combo := (preload("res://scripts/combat/m1_rebuild.gd").new() if m1_rebuild_enabled else preload("res://scripts/combat/m1_combo.gd").new())
+		if m1_combo_enabled or m1_rebuild_enabled or m1_natural_enabled:
+			var combo := (preload("res://scripts/combat/m1_natural_combo.gd").new() if m1_natural_enabled else (preload("res://scripts/combat/m1_rebuild.gd").new() if m1_rebuild_enabled else preload("res://scripts/combat/m1_combo.gd").new()))
 			combo.name = "M1Combo"
 			add_child(combo)
 	else:
