@@ -21,6 +21,7 @@ enum MoveState { NORMAL, DASH }
 @export_group("Movement prototype")
 @export var movement_preview: bool = false
 @export var m1_combo_enabled: bool = false
+@export var m1_rebuild_enabled: bool = false
 @export var roll_duration: float = 0.29
 @export var roll_speed: float = 333.3333333 # 100 px across 18 active ticks at 60 Hz
 @export var roll_cooldown: float = 0.35 # starts on completion or cancellation
@@ -341,8 +342,8 @@ func _ready() -> void:
 		movement_visual.name = "IvenVisual"
 		add_child(movement_visual)
 		jumped.connect(_on_movement_jump)
-		if m1_combo_enabled:
-			var combo := preload("res://scripts/combat/m1_combo.gd").new()
+		if m1_combo_enabled or m1_rebuild_enabled:
+			var combo := (preload("res://scripts/combat/m1_rebuild.gd").new() if m1_rebuild_enabled else preload("res://scripts/combat/m1_combo.gd").new())
 			combo.name = "M1Combo"
 			add_child(combo)
 	else:
@@ -475,6 +476,8 @@ func _movement_physics(delta: float) -> void:
 	if roll_remaining > 0.0:
 		velocity.x = float(roll_direction) * roll_speed # assignment, never accumulated impulses
 		facing = roll_direction
+	if is_instance_valid(movement_attack_preview) and movement_attack_preview.has_method("apply_attack_motion"):
+		movement_attack_preview.apply_attack_motion(delta)
 	# Carrier step FIRST, through the same collision solver: a belt can never
 	# push Iven through a wall, and being carried stays separate from `velocity`
 	# (so friction/acceleration cannot silently eat a moving platform).
