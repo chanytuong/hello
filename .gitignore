@@ -20,3 +20,5 @@ __pycache__/
 *.fbx
 *.glb
 *.zip
+tools/video_research/bin/ffmpeg.exe
+tools/video_research/bin/ffprobe.exe
