@@ -1,0 +1,326 @@
+{
+  "schema_version": 1,
+  "project_root": "E:/neverlookback",
+  "execution_policy": "Exactly one phase per turn; save evidence and checkpoint, then stop.",
+  "last_completed_phase": "E",
+  "next_phase": "F",
+  "current_phase": "F",
+  "stopped_at_phase_boundary": false,
+  "phases": {
+    "A": {
+      "status": "complete",
+      "skills_count": 421,
+      "support_files_count": 67,
+      "source_of_truth": [
+        "skills_read.json",
+        "production_rulebook.md"
+      ],
+      "evidence": "support_read.json",
+      "missing_optional_support_files": 4
+    },
+    "B": {
+      "status": "complete",
+      "evidence": "project_runtime_audit.md",
+      "graphical_captures": 8,
+      "headless_suites": 7,
+      "passing_checks": 122,
+      "source_files_verified_unchanged": 45
+    },
+    "C": {
+      "status": "complete",
+      "task": "Audit reference sprite and animations; classify PASS / FIX / REPLACE against actual game needs.",
+      "evidence": [
+        "reference_sprite_audit.md",
+        "reference_animation_audit.md",
+        "reference_animation_audit.json",
+        "reference_file_metadata.json",
+        "phase_c_preservation_receipt.json"
+      ],
+      "reference_path": "E:\\neverlookback\\refs\\Bảng sprite nhân vật đầu lửa pixel art.png",
+      "reference_sha256": "fe48d42836313d2ec7b8191e943d7b49d85fb00dbd5baee11eb7e1af8980db9d",
+      "reference_dimensions": [
+        1536,
+        1024
+      ],
+      "matches_supplied_download": true,
+      "motion_effect_groups": 14,
+      "static_study_groups": 2,
+      "criteria_per_group": 21,
+      "motion_effect_verdicts": {
+        "PASS": 0,
+        "FIX": 6,
+        "REPLACE": 8
+      },
+      "all_group_verdicts": {
+        "PASS": 0,
+        "FIX": 7,
+        "REPLACE": 9
+      },
+      "visible_motion_effect_samples": 75,
+      "visible_all_samples": 85,
+      "unresolved_uncertainties": [
+        "Original native sprite pixel grid",
+        "Exact temporal ordering and whether studies are alternatives",
+        "Exposure/FPS/holds/loop seams",
+        "Registered roots and limb/grip identities",
+        "Creation provenance",
+        "Final runtime scale readability"
+      ]
+    },
+    "D": {
+      "status": "complete",
+      "task": "Focused external research and production synthesis against Phase B timing and Phase C findings.",
+      "evidence": [
+        "external_research.md",
+        "research_sources.json",
+        "research_synthesis.md",
+        "research_reference_mapping.json",
+        "movement_law_candidates.md",
+        "movement_law_candidates.json",
+        "research_source_views/inspection_manifest.json",
+        "phase_d_preservation_receipt.json"
+      ],
+      "research_sources_used": 24,
+      "source_categories": {
+        "firsthand_game_development": 8,
+        "artist_animation_teaching_text": 9,
+        "original_human_motion_papers": 4,
+        "original_pixel_animation_tutorials": 3
+      },
+      "all_requested_games_covered": true,
+      "reference_groups_mapped": 16,
+      "production_rule_categories": 12,
+      "candidate_count": 3,
+      "required_fields_per_candidate": 14,
+      "score_axes_per_candidate": 10,
+      "mandatory_score_minimum": 8,
+      "candidate_scores": {
+        "A": {
+          "name": "Reach, then catch up",
+          "total": 86,
+          "body_identity": 9,
+          "readability": 8,
+          "feasibility": 8,
+          "status": "retained_for_E"
+        },
+        "B": {
+          "name": "Brace, then drive",
+          "total": 86,
+          "body_identity": 8,
+          "readability": 9,
+          "feasibility": 9,
+          "status": "retained_for_E"
+        },
+        "C": {
+          "name": "Twist, then unwind",
+          "total": 80,
+          "body_identity": 9,
+          "readability": 7,
+          "feasibility": 7,
+          "status": "rejected"
+        }
+      },
+      "scores_provisional": true,
+      "final_body_law_selected": false,
+      "final_palette_selected": false,
+      "production_art_drawn": false,
+      "preservation": {
+        "project_sources_checked": 45,
+        "legacy_pngs_checked": 30,
+        "all_unchanged": true,
+        "reference_unchanged": true
+      },
+      "unresolved_uncertainties": [
+        "Final movement-law selection and numeric construction/palette remain Phase E decisions.",
+        "Native-size master-pose and animation evidence does not yet exist.",
+        "Stress-specific civilian performance is an authored hypothesis; no universal untrained-aggression motion established.",
+        "Residual run foot slide under distance-sampled held art needs later runtime measurement.",
+        "Grip anchors across mirrored extreme poses, hurt-direction availability and moving/airborne death require later visual-integration checks.",
+        "Reference original grid, exposures, order, seams and provenance remain unknown."
+      ]
+    },
+    "E": {
+      "status": "complete",
+      "task": "Select and lock one final movement/body-language law and native production constraints.",
+      "evidence": [
+        "final_movement_law.md",
+        "phase_e_decision_matrix.md",
+        "phase_e_structural_checks.json",
+        "phase_f_constraints.md",
+        "phase_f_constraints.json",
+        "phase_e_preservation_receipt.json"
+      ],
+      "selected_candidate": "B",
+      "selected_law": "Brace, then drive",
+      "one_sentence": "The support leg drives the pelvis while the ribcage stays enclosed beneath the neckward right shoulder, opens briefly for the action, and returns over support before the arms and attached flame settle.",
+      "hybrid": false,
+      "other_candidate_disposition": "A retired for this rebuild after structural/interruption comparison; C remains rejected.",
+      "candidate_definition_fields": 19,
+      "state_assessments": 240,
+      "states_per_candidate": 12,
+      "questions_per_state": 10,
+      "interrupt_comparisons": 9,
+      "anti_generic_comparisons": 6,
+      "construction_probes": 12,
+      "final_invariants": [
+        {
+          "id": 1,
+          "name": "Registered physical construction",
+          "rule": "Every BODY/FLAME frame keeps the 64×64 native canvas, pivot (32,62), connected anatomy and the same material volumes; projection/occlusion and articulated bending replace scaling or changing limb length. A separate weapon module keeps its own registered hilt pivot."
+        },
+        {
+          "id": 2,
+          "name": "Persistent upper-body ownership",
+          "rule": "The anatomical right shoulder is the collar-side shoulder (about 2 px higher than the left in upright enclosed keys), and the left elbow owns the open rib-side wedge; contact may release enclosure but never swaps these anatomical roles. Carry this relationship in torso-local construction through oblique poses and collapse, not as a fixed screen-up offset."
+        },
+        {
+          "id": 3,
+          "name": "One grip/striker",
+          "rule": "The anatomical right hand is the grip and primary contact hand in every frame and facing; its connected shoulder/elbow/wrist chain and pose anchor persist even when occluded or the weapon is broken. The left hand never silently becomes the grip."
+        },
+        {
+          "id": 4,
+          "name": "Support-led causal rhythm",
+          "rule": "Voluntary exertion starts from support/pelvis drive and a protected torso, with brief opening and support retrieval where time survives; interruption selects the real destination without an obligatory completion. Airborne release and fatal support failure are consequences of that chain, not invented grounded steps."
+        },
+        {
+          "id": 5,
+          "name": "Body before attached self-image",
+          "rule": "BODY alone must retain the person and action; FLAME is faceless secondary anatomy rooted at the same neck, obeys the selected/frozen presentation and never supplies damage, an independent projectile, glow or a substitute for physical body mass."
+        }
+      ],
+      "production_constraints": {
+        "frame_size": [
+          64,
+          64
+        ],
+        "pivot": [
+          32,
+          62
+        ],
+        "offset": [
+          -32,
+          -62
+        ],
+        "ground_row": 62,
+        "neutral_full_actor_height_px": 56,
+        "neutral_body_only_height_px": 45,
+        "live_body_width_max_px": 46,
+        "collapse_body_width_max_px": 58,
+        "grip_hand": "anatomical_right",
+        "body_palette_budget": 10,
+        "flame_palette_budget": 5,
+        "weapon_reused_color_budget": 4,
+        "combined_palette_budget": 15,
+        "palette_roles": "phase_f_constraints.json"
+      },
+      "selection_based_on": "Fixed-frame and joint-chain feasibility; native footprint/head-lead margins; actual selector, cancel, freeze and prop-clock behavior; Phase C remedies and Phase D principles. Not equal Phase D text scores.",
+      "visual_proof_performed": false,
+      "raster_drawn": false,
+      "native_scale_visual_approval": false,
+      "preservation": {
+        "source_files_checked": 45,
+        "legacy_pngs_checked": 30,
+        "reference_unchanged": true,
+        "phase_D_artifacts_checked": 19,
+        "all_unchanged": true
+      },
+      "additional_contract_clarification": "Held prop transform continues on its own process path; free pickup is frozen-gated; swing resolves pre-snap transform to285 ms. Preserve those exceptions.",
+      "remaining_risks": [
+        "Protected posture could become a generic hunch or guard unless real release/reclosure and capable alternating legs read at1×.",
+        "Numeric construction is not native raster proof; actual masters must verify silhouette, anatomy, cloth volume and both facings.",
+        "Residual foot slide under18 px held run samples and visual contact gap to collision reach need later runtime measurements.",
+        "Right-grip metadata across all poses, occlusion and independent prop lift during Blink need visual-only integration proof.",
+        "Same-phase hurt priority, interrupted recovery and moving/airborne death remain later animation/runtime obligations.",
+        "Reference grid/exposures/seams/provenance and stress-specific movement interpretation remain uncertain."
+      ]
+    },
+    "F": {
+      "status": "in_progress",
+      "task": "Master key poses in Pixelorama MCP."
+    },
+    "G": {
+      "status": "pending",
+      "task": "Production animations and at least two actual pixel correction passes per animation."
+    },
+    "H": {
+      "status": "pending",
+      "task": "Visual-only Godot integration; preserve gameplay and legacy assets."
+    },
+    "I": {
+      "status": "pending",
+      "task": "Runtime capture and visual QA of integrated rebuild."
+    }
+  },
+  "invariants": {
+    "gameplay_logic_modified": false,
+    "legacy_assets_deleted": false,
+    "production_raster_started": false,
+    "production_raster_tool": "Pixelorama MCP only",
+    "python_pillow_usage": "Existing-PNG measurement, documentary crops/nearest enlargement, alpha diagnostics/compositing and decoding existing external tutorial GIF frames for research only; no production drawing."
+  },
+  "connectivity": {
+    "pixelorama_mcp": "Connected; existing PCK registered in running Pixelorama v1.2.3; list_canvases succeeded; no reinstall/recompile.",
+    "godot_editor_mcp": "PLUGIN_DISCONNECTED; no active session",
+    "godot_cli": "4.7.2 stable; graphical probe and seven headless suites exit 0",
+    "last_verified_phase": "B",
+    "phase_C_note": "No Pixelorama or Godot session actions; analysis-only phase. Historical Phase B status has not been reverified.",
+    "phase_D_note": "Research-only phase; no Pixelorama or Godot actions. Phase B connectivity is historical, not reverified.",
+    "phase_E_note": "No Pixelorama or Godot session actions in Phase E. Connectivity remains historical from B; do not restart setup unless a future needed connection actually fails."
+  },
+  "resume_instructions": [
+    "Phase E is complete: selected law B — Brace, then drive; no hybrid. Do not repeat skills, audits or research.",
+    "Execute Phase F only next turn: master key poses INSIDE Pixelorama through MCP, using final_movement_law.md and phase_f_constraints.md/json plus the forthcoming/original Phase F master requirements.",
+    "Check the existing Pixelorama connection when actual drawing is required; safely reconnect transport only if it has dropped, without unnecessary setup.",
+    "Do not use analytical centerline probes, Python/PIL, image generation, downsampling, procedural fills, rigid cutouts or interpolated frames as production art.",
+    "Preserve gameplay logic, legacy assets, input/physics/timing/Blink/weapon semantics and the existing root/scale contract.",
+    "F must prove BODY-only and full-composite identity at native scale with actual anatomy/grip metadata; E numeric feasibility is not visual approval.",
+    "Save F outputs and checkpoint, then STOP before G production animations."
+  ],
+  "evidence_files": [
+    "project_runtime_audit.md",
+    "baseline_source_hashes.json",
+    "baseline_source_verification.json",
+    "baseline_sources/",
+    "baseline_runtime_probe.gd",
+    "baseline_runtime.log",
+    "baseline_runtime_raw.json",
+    "baseline_runtime/observations.json",
+    "baseline_runtime/01_idle.png",
+    "baseline_runtime/02_run.png",
+    "baseline_runtime/03_jump_rise.png",
+    "baseline_runtime/04_fall.png",
+    "baseline_runtime/05_dash.png",
+    "baseline_runtime/06_attack_active.png",
+    "baseline_runtime/07_blink_transition.png",
+    "baseline_runtime/08_blink_arrival.png",
+    "baseline_runtime/qa_capture_crops_4x.png",
+    "baseline_tests.json",
+    "audit_existing_assets.py",
+    "existing_asset_audit.json",
+    "support_read.json",
+    "reference_sprite_audit.md",
+    "reference_animation_audit.md",
+    "reference_animation_audit.json",
+    "reference_file_metadata.json",
+    "reference_inspection.py",
+    "reference_inspection/",
+    "phase_c_preservation_receipt.json",
+    "external_research.md",
+    "research_sources.json",
+    "research_synthesis.md",
+    "research_reference_mapping.json",
+    "movement_law_candidates.md",
+    "movement_law_candidates.json",
+    "research_source_views/inspection_manifest.json",
+    "phase_d_preservation_receipt.json",
+    "final_movement_law.md",
+    "phase_e_decision_matrix.md",
+    "phase_e_structural_checks.json",
+    "phase_f_constraints.md",
+    "phase_f_constraints.json",
+    "phase_e_preservation_receipt.json"
+  ],
+  "stop_reason": "User-directed one-phase-per-turn policy; Phase E complete; Phase F not started.",
+  "updated_at": "2026-10-06T13:53:35.970Z"
+}

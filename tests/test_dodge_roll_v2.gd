@@ -40,11 +40,14 @@ func _run() -> void:
 		await roll_press()
 		await step(age-1)
 		Input.action_press("move_left")
-		Input.action_press("dash") # rejection cannot steal the directional cancel
+		Input.action_press("dash") # ignored for the rest of the clip, not cancelled into
 		await step(1)
 		Input.action_release("dash")
-		check(player.roll_remaining==0 and player.velocity.x==-player.run_speed, "tick%d cancel/reverse takes immediate priority" % age)
-		check(is_equal_approx(player.roll_cooldown_remaining,.35), "tick%d cancel arms full cooldown" % age)
+		check(player.roll_remaining>0 and is_equal_approx(player.velocity.x,player.roll_speed), "tick%d direction and roll spam are ignored" % age)
+		while player.roll_remaining>0:
+			await step(1)
+		check(is_equal_approx(player.roll_cooldown_remaining,.35), "tick%d full clip arms the 0.35s cooldown on completion" % age)
+		check(player.velocity.x==-player.run_speed, "tick%d held direction resumes after the clip" % age)
 		var previous := player.roll_cooldown_remaining
 		await step(2)
 		await roll_press()
@@ -72,7 +75,7 @@ func _run() -> void:
 	await roll_press()
 	# Keep rejected button held through expiry: there is no deferred roll.
 	Input.action_press("dash")
-	await step(30)
+	await step(45)
 	check(player.can_movement_roll() and player.roll_remaining==0, "rejected held input is discarded, no queued charge")
 	Input.action_release("dash")
 	await step(1)
@@ -85,7 +88,11 @@ func _run() -> void:
 	check(player.roll_remaining>0 and player.velocity.y>=vy and player._air_dashes==budget and player._coyote<=0, "air roll keeps gravity and jump budget")
 	Input.action_press("move_left")
 	await step(1)
-	check(player.roll_remaining==0 and player.velocity.x==-player.run_speed and not player.is_on_floor(), "air cancel restores normal control immediately")
+	check(player.roll_remaining>0 and player.velocity.x>0 and not player.is_on_floor(), "air roll ignores direction input until the clip completes")
+	while player.roll_remaining>0:
+		await step(1)
+	check(player.velocity.x==-player.run_speed, "air control resumes after the air roll clip")
+	Input.action_release("move_left")
 	await prepare()
 	await roll_press()
 	player.motion_swap_apply(Vector2(600,-50),.24)
@@ -95,8 +102,8 @@ func _run() -> void:
 	check(player.roll_cooldown_remaining<.35 and player.roll_cooldown_remaining>.29, "cooldown continues through forced-motion updates")
 	await prepare()
 	await roll_press()
-	Input.action_press("move_right")
-	await step(1)
+	while player.roll_remaining>0:
+		await step(1)
 	var cd_before_slow := player.roll_cooldown_remaining
 	Engine.time_scale=.12
 	await step(5)

@@ -1,0 +1,353 @@
+extends SceneTree
+## PHASE 2 AUDIT — measures the CURRENT running game. Never edits anything.
+## Points 1-10 from the brief:
+##   1 hit vs miss readability   2 body separation      3 invisible drag
+##   4 bulldozing               5 grounded hit         6 vertical launch
+##   7 dash -> attack           8 Blink rhythm         9 damage values
+##  10 leftover glow/swoosh object
+## Run: godot --headless --path E:\neverlookback --script res://tests/audit_combat.gd
+
+var _phase: int = 0
+var _pf: int = 0
+var _main: Node
+
+# --- point 1 (hit vs miss) ---
+var _shake_max: float = 0.0
+var _ts_min: float = 1.0
+var _foe_dx: float = 0.0
+var _foe_dx_max: float = -9999.0
+var _max_gap: float = -9999.0
+var _foe_vymax: float = 0.0
+var _ply_vymax: float = 0.0
+var _min_gap: float = 9999.0
+var _hp0_ply: int = -1
+var _hp0_foe: int = -1
+var _confirmed: bool = false
+
+# --- point 3 (drag) ---
+var _x0: float = 0.0
+var _travel: float = 0.0
+
+# --- point 4 (bulldoze) ---
+var _foe_x0: float = 0.0
+var _foe_move: float = 0.0
+var _strike_seen: bool = false
+var _windup_n: int = 0
+var _last_state: int = -1
+var _gap_min: float = 9999.0
+var _gap_max: float = -9999.0
+var _ov_frames: int = 0
+var _ov_worst: float = 9999.0
+
+# --- point 7 (dash->attack) ---
+var _vx_dash_end: float = -9999.0
+var _vx_swing: float = -9999.0
+
+# --- point 8 (blink rhythm) ---
+var _blink_row: Array = []
+var _prev_alpha: float = -1.0
+
+func _init() -> void:
+	_main = load("res://scenes/main.tscn").instantiate()
+	get_root().add_child(_main)
+	current_scene = _main
+
+func _p() -> NLBPlayer:
+	return get_first_node_in_group("player") as NLBPlayer
+
+func _melee() -> NLBMeleeChaser:
+	for e in get_nodes_in_group("enemies"):
+		if e is NLBMeleeChaser:
+			return e
+	return null
+
+func _ranged() -> NLBRangedEnemy:
+	for e in get_nodes_in_group("enemies"):
+		if e is NLBRangedEnemy:
+			return e
+	return null
+
+func _g() -> NLBGame:
+	return current_scene as NLBGame
+
+func _snap(p: NLBPlayer, x: float) -> void:
+	_park_prop()
+	p.global_position = Vector2(x, 599)
+	p.velocity = Vector2.ZERO
+	p.move_state = NLBPlayer.MoveState.NORMAL
+	p._atk_t = -1.0
+	p._dash_cd = 0.0
+	p._dash_buf = 0.0
+	p._dash_t = 0.0
+	p._atk_cd = 0.0
+	p._atk_buf = 0.0
+	p._hurt_t = 0.0
+	p._struck_from_dash = false
+	p.body_vis.rotation = 0.0
+	p.body_vis.scale = Vector2.ONE
+	p.set_fight_frozen(false)
+
+## Arena now has a walk-over pickup; this audit measures bare hands, so park
+## it 400px up where dy puts it outside the pickup window.
+func _park_prop() -> void:
+	var prop := get_first_node_in_group("props")
+	if prop != null:
+		prop.global_position = Vector2(1190, 200)
+
+func _place(m: NLBMeleeChaser, x: float, frozen: bool, cd: float = 99.0) -> void:
+	m.global_position = Vector2(x, 599)
+	m.velocity = Vector2.ZERO
+	m._kb = Vector2.ZERO
+	m._cd = cd
+	m._stagger_t = 0.0
+	m.ai_state = NLBMeleeChaser.AIState.CHASE
+	m.fight_frozen = frozen
+
+func _reset_mark() -> void:
+	_shake_max = 0.0
+	_ts_min = 1.0
+	_foe_dx = 0.0
+	_foe_dx_max = -9999.0
+	_max_gap = -9999.0
+	_foe_vymax = 0.0
+	_ply_vymax = 0.0
+	_min_gap = 9999.0
+	_confirmed = false
+
+func _watch(p: NLBPlayer, m: NLBMeleeChaser, foe_x0: float) -> void:
+	var g := _g()
+	if g != null:
+		_shake_max = maxf(_shake_max, g._shake)
+	_ts_min = minf(_ts_min, Engine.time_scale)
+	_ply_vymax = maxf(_ply_vymax, p.velocity.y)
+	if m != null:
+		_foe_vymax = maxf(_foe_vymax, m.velocity.y)
+		_foe_dx = m.global_position.x - foe_x0
+		# Peak reach, not end state: end state is polluted by the player
+		# re-closing to standoff after the knockback.
+		_foe_dx_max = maxf(_foe_dx_max, _foe_dx)
+		var gap_now := absf(m.global_position.x - p.global_position.x)
+		_min_gap = minf(_min_gap, gap_now)
+		_max_gap = maxf(_max_gap, gap_now)
+		_confirmed = _confirmed or p._bite_done
+
+func _physics_process(_delta: float) -> bool:
+	_pf += 1
+	var p := _p()
+	var m := _melee()
+	match _phase:
+		# ---------------------------------------------------------------- 0
+		0:
+			if _pf == 1:
+				var g := _g()
+				var r := _ranged()
+				print("P9_DAMAGE_BEGIN")
+				print("  player   hp=%d iframes=%.2f" % [p.health.hp, p.health.iframes])
+				print("  swing    dmg=%d kb=%s brake=%.2f step=%.0f" % [
+					p.swing_box.damage, str(p.swing_box.knockback), p.hit_brake, p.attack_step])
+				print("  swing    startup=%.2f active=%.2f recovery=%.2f cd=%.2f reach=82" % [
+					p.attack_startup, p.attack_active, p.attack_recovery, p.attack_cooldown])
+				print("  hitstop  %.3fs @scale 0.05 (game.gd)" % 0.045)
+				if m != null:
+					print("  melee    hp=%d iframes=%.2f touch_dmg=%d slam_dmg=%d touch_tick=%.2f" % [
+						m.health.hp, m.health.iframes, m.touch_box.damage, m.slam_box.damage, m.touch_box.tick])
+					print("  melee    slam_kb=%s touch_kb set per frame" % str(m.slam_box.knockback))
+				if r != null:
+					print("  ranged   hp=%d iframes=%.2f touch_dmg=%d" % [
+						r.health.hp, r.health.iframes, r.touch_box.damage])
+				var hz := g.arena.get_node_or_null("Hazard/HitBox") as NLBHitBox
+				if hz != null:
+					print("  hazard   dmg=%d tick=%.2f continuous=%s" % [hz.damage, hz.tick, str(hz.continuous)])
+				print("P9_DAMAGE_END")
+				print("P10_SWOOSH child_node_present=%s (must be false: the leftover glowing swoosh was removed)" % [
+					str(p.get_node_or_null("Swoosh") != null)])
+				_next()
+		# ---------------------------------------------------------------- 1
+		1:  # MISS: identical input, no enemy in reach
+			if _pf == 1:
+				_reset_mark()
+				_snap(p, 300.0)
+				_place(m, 980.0, false)
+				Input.action_press("move_right")
+				Input.action_press("attack")
+			if _pf == 3:
+				Input.action_release("attack")
+			if _pf <= 45:
+				_watch(p, m, 980.0)
+			if _pf == 45:
+				Input.action_release("move_right")
+				print("P1_MISS   shakeMax=%.3f tsMin=%.2f foeDx=%.0f confirm=%s plyVyMax=%.0f" % [
+					_shake_max, _ts_min, _foe_dx, str(_confirmed), _ply_vymax])
+				_next()
+		# ---------------------------------------------------------------- 2
+		2:  # HIT: same input, enemy inside reach
+			if _pf == 1:
+				_reset_mark()
+				_snap(p, 300.0)
+				_place(m, 352.0, false)
+				_hp0_foe = m.health.hp
+				_hp0_ply = p.health.hp
+				var fx := m.global_position.x
+				Input.action_press("move_right")
+				Input.action_press("attack")
+				_phase_fx = fx
+			if _pf == 3:
+				Input.action_release("attack")
+			if _pf <= 45:
+				_watch(p, m, _phase_fx)
+			if _pf == 45:
+				Input.action_release("move_right")
+				print("P2_HIT    shakeMax=%.3f tsMin=%.2f peakFoeDx=%.0f endFoeDx=%.0f peakGap=%.0f confirm=%s plyVyMax=%.0f foeVyMax=%.0f minGap=%.0f foeHp %d->%d" % [
+					_shake_max, _ts_min, _foe_dx_max, _foe_dx, _max_gap, str(_confirmed), _ply_vymax, _foe_vymax, _min_gap,
+					_hp0_foe, m.health.hp])
+				_next()
+		# ---------------------------------------------------------------- 3
+		3:  # DRAG a: run 45 frames with nothing nearby
+			if _pf == 1:
+				_snap(p, 200.0)
+				_place(m, 1000.0, false)
+				_x0 = p.global_position.x
+				Input.action_press("move_right")
+			if _pf == 45:
+				Input.action_release("move_right")
+				_travel = p.global_position.x - _x0
+				print("P3_DRAG_a alone travel=%.0f px in 45f (cap 4.67f => 210)" % _travel)
+				_next()
+		# ---------------------------------------------------------------- 4
+		4:  # DRAG b: same run, chaser glued to the player's BACK at gap<30.
+			# Separation must stay active here WITHOUT slowing the player:
+			# the body that yields is the one doing the encroaching (the foe),
+			# so proximity alone can never cost the player travel.
+			if _pf == 1:
+				_snap(p, 200.0)
+				_place(m, 180.0, false)
+				_x0 = p.global_position.x
+				Input.action_press("move_right")
+			if _pf <= 45:
+				_min_gap = minf(_min_gap, absf(m.global_position.x - p.global_position.x))
+			if _pf == 45:
+				Input.action_release("move_right")
+				var t := p.global_position.x - _x0
+				print("P3_DRAG_b chased-from-behind travel=%.0f px  ratio=%.0f%%  minGap=%.0f" % [
+					t, 100.0 * t / maxf(_travel, 1.0), _min_gap])
+				_next()
+		# ---------------------------------------------------------------- 5
+		5:  # BULLDOZE: hold forward into a LIVE chaser (cd=0 so it can fight back)
+			if _pf == 1:
+				_snap(p, 300.0)
+				_place(m, 331.0, false, 0.0)
+				_foe_x0 = m.global_position.x
+				_hp0_ply = p.health.hp
+				_hp0_foe = m.health.hp
+				_gap_min = 9999.0
+				_gap_max = -9999.0
+				_strike_seen = false
+				_windup_n = 0
+				Input.action_press("move_right")
+			if _pf <= 120 and m != null:
+				_foe_move = m.global_position.x - _foe_x0
+				var gap := m.global_position.x - p.global_position.x
+				_gap_min = minf(_gap_min, gap)
+				_gap_max = maxf(_gap_max, gap)
+				if m.ai_state == NLBMeleeChaser.AIState.STRIKE:
+					_strike_seen = true
+				if m.ai_state == NLBMeleeChaser.AIState.WINDUP and _last_state != 1:
+					_windup_n += 1
+				_last_state = 1 if m.ai_state == NLBMeleeChaser.AIState.WINDUP else 0
+			if _pf == 120:
+				Input.action_release("move_right")
+				print("P4_BULLDOZE foe_displaced=%.0f px  gapMin=%.0f gapMax=%.0f  windups=%d reachedStrike=%s  plyHp %d->%d foeHp %d->%d" % [
+					_foe_move, _gap_min, _gap_max, _windup_n, str(_strike_seen),
+					_hp0_ply, p.health.hp, _hp0_foe, m.health.hp])
+				_next()
+		# ---------------------------------------------------------------- 6
+		6:  # DASH -> ATTACK continuity
+			if _pf == 1:
+				_reset_mark()
+				_snap(p, 300.0)
+				_place(m, 980.0, false)
+				Input.action_press("move_right")
+				Input.action_press("dash")
+			if _pf == 3:
+				Input.action_release("dash")
+			if _pf == 8:
+				Input.action_press("attack")
+			if _pf == 10:
+				Input.action_release("attack")
+			if _pf >= 10 and _pf <= 30:
+				if p.move_state != NLBPlayer.MoveState.DASH and _vx_dash_end < -9000.0:
+					_vx_dash_end = p.velocity.x
+				if p.is_attack_busy() and _vx_swing < -9000.0:
+					_vx_swing = p.velocity.x
+				_watch(p, m, 980.0)
+			if _pf == 30:
+				Input.action_release("move_right")
+				print("P7_DASH2ATK vx_at_dash_end=%.0f vx_at_swing_start=%.0f delta=%.0f busy=%s" % [
+					_vx_dash_end, _vx_swing, _vx_swing - _vx_dash_end, str(p.is_attack_busy())])
+				_vx_dash_end = -9999.0
+				_vx_swing = -9999.0
+				_next()
+		# ---------------------------------------------------------------- 7
+		7:  # BLINK rhythm: sample the whole transition
+			if _pf == 1:
+				_snap(p, 400.0)
+				_place(m, 700.0, false)
+				_blink_row = []
+				_prev_alpha = -1.0
+				Input.action_press("blink")
+			if _pf == 2:
+				Input.action_release("blink")
+			if _pf <= 40:
+				var g2 := _g()
+				var a := g2.flash.color.a
+				var sh := g2._shake
+				var moved := absf(p.velocity.x) + absf(p.velocity.y)
+				var da := absf(a - _prev_alpha) if _prev_alpha >= 0.0 else 1.0
+				_prev_alpha = a
+				_blink_row.append("%d:a%.2f%s%s%s" % [
+					_pf, a,
+					(" s%.2f" % sh) if sh > 0.001 else "",
+					(" v%.0f" % moved) if moved > 1.0 else "",
+					" DEAD" if (da < 0.005 and sh <= 0.001 and moved <= 1.0) else ""])
+				if (not g2.blink.is_transitioning() and _pf > 4) or _pf >= 60:
+					print("P8_BLINK row=%s" % " ".join(_blink_row))
+					var dead := 0
+					for row in _blink_row:
+						if (row as String).ends_with(" DEAD"):
+							dead += 1
+					print("P8_BLINK dead_frames=%d of %d sample_end_frame=%d transition_done=%s" % [
+						dead, _blink_row.size(), _pf, str(not g2.blink.is_transitioning())])
+					_next()
+		# ---------------------------------------------------------------- 8
+		8:  # WALL SHOVE: press an enemy into solid geometry and keep pressing
+			if _pf == 1:
+				_snap(p, 1000.0)
+				_place(m, 1031.0, false, 0.0)
+				_gap_min = 9999.0
+				_ov_frames = 0
+				_ov_worst = 9999.0
+				_foe_x0 = m.global_position.x
+				Input.action_press("move_right")
+			if _pf <= 200 and m != null and p != null:
+				var gap2: float = m.global_position.x - p.global_position.x
+				_gap_min = minf(_gap_min, gap2)
+				if gap2 < 30.0:
+					_ov_frames += 1
+					_ov_worst = minf(_ov_worst, gap2)
+			if _pf == 200:
+				Input.action_release("move_right")
+				print("P4b_WALL gapMin=%.0f  frames_below_30=%d/200  worst=%.0f (negative = bodies interpenetrating)" % [
+					_gap_min, _ov_frames, _ov_worst])
+				_next()
+		# ---------------------------------------------------------------- 9
+		9:
+			print("AUDIT_DONE")
+			quit(0)
+			return true
+	return false
+
+var _phase_fx: float = 0.0
+
+func _next() -> void:
+	_phase += 1
+	_pf = 0

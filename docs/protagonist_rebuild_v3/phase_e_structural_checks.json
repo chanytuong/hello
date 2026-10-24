@@ -1,0 +1,1872 @@
+{
+  "phase": "E",
+  "assessment_kind": "Structural design/constraint evaluation, not raster or runtime test",
+  "selected_candidate": "B",
+  "selected_name": "Brace, then drive",
+  "hybrid": false,
+  "discarded_candidate": "A",
+  "prior_rejected_candidate": "C",
+  "candidate_definitions": [
+    {
+      "field": "Default spine",
+      "A": "Collar forward of pelvis 3–4 px at rest; pelvis-to-rib axis about 14°. Preserve a shallow connected curve, not a permanently falling line.",
+      "B": "Collar forward of pelvis about 3 px; pelvis-to-rib axis about 9.5°. Short waist connection and a mobile curve; rest is not deep crouch."
+    },
+    {
+      "field": "Head position",
+      "A": "Void center +4 px ahead of pelvis in idle, +12 run, +18 dash, +17 contact. Anatomical neck remains attached.",
+      "B": "Void center +3 px idle, +6 run, +12 dash, +9 contact. Attached neck; no head-led impact surface."
+    },
+    {
+      "field": "Shoulder relationship",
+      "A": "Right/grip shoulder 1 px nearer the neck than left in baseline; chest-forward excursion dominates this small offset.",
+      "B": "Right/grip shoulder is about 2 px higher than left in upright enclosed targets; carry its collar-side anatomical role with the torso through oblique keys, not an exact screen-y gap."
+    },
+    {
+      "field": "Ribcage orientation",
+      "A": "Rib center leads pelvis by 3 px idle, 8 run, 10 dash/contact; approximately 14–45° forward axis in six targets.",
+      "B": "Rib center leads pelvis by 2 px idle, 3 run, 5 dash, 0 antic, 6 contact, 2 recovery; approximately 0–25° forward axis."
+    },
+    {
+      "field": "Pelvis orientation",
+      "A": "Near-level belt plane, projecting after the chest. Use 1–2 px belt tilt with alternating contact; no rotating rigid cutout.",
+      "B": "Near-level belt plane initiates the support transfer; 1–2 px tilt alternates with support. Ribcage yaw/lean responds at smaller or later amplitude."
+    },
+    {
+      "field": "Center of gravity",
+      "A": "Torso/pelvis drawing proxy moves toward front support; an excursion needs subsequent retrieval. Never equate this proxy with measured whole-body mass.",
+      "B": "Proxy stays within static support in quiet keys, moves forward in action and is recontained. A running mass need not be within the current foot at every instant."
+    },
+    {
+      "field": "Weight-bearing leg",
+      "A": "Right leg favored at rest; both anatomical legs alternate without a permanent weaker side. A forward catch is not a forced gameplay step.",
+      "B": "Right leg favored at rest; both legs alternate. A support/down accent precedes chest opening. Equal competent legs; no permanent unilateral drag."
+    },
+    {
+      "field": "Arm spacing",
+      "A": "Wide action/grip versus trailing free arm; six targets have 22–33 px horizontal wrist separation. One narrow free-elbow window remains required.",
+      "B": "Right grip stays below head/face, left elbow supplies a 2–3 px open wedge against ribs; six targets have 20–29 px wrist separation. No paired raised fists."
+    },
+    {
+      "field": "Leg rhythm",
+      "A": "Distinct right contact/down, passing/flight, left contact/down and return, with faster visual gathering under advancing chest.",
+      "B": "The same complete bilateral support sequence; loading accents precede short chest releases. Alternate legs fully rather than mirroring half a gait."
+    },
+    {
+      "field": "Movement initiator",
+      "A": "Upper chest visually commits first; pelvis and support catch the advance.",
+      "B": "Support loading and pelvis drive lead the action; ribcage initially stays enclosed beneath the right shoulder."
+    },
+    {
+      "field": "Delayed body part",
+      "A": "Pelvis/support retrieval then trailing shoulder, free wrist and attached flame. This chain may need more than the remaining visible exposure.",
+      "B": "Chest opens after support drive; left wrist and flame finish after torso reclosure. Offsets are spatial/pose relationships within the current clock, never extra input delay."
+    },
+    {
+      "field": "Forward acceleration",
+      "A": "Actual root accelerates immediately; chest lead grows 3→8 px rib-to-pelvis across selected keys, then support catches. No planted prelaunch hold.",
+      "B": "Actual root accelerates immediately; pelvis changes first in the pose, rib lead grows 2→3 px and chest briefly opens. No brace wait."
+    },
+    {
+      "field": "Braking",
+      "A": "Actual friction/reversal changes root velocity; chest retains forward excursion until a support retrieval key. Cancellation may omit that defining catch.",
+      "B": "Real braking loads support; rib lead shrinks toward 0–2 px while the left elbow stays legible. No forced skid duration or additional displacement."
+    },
+    {
+      "field": "Attack loading",
+      "A": "Compact chest commitment, retaining consistent right striker; six-target antic rib lead 3 px. Returning from run to this key drops rib lead by 5 px.",
+      "B": "Rib center nearly above pelvis, grip below face, right shoulder close to collar; antic rib lead 0 px. From run the lead changes only 3 px."
+    },
+    {
+      "field": "Attack contact",
+      "A": "Right palm/weapon acts forward with pelvis trailing chest by 10 px; head lead 17 px. Support and restoration must justify the overreach.",
+      "B": "Pelvis projects, chest opens to 6 px lead, right hand connects forward while left elbow stays separate; head lead 9 px. No trained straight-punch guard."
+    },
+    {
+      "field": "Recovery",
+      "A": "Support/pelvis retrieves the chest before wrist/secondary settling. The law is clearest only if the catch is displayed.",
+      "B": "Rib lead contracts to 2 px and protective shoulder relation remains; wrist/secondary settle afterwards. A cut can discard final settle without changing the body's identity."
+    },
+    {
+      "field": "Interrupted-state behavior",
+      "A": "Discard unfinished catch on real cancel; use destination pose and preserve anatomical ownership. A frozen/cut lunge risks leaving only stock reach.",
+      "B": "Discard final settle on real cancel; choose the destination compact/open key directly, retaining protected shoulder, support relationship and grip. No mandatory rest reset."
+    },
+    {
+      "field": "Mirror behavior",
+      "A": "Use facing × (texture point − pivot); anatomical right remains right and leg phase is not swapped. Large head lead reverses instantly with facing even while velocity still opposes it.",
+      "B": "Same transform/ownership. Smaller lead permits a compact braking pose when facing changes before velocity crosses zero; no interpolated turn-through-front."
+    },
+    {
+      "field": "Weapon-anchor implications",
+      "A": "Rest grip (48,32) matches legacy offset. Target grip travel reaches local (27,-29); fixed legacy anchor cannot hold the arm through action.",
+      "B": "Rest grip (48,32) matches legacy offset. Target contact (56,32), local (24,-30), requires pose metadata; no change to prop state, collision, reach or transformation time."
+    }
+  ],
+  "state_checks": [
+    {
+      "candidate": "A",
+      "state": "IDLE",
+      "assessments": {
+        "law_visible": "Visible only through a small checked inclination; whole-cycle support retrieval is absent.",
+        "anatomy": "Supported stance; right loading must not lock the other leg.",
+        "fast_response": "Directly leave idle on accepted action.",
+        "native_frame": "32×45 BODY proxy fits; identity at 1× unproven.",
+        "mirror": "Fits transform; small head lead reflects cleanly.",
+        "weapon": "Legacy rest anchor fits right hand.",
+        "flame": "Small contained unequal tips; no flame-driven bob.",
+        "generic_risk": "High if only a forward slouch is drawn.",
+        "goofy_risk": "Repeated aborted leans could look indecisively comic.",
+        "impairment_misread_risk": "Persistent off-center sway could imply instability; keep supports quiet."
+      }
+    },
+    {
+      "candidate": "B",
+      "state": "IDLE",
+      "assessments": {
+        "law_visible": "Enclosure visible through right shoulder and left elbow wedge.",
+        "anatomy": "Supported stance; keep knee flexion modest and spine mobile.",
+        "fast_response": "Already compact: next state needs no new wait.",
+        "native_frame": "31×45 BODY proxy fits; gap/identity still needs raster proof.",
+        "mirror": "Same asymmetry reflected without hand reassignment.",
+        "weapon": "Legacy rest anchor fits right hand.",
+        "flame": "Contained flame disagrees subtly with physical restraint.",
+        "generic_risk": "High if enclosure replaces release rhythm; static hunch alone fails.",
+        "goofy_risk": "Large repetitive shrug would look comic; cap at 1–2 px.",
+        "impairment_misread_risk": "Do not hold a rigid painful-looking curl; preserve easy breathing and mobile supports."
+      }
+    },
+    {
+      "candidate": "A",
+      "state": "RUN",
+      "assessments": {
+        "law_visible": "Chest lead and fast support retrieval can identify the law.",
+        "anatomy": "Both contacts/flight must be clear; no trailing dead leg.",
+        "fast_response": "Root follows actual 2600 acceleration immediately.",
+        "native_frame": "42×39 proxy fits, but broad wedge competes with detail.",
+        "mirror": "Keep actual leg phase; immediate facing change may flip a long lead.",
+        "weapon": "Grip moves to (51,41); metadata needed.",
+        "flame": "Rearward lag, attached neck, no independent trail.",
+        "generic_risk": "High if all keys repeat the same athlete's diagonal.",
+        "goofy_risk": "Excess retrieval can look like repeatedly tripping.",
+        "impairment_misread_risk": "Do not exaggerate one leg's catch or drag; both must carry normal strides."
+      }
+    },
+    {
+      "candidate": "B",
+      "state": "RUN",
+      "assessments": {
+        "law_visible": "Load→short chest release repeats across bilateral contacts.",
+        "anatomy": "Arm restriction needs torso response; both legs work normally.",
+        "fast_response": "Support accent is drawn inside current distance cadence.",
+        "native_frame": "35×40 proxy fits; open left wedge remains required.",
+        "mirror": "Compact lead helps reverse without a turn animation.",
+        "weapon": "Grip (49,37); right ownership retained.",
+        "flame": "Rearward flame reinforces brisk drive rather than propulsion.",
+        "generic_risk": "Moderate: compact jog becomes stock if chest never opens.",
+        "goofy_risk": "Tiny frantic steps would look comic; retain complete stride.",
+        "impairment_misread_risk": "No unequal leg length, permanent drag or one-sided cadence."
+      }
+    },
+    {
+      "candidate": "A",
+      "state": "REVERSE DIRECTION",
+      "assessments": {
+        "law_visible": "Defining catch may be skipped by immediate facing reversal.",
+        "anatomy": "Ground support must respond to old velocity, not simply new facing.",
+        "fast_response": "Reverse acceleration 4200 remains untouched.",
+        "native_frame": "Use compact braking variant; full forward lunge is unsafe as an immediate flip.",
+        "mirror": "Facing changes before velocity crosses zero; large lead strongly reverses.",
+        "weapon": "Mirror pose anchor and preserve the held hand.",
+        "flame": "Flame must use actual travel/deceleration cue; freeze obeyed.",
+        "generic_risk": "Mirrored heroic run is a major failure risk.",
+        "goofy_risk": "S-shaped wobble after each reversal reads comic.",
+        "impairment_misread_risk": "Do not imply a failing ankle or repeated involuntary collapse."
+      }
+    },
+    {
+      "candidate": "B",
+      "state": "REVERSE DIRECTION",
+      "assessments": {
+        "law_visible": "Compact enclosure survives even when release is cut.",
+        "anatomy": "Support handles old velocity; posture faces input while braking.",
+        "fast_response": "Immediate response; no required skid hold.",
+        "native_frame": "0–2 px rib lead braking target fits; no new broad turn.",
+        "mirror": "Reflect right anatomy; distinguish facing from current velocity.",
+        "weapon": "Grip stays registered through braking variant.",
+        "flame": "Lag may briefly remain in old-travel direction within attached envelope.",
+        "generic_risk": "Stock skid risk if a dramatic leg split is used.",
+        "goofy_risk": "Avoid exaggerated tiptoe pivot or repeated bounce.",
+        "impairment_misread_risk": "Both legs can brake; no permanently compromised support."
+      }
+    },
+    {
+      "candidate": "A",
+      "state": "JUMP RISE",
+      "assessments": {
+        "law_visible": "Chest lead without foot support makes a catch less meaningful.",
+        "anatomy": "Use unsupported fold and account for both knees/feet.",
+        "fast_response": "Launch at -640 immediately; no grounded coil.",
+        "native_frame": "Need separate airborne key; no raster proof.",
+        "mirror": "Both anatomy labels retained; flip does not swap feet.",
+        "weapon": "Right grip tracks pose; no floating fixed-anchor pipe.",
+        "flame": "Delayed upward stretch can reinforce release.",
+        "generic_risk": "Parkour tuck risk if chest leads every launch.",
+        "goofy_risk": "Running-in-air or pedal action can look comic.",
+        "impairment_misread_risk": "Don't use a dragged leg as jump identity."
+      }
+    },
+    {
+      "candidate": "B",
+      "state": "JUMP RISE",
+      "assessments": {
+        "law_visible": "Pelvis release preserves protected chest relation without requiring ground after launch.",
+        "anatomy": "Fold both limbs through hips; no planted feet once airborne.",
+        "fast_response": "No anticipatory wait; short-hop cut preserved.",
+        "native_frame": "Vertical recovery fold must separate ankles at least 2 px when distinguishable.",
+        "mirror": "Anatomical limb roles remain consistent.",
+        "weapon": "Right grip connected; air pose anchor required.",
+        "flame": "Rise stretch follows bodily release, not prelaunch magic.",
+        "generic_risk": "Stock tuck risk; right shoulder/left wedge must persist.",
+        "goofy_risk": "Avoid tiny cycling legs or exaggerated frightened curl.",
+        "impairment_misread_risk": "Both legs move and prepare landing; no unilateral limitation."
+      }
+    },
+    {
+      "candidate": "A",
+      "state": "FALL",
+      "assessments": {
+        "law_visible": "Forward catch can be misread as another intentional lunge or kick.",
+        "anatomy": "Prepare support below pelvis, not seated feet ahead.",
+        "fast_response": "Enter from ledge directly; actual gravity wins.",
+        "native_frame": "Distinct silhouette needed beyond the six checked keys.",
+        "mirror": "No front/back limb ownership swap.",
+        "weapon": "Weapon stays on right; cannot remain at obsolete shoulder height.",
+        "flame": "Upward drag distinguishes descent if body already reads fall.",
+        "generic_risk": "Seated kick reference failure likely if reach pattern dominates.",
+        "goofy_risk": "Flailing corrections can read slapstick.",
+        "impairment_misread_risk": "No permanent leg drag; unsupported descent is contextual."
+      }
+    },
+    {
+      "candidate": "B",
+      "state": "FALL",
+      "assessments": {
+        "law_visible": "Enclosure is already legible; pelvis lacks support and feet prepare below it.",
+        "anatomy": "No simulated floor contact; paired ankles resolve through overlaps.",
+        "fast_response": "No mandatory apex or fall hold.",
+        "native_frame": "Distinct hanging/ready pose needed; native proof pending.",
+        "mirror": "Mirror preserves right upper-body role and both legs.",
+        "weapon": "Pose-specific air anchor, without weapon trajectory mechanics.",
+        "flame": "Attached upward drag follows descent.",
+        "generic_risk": "Generic frightened fall if arms rise together; retain unequal role.",
+        "goofy_risk": "Avoid both feet bicycling or comic airborne panic.",
+        "impairment_misread_risk": "Temporary unsupported movement must not become a chronic limp."
+      }
+    },
+    {
+      "candidate": "A",
+      "state": "LAND",
+      "assessments": {
+        "law_visible": "Chest excursion followed by catch explains impact only if time remains.",
+        "anatomy": "First real support accepts mass; avoid an invented extra step.",
+        "fast_response": "Landing attack/jump may immediately supersede retrieval.",
+        "native_frame": "Body compression must not merge knees/hands.",
+        "mirror": "Whichever actual support is depicted remains traceable.",
+        "weapon": "Grip may shift; never leave weapon at a prelanding position.",
+        "flame": "Flame overshoot occurs only while the landing pose is displayed.",
+        "generic_risk": "Stock deep hero landing risk.",
+        "goofy_risk": "Repeated forward stumble after every shallow landing would be comic.",
+        "impairment_misread_risk": "Healthy bilateral rebound; no compulsory buckling after ordinary landing."
+      }
+    },
+    {
+      "candidate": "B",
+      "state": "LAND",
+      "assessments": {
+        "law_visible": "Actual support loads pelvis; chest recontains above it.",
+        "anatomy": "Knee/spine articulation absorbs pose compression; volume unchanged.",
+        "fast_response": "Direct attack or buffered jump can replace landing at once.",
+        "native_frame": "Compact land target retains elbow/leg gaps; no actual drawing yet.",
+        "mirror": "Both mirrored land keys retain anatomy.",
+        "weapon": "Right grip follows land/attack destination.",
+        "flame": "Brief attached overshoot; discarded if the state is replaced.",
+        "generic_risk": "Stock crouch if pelvis drops too far; short load must restore.",
+        "goofy_risk": "No pogo or prolonged squat.",
+        "impairment_misread_risk": "No deep collapse on every landing; only fatal collapse loses support."
+      }
+    },
+    {
+      "candidate": "A",
+      "state": "DASH",
+      "assessments": {
+        "law_visible": "51 px body envelope and 18 px head lead make one large lunge.",
+        "anatomy": "Both limbs connected, but low torso needs clear entry/exit support.",
+        "fast_response": "150 ms clock unchanged; catch cannot extend exit.",
+        "native_frame": "Fits numerically; narrower flame corridor and near-edge palm remain risks.",
+        "mirror": "Large reflected lead is hard to reconcile with residual old velocity.",
+        "weapon": "Grip (56,40); legacy anchor visibly wrong.",
+        "flame": "Long connected shear could easily become the forbidden rocket head.",
+        "generic_risk": "Very high straight-lunge/athletic-wedge risk if exit is cut.",
+        "goofy_risk": "Oversized leaning head can look cartoonish.",
+        "impairment_misread_risk": "Don't ground both feet rigidly while the root travels."
+      }
+    },
+    {
+      "candidate": "B",
+      "state": "DASH",
+      "assessments": {
+        "law_visible": "44 px body and 12 px head lead leave distinct compact transit.",
+        "anatomy": "Pelvis initiates, right shoulder stays enclosed; ground/air support must differ.",
+        "fast_response": "Entry <20 ms, hold to 110 ms, exit until 150 ms; all skippable by real state.",
+        "native_frame": "Fits with more gutter than A; flame/weapon still unproven.",
+        "mirror": "Same grip and shape relationships reflect; no root lag.",
+        "weapon": "Grip (52,40); metadata required.",
+        "flame": "Severe attached shear within gutter, rather than an independent emitter.",
+        "generic_risk": "Stock crouched dash risk unless entry/transit/exit body deltas remain.",
+        "goofy_risk": "No head inflation, rigid sled posture or bouncing crawl.",
+        "impairment_misread_risk": "Air dash removes plants; no invented weak leg or drag."
+      }
+    },
+    {
+      "candidate": "A",
+      "state": "ATTACK ANTICIPATION",
+      "assessments": {
+        "law_visible": "Chest commitment is small; a preceding wide run may look like it recoils backward.",
+        "anatomy": "Right striker connected; support must remain real.",
+        "fast_response": "Only 50 ms; no extra catch/loading frame.",
+        "native_frame": "33×44 proxy fits; glove-like silhouette could look trained.",
+        "mirror": "Right striker mirrors, not alternates.",
+        "weapon": "Grip (46,30); attachment must survive short startup.",
+        "flame": "Compact secondary compression, no eye cues.",
+        "generic_risk": "Boxer wind-up risk if wrist rises toward face.",
+        "goofy_risk": "Big backward arm circle would be comic.",
+        "impairment_misread_risk": "No strained spinal bend or lopsided bad leg implied."
+      }
+    },
+    {
+      "candidate": "B",
+      "state": "ATTACK ANTICIPATION",
+      "assessments": {
+        "law_visible": "Enclosed rib over driving pelvis is readable as a compact load.",
+        "anatomy": "Right shoulder neckward, palm below face; no identical fists.",
+        "fast_response": "50 ms maximum; dash strike skips antic drawing.",
+        "native_frame": "31×44 proxy fits; protect the left elbow gap.",
+        "mirror": "Same anatomy; no swing hand switch.",
+        "weapon": "Grip (45,32); pipe registration independent of gameplay.",
+        "flame": "Attached contraction without delaying body action.",
+        "generic_risk": "Guard/boxer risk remains if both arms frame the face.",
+        "goofy_risk": "Avoid exaggerated shoulder squeeze or deep squat.",
+        "impairment_misread_risk": "Small mobile brace reads tension; no rigid painful bend."
+      }
+    },
+    {
+      "candidate": "A",
+      "state": "ATTACK CONTACT",
+      "assessments": {
+        "law_visible": "10 px rib lead and 17 px head lead make the overreach unmistakable.",
+        "anatomy": "Support can justify it, but live mass and limb ownership need proof.",
+        "fast_response": "Active 120 ms and existing confirm hitstop only.",
+        "native_frame": "50×38 body fits; a tiny destination margin limits overlap freedom.",
+        "mirror": "Reflection preserves ownership, but reach can dominate identity.",
+        "weapon": "Grip (59,33); +11 px x beyond legacy anchor.",
+        "flame": "Contact shear may eclipse small body if uncontrolled.",
+        "generic_risk": "High straight-punch/hero-lunge risk.",
+        "goofy_risk": "Large head lead can make the face look like the weapon.",
+        "impairment_misread_risk": "An overreach is one action, not an always unstable body."
+      }
+    },
+    {
+      "candidate": "B",
+      "state": "ATTACK CONTACT",
+      "assessments": {
+        "law_visible": "Pelvis drive opens ribs to +6 px; shoulder identity survives contact.",
+        "anatomy": "Supported forward contact; left arm remains a separate counterweight.",
+        "fast_response": "Same 120 ms active, confirm/whiff picker and hitstop.",
+        "native_frame": "41×42 body fits; gap and material volumes still need raster proof.",
+        "mirror": "Same right palm/grip remains striker across facings.",
+        "weapon": "Grip (56,32), local (24,-30); separate prop tracks it.",
+        "flame": "Attached tear follows contact; body and weapon carry damage read.",
+        "generic_risk": "Straight-lunge risk controlled by compact shoulder and differentiated recovery.",
+        "goofy_risk": "No balloon fist, long neck or giant flame arc.",
+        "impairment_misread_risk": "Stable connected force chain; no compulsory knee collapse."
+      }
+    },
+    {
+      "candidate": "A",
+      "state": "ATTACK RECOVERY",
+      "assessments": {
+        "law_visible": "Support catch is the clearest identity beat; dash/Blink can delete it.",
+        "anatomy": "Retrieval must not shorten bones or pop clothes.",
+        "fast_response": "Only 80 ms, at most current whiff/return slots; don't add time.",
+        "native_frame": "36×43 proxy fits; terminal retrieve may be skipped.",
+        "mirror": "Reentry phase preserved; no neutral forced reset.",
+        "weapon": "Grip (53,34) returns toward legacy rest.",
+        "flame": "Secondary snap only after surviving body return.",
+        "generic_risk": "If cut, prior lunge can remain completely generic.",
+        "goofy_risk": "Overshoot→stumble on every swing can look comic.",
+        "impairment_misread_risk": "No involuntary leg weakness or repeated fall without cause."
+      }
+    },
+    {
+      "candidate": "B",
+      "state": "ATTACK RECOVERY",
+      "assessments": {
+        "law_visible": "Rib lead retracts to +2 px before wrist/flame settle; enclosure is visible even if cut.",
+        "anatomy": "Regained support and unchanged volumes; contact rebound differs from whiff.",
+        "fast_response": "80 ms only; dash/Blink discards the rest.",
+        "native_frame": "32×44 proxy fits and permits immediate destination selection.",
+        "mirror": "No hand swap; actual run phase survives return.",
+        "weapon": "Grip (49,33); destination pose has its own anchor.",
+        "flame": "Snap follows torso return if displayed; never continues through freeze.",
+        "generic_risk": "Guard return risk if both elbows tighten symmetrically.",
+        "goofy_risk": "No springy chest bounce or looping shrug.",
+        "impairment_misread_risk": "No locked protection or impaired step; healthy support is regained."
+      }
+    },
+    {
+      "candidate": "A",
+      "state": "HURT",
+      "assessments": {
+        "law_visible": "Interrupted reach can support flinch but may resemble attack/catch.",
+        "anatomy": "Impact data does not include a reliable presentation direction.",
+        "fast_response": "Attack priority can hide _hurt_t; no forced hurt cancel.",
+        "native_frame": "Needs attack-compatible strain variant or residual hurt; no current art proof.",
+        "mirror": "Same grip; impulse direction cannot be invented.",
+        "weapon": "Attach weapon to the selected strain/residual pose.",
+        "flame": "Local connected disruption; no detached particles.",
+        "generic_risk": "Attack-guard reuse is a major reference risk.",
+        "goofy_risk": "Fist-to-face reaction and random limb flail look comic.",
+        "impairment_misread_risk": "Only momentary support disturbance caused by a hit, never permanent impairment."
+      }
+    },
+    {
+      "candidate": "B",
+      "state": "HURT",
+      "assessments": {
+        "law_visible": "Abrupt involuntary compression differs from voluntary enclosed startup.",
+        "anatomy": "Keep feet responding to true airborne/grounded situation.",
+        "fast_response": "Same suppressed/remaining hurt rules; no new control lock.",
+        "native_frame": "Candidate supports local strain without deleting striker; actual proof deferred.",
+        "mirror": "Right identity stays intact; no fabricated directional flinch.",
+        "weapon": "Selected attack-strain or hurt anchor keeps grip.",
+        "flame": "Short deformation of attached head, no autonomous debris.",
+        "generic_risk": "Brace can look like guard; distinguish onset and disrupted support.",
+        "goofy_risk": "No repeated shrug, tiny jitters or exaggerated knee collapse.",
+        "impairment_misread_risk": "Temporary hit consequence; return must show capable ordinary motion."
+      }
+    },
+    {
+      "candidate": "A",
+      "state": "DEATH / COLLAPSE",
+      "assessments": {
+        "law_visible": "Support catch fails permanently; continued reach must resolve into actual mass.",
+        "anatomy": "Account for both legs and floor contacts; no disappearance.",
+        "fast_response": "Controller continues; reload after 1.2 s unchanged.",
+        "native_frame": "Horizontal corpse must stay within 58 px body budget; not checked in six-key proxy.",
+        "mirror": "Corpse mirrors anatomical ownership rather than a new hand.",
+        "weapon": "Held/broken state still belongs to prop; no invented drop.",
+        "flame": "Flame loses structure after support failure; body persists.",
+        "generic_risk": "Stock forward kneel if all supports change at once.",
+        "goofy_risk": "Unmotivated rolling or dramatic stretch reads comic.",
+        "impairment_misread_risk": "Fatal loss of support is contextual; not a chronic locomotion cue."
+      }
+    },
+    {
+      "candidate": "B",
+      "state": "DEATH / COLLAPSE",
+      "assessments": {
+        "law_visible": "Support-driven law fails at its source: pelvis no longer retrieves protected torso.",
+        "anatomy": "Support loss and mass settlement are traceable; no mandatory kneel.",
+        "fast_response": "No input/physics freeze; grounded/airborne consequence follows real root.",
+        "native_frame": "Needs later horizontal compression proof in existing 64×64; do not shrink corpse.",
+        "mirror": "Same limb ledger survives rotation/collapse and mirror.",
+        "weapon": "Grip persists while prop remains held; visual occlusion recorded.",
+        "flame": "Coherence decays while physical body remains.",
+        "generic_risk": "Standard kneeling collapse still a risk; preserve unequal arm/support sequence.",
+        "goofy_risk": "No disappearing body, bouncing corpse or heroic death tableau.",
+        "impairment_misread_risk": "Only fatal event loses support; ordinary states retain mobile competent legs."
+      }
+    }
+  ],
+  "interrupt_checks": [
+    {
+      "transition": "run → attack",
+      "current_gameplay": "Eligible buffered swing starts at actual _atk_t=0; +60 horizontal step. Run distance continues underneath grounded attack.",
+      "A": "Run rib lead 8→antic 3 px, head lead 12→4 px. Without a bridge this cuts away the defining catch; an inserted bridge would consume startup. Destination must still be chosen directly.",
+      "B": "Run rib lead 3→antic 0 px, head lead 6→2 px. Compact load can replace running without a rest reset or new timer; keep right grip and current support."
+    },
+    {
+      "transition": "dash → attack",
+      "current_gameplay": "Allowed only with dash remaining ≤60 ms; move state becomes NORMAL, dash momentum retained. Startup time still exists but picker skips a0 to a1.",
+      "A": "Dash head lead 18→contact 17 px leaves only a long lunge until a catch is shown. Candidate identity risks disappearing when later recovery is canceled.",
+      "B": "Dash head lead 12→contact 9 px and enclosed right shoulder remain. Direct contact/commit key carries inherited momentum; no backward reload."
+    },
+    {
+      "transition": "attack → dash",
+      "current_gameplay": "Dash blocked through startup/active (_atk_t≤170 ms); allowed during recovery if cooldown/buffer/air-dash gates permit. _end_swing occurs on cancel.",
+      "A": "A visible catch is not guaranteed before dash; early eligible cancellation can erase the defining retrieval. Never wait for it or change the buffer.",
+      "B": "Drop pending settle and select dash entry immediately. Enclosure and right ownership persist; no obligatory recovery/idle drawing."
+    },
+    {
+      "transition": "landing → attack",
+      "current_gameplay": "No dedicated gameplay landing lock. Buffered attack checks current eligibility; floor state is sampled before move_and_slide, so presentation may change on the next physics/visual update.",
+      "A": "Required catch may conflict with immediate loaded strike; do not force a planted corrective step or land hold.",
+      "B": "Existing support load supplies preparation; attack can replace cosmetic landing at once. Do not claim a newly authored landing frame exists in today's picker."
+    },
+    {
+      "transition": "Blink → attack",
+      "current_gameplay": "Freeze 280 ms preserves cooldown/buffers; gravity/movement continue and visuals are skipped. Arrival opens eligibility, not a guarantee that a cooling attack fires immediately.",
+      "A": "Held reach may return directly to a new action without a catch. Body identity then depends mostly on a static lean.",
+      "B": "Resume selected destination at the actual clock when eligible; compact shoulder/grip remain identifiable without completing arrival settle. If cooldown persists, do not show fake active contact."
+    },
+    {
+      "transition": "attack → Blink",
+      "current_gameplay": "set_fight_frozen(true) ends current swing. Last selected drawing is held because visuals are skipped; root keeps moving under gravity. It is not an attack paused for continuation.",
+      "A": "A reached key can remain frozen without support retrieval; no invisible catch may be imagined. Select real postfreeze state directly.",
+      "B": "Hold exact drawing and its anchor through freeze, with no new secondary advance; clear the pending swing picture on normal visual reentry. No replay of old recovery or contact."
+    },
+    {
+      "transition": "hit during anticipation",
+      "current_gameplay": "Accepted nonfatal damage sets _hurt_t=120 ms and knockback; it does not cancel the attack. Attack picker has priority, so standalone hurt can be entirely hidden by the remaining swing.",
+      "A": "Use only a same-phase strain variant if later visual integration supports it; do not force a separate catch/flinch sequence or reverse contact direction.",
+      "B": "A short added contraction/left-elbow disruption can preserve the right striker and existing attack phase. This is a future presentation variant, not a current selector feature or a gameplay cancel."
+    },
+    {
+      "transition": "hit during recovery",
+      "current_gameplay": "Attack presentation keeps priority until attack ends; remaining hurt time can show afterward. Dash may also outrank hurt. No new hurt lock.",
+      "A": "Do not try to complete retrieval before the real destination. A lost catch and residual off-balance pose can be confused with another attack.",
+      "B": "Select appropriate same-phase strain/residual hurt without a new wait; return or cancel keeps the same support/grip relationships. Fatal hit follows separate died path."
+    },
+    {
+      "transition": "direction reversal during locomotion",
+      "current_gameplay": "Facing changes immediately from input while velocity is still old-direction; reverse acceleration and _skid already exist, run distance does not reset.",
+      "A": "A long lead flips before travel reverses; must author compact braking. This reduces the very feature that otherwise defines A.",
+      "B": "Use compact loaded key with 0–2 px rib lead; old-travel flame lag may remain briefly attached. Keep current leg phase and anatomical hand, not a swapped half-cycle."
+    }
+  ],
+  "anti_generic_checks": [
+    {
+      "risk": "Generic hunched guy",
+      "A": "Idle inclination and unresolved run-end lean can collapse to a stock slouch.",
+      "B": "Permanent enclosure with no release would be a stock hunch; require load/open/recontain changes and mobile waist."
+    },
+    {
+      "risk": "Generic sprint",
+      "A": "Most run/dash targets are a broad chest-first diagonal; 42/51 px envelopes invite an athletic wedge.",
+      "B": "Compact leg-driven jog becomes stock unless both contact/down accents and offset chest releases are distinguishable BODY-only."
+    },
+    {
+      "risk": "Generic boxer wind-up",
+      "A": "Guard-like right wrist can replace chest intent in short antic.",
+      "B": "If both palms rise toward face, the brace becomes a trained guard; keep right grip below head and left elbow window open."
+    },
+    {
+      "risk": "Generic straight lunge",
+      "A": "Dash and contact head leads 18/17 px are very similar when the catch is cut.",
+      "B": "A repeated transit key would still fail; distinguish pelvic load, chest opening and reclosure, with stable shoulder relation."
+    },
+    {
+      "risk": "Generic sad urban protagonist",
+      "A": "Rest leaning and repeated failed catches can communicate defeat rather than urgent intent.",
+      "B": "A drooped head plus endless enclosure would imply sadness; keep active supports and abrupt directed releases; flame alone cannot supply agency."
+    },
+    {
+      "risk": "Generic action-game body",
+      "A": "Trained stride/strike plus static lean could overwhelm the law when recovery is skipped.",
+      "B": "Support→restrained opening→recontain must survive more than pose shape; use whiff/confirmed difference and unequal upper-body spacing without leg impairment."
+    }
+  ],
+  "construction_proxy_method": "12 analytic centerline feasibility probes; two-link segment-length checks, approximate occupancy and mirrored coordinates. No image drawn; no proof of silhouette readability.",
+  "construction_probes": [
+    {
+      "candidate": "A",
+      "state": "IDLE",
+      "pelvis": [
+        31,
+        42
+      ],
+      "rib": [
+        34,
+        30
+      ],
+      "neck": [
+        34,
+        20
+      ],
+      "head": [
+        35,
+        14
+      ],
+      "shoulders": [
+        [
+          28,
+          24
+        ],
+        [
+          38,
+          23
+        ]
+      ],
+      "wrists": [
+        [
+          24,
+          39
+        ],
+        [
+          48,
+          32
+        ]
+      ],
+      "ankles": [
+        [
+          26,
+          60
+        ],
+        [
+          37,
+          60
+        ]
+      ],
+      "hips": [
+        [
+          28,
+          42
+        ],
+        [
+          34,
+          42
+        ]
+      ],
+      "elbows": [
+        [
+          21.33651424669607,
+          31.456403799118956
+        ],
+        [
+          47.94985857698157,
+          24.000157136687143
+        ]
+      ],
+      "knees": [
+        [
+          30.49058411334625,
+          52.20034267926069
+        ],
+        [
+          39.01045268777844,
+          51.22742455203693
+        ]
+      ],
+      "body_bounds_approx": [
+        19,
+        18,
+        50,
+        62
+      ],
+      "width": 32,
+      "height": 45,
+      "torso_angle_deg": 14,
+      "head_lead_px": 4,
+      "wrist_horizontal_separation_px": 24,
+      "ankle_horizontal_separation_px": 11,
+      "joint_chains_length_preserved": true,
+      "mirror_lengths_preserved": true,
+      "safe_box_fit": true,
+      "grip_local_offset": [
+        16,
+        -30
+      ],
+      "support_note": "At least one sole allowance meets row62.",
+      "all_eight_mirrored_segments_preserved": true
+    },
+    {
+      "candidate": "A",
+      "state": "RUN",
+      "pelvis": [
+        32,
+        44
+      ],
+      "rib": [
+        40,
+        32
+      ],
+      "neck": [
+        43,
+        26
+      ],
+      "head": [
+        44,
+        20
+      ],
+      "shoulders": [
+        [
+          34,
+          30
+        ],
+        [
+          43,
+          29
+        ]
+      ],
+      "wrists": [
+        [
+          25,
+          33
+        ],
+        [
+          51,
+          41
+        ]
+      ],
+      "ankles": [
+        [
+          18,
+          56
+        ],
+        [
+          47,
+          59
+        ]
+      ],
+      "hips": [
+        [
+          29,
+          44
+        ],
+        [
+          35,
+          44
+        ]
+      ],
+      "elbows": [
+        [
+          25.335681916492625,
+          25.007045749477868
+        ],
+        [
+          52.129742582237554,
+          33.080171611841635
+        ]
+      ],
+      "knees": [
+        [
+          26.832933455362664,
+          54.27393900074911
+        ],
+        [
+          42.78116790459941,
+          51.05006567632047
+        ]
+      ],
+      "body_bounds_approx": [
+        14,
+        23,
+        55,
+        61
+      ],
+      "width": 42,
+      "height": 39,
+      "torso_angle_deg": 33.7,
+      "head_lead_px": 12,
+      "wrist_horizontal_separation_px": 26,
+      "ankle_horizontal_separation_px": 29,
+      "joint_chains_length_preserved": true,
+      "mirror_lengths_preserved": true,
+      "safe_box_fit": true,
+      "grip_local_offset": [
+        19,
+        -21
+      ],
+      "support_note": "Sampled flight/extension proxy; both feet above row62.",
+      "all_eight_mirrored_segments_preserved": true
+    },
+    {
+      "candidate": "A",
+      "state": "DASH",
+      "pelvis": [
+        29,
+        47
+      ],
+      "rib": [
+        39,
+        37
+      ],
+      "neck": [
+        45,
+        32
+      ],
+      "head": [
+        47,
+        26
+      ],
+      "shoulders": [
+        [
+          35,
+          35
+        ],
+        [
+          43,
+          35
+        ]
+      ],
+      "wrists": [
+        [
+          23,
+          39
+        ],
+        [
+          56,
+          40
+        ]
+      ],
+      "ankles": [
+        [
+          12,
+          60
+        ],
+        [
+          45,
+          60
+        ]
+      ],
+      "hips": [
+        [
+          26,
+          47
+        ],
+        [
+          32,
+          47
+        ]
+      ],
+      "elbows": [
+        [
+          25.650625097686778,
+          31.45187529306034
+        ],
+        [
+          52.73147340792548,
+          32.698169139393755
+        ]
+      ],
+      "knees": [
+        [
+          19.763562938397325,
+          55.447298549043275
+        ],
+        [
+          41.35293527522609,
+          51.77206472477391
+        ]
+      ],
+      "body_bounds_approx": [
+        8,
+        29,
+        58,
+        62
+      ],
+      "width": 51,
+      "height": 34,
+      "torso_angle_deg": 45,
+      "head_lead_px": 18,
+      "wrist_horizontal_separation_px": 33,
+      "ankle_horizontal_separation_px": 33,
+      "joint_chains_length_preserved": true,
+      "mirror_lengths_preserved": true,
+      "safe_box_fit": true,
+      "grip_local_offset": [
+        24,
+        -22
+      ],
+      "support_note": "At least one sole allowance meets row62.",
+      "all_eight_mirrored_segments_preserved": true
+    },
+    {
+      "candidate": "A",
+      "state": "ANTICIPATION",
+      "pelvis": [
+        31,
+        43
+      ],
+      "rib": [
+        34,
+        31
+      ],
+      "neck": [
+        34,
+        21
+      ],
+      "head": [
+        35,
+        15
+      ],
+      "shoulders": [
+        [
+          28,
+          25
+        ],
+        [
+          38,
+          24
+        ]
+      ],
+      "wrists": [
+        [
+          24,
+          39
+        ],
+        [
+          46,
+          30
+        ]
+      ],
+      "ankles": [
+        [
+          25,
+          60
+        ],
+        [
+          37,
+          60
+        ]
+      ],
+      "hips": [
+        [
+          28,
+          43
+        ],
+        [
+          34,
+          43
+        ]
+      ],
+      "elbows": [
+        [
+          20.620698558551986,
+          31.74877101672914
+        ],
+        [
+          47.8392726671576,
+          22.214303110456523
+        ]
+      ],
+      "knees": [
+        [
+          30.801467142122657,
+          53.119376554492234
+        ],
+        [
+          40.09593022937098,
+          51.54924760658159
+        ]
+      ],
+      "body_bounds_approx": [
+        18,
+        19,
+        50,
+        62
+      ],
+      "width": 33,
+      "height": 44,
+      "torso_angle_deg": 14,
+      "head_lead_px": 4,
+      "wrist_horizontal_separation_px": 22,
+      "ankle_horizontal_separation_px": 12,
+      "joint_chains_length_preserved": true,
+      "mirror_lengths_preserved": true,
+      "safe_box_fit": true,
+      "grip_local_offset": [
+        14,
+        -32
+      ],
+      "support_note": "At least one sole allowance meets row62.",
+      "all_eight_mirrored_segments_preserved": true
+    },
+    {
+      "candidate": "A",
+      "state": "CONTACT",
+      "pelvis": [
+        32,
+        45
+      ],
+      "rib": [
+        42,
+        32
+      ],
+      "neck": [
+        47,
+        26
+      ],
+      "head": [
+        49,
+        20
+      ],
+      "shoulders": [
+        [
+          36,
+          29
+        ],
+        [
+          45,
+          29
+        ]
+      ],
+      "wrists": [
+        [
+          27,
+          35
+        ],
+        [
+          59,
+          33
+        ]
+      ],
+      "ankles": [
+        [
+          16,
+          59
+        ],
+        [
+          48,
+          59
+        ]
+      ],
+      "hips": [
+        [
+          29,
+          45
+        ],
+        [
+          35,
+          45
+        ]
+      ],
+      "elbows": [
+        [
+          26.1938162779905,
+          27.040724416985743
+        ],
+        [
+          54.6285874738369,
+          26.29994384157085
+        ]
+      ],
+      "knees": [
+        [
+          23.405517727125464,
+          53.88548074661651
+        ],
+        [
+          43.447298549043275,
+          51.23643706160267
+        ]
+      ],
+      "body_bounds_approx": [
+        12,
+        24,
+        61,
+        61
+      ],
+      "width": 50,
+      "height": 38,
+      "torso_angle_deg": 37.6,
+      "head_lead_px": 17,
+      "wrist_horizontal_separation_px": 32,
+      "ankle_horizontal_separation_px": 32,
+      "joint_chains_length_preserved": true,
+      "mirror_lengths_preserved": true,
+      "safe_box_fit": true,
+      "grip_local_offset": [
+        27,
+        -29
+      ],
+      "support_note": "Both sole allowances end at y61: grounded contact needs a 1px footwear/endpoint correction in a drawn study; not counted as planted proof.",
+      "all_eight_mirrored_segments_preserved": true
+    },
+    {
+      "candidate": "A",
+      "state": "RECOVERY",
+      "pelvis": [
+        34,
+        43
+      ],
+      "rib": [
+        39,
+        31
+      ],
+      "neck": [
+        40,
+        22
+      ],
+      "head": [
+        41,
+        16
+      ],
+      "shoulders": [
+        [
+          33,
+          25
+        ],
+        [
+          42,
+          24
+        ]
+      ],
+      "wrists": [
+        [
+          28,
+          40
+        ],
+        [
+          53,
+          34
+        ]
+      ],
+      "ankles": [
+        [
+          24,
+          60
+        ],
+        [
+          42,
+          60
+        ]
+      ],
+      "hips": [
+        [
+          31,
+          43
+        ],
+        [
+          37,
+          43
+        ]
+      ],
+      "elbows": [
+        [
+          26.0923340058745,
+          32.230778001958164
+        ],
+        [
+          51.77833729276384,
+          26.093828977959788
+        ]
+      ],
+      "knees": [
+        [
+          30.192299975295647,
+          53.46888822512174
+        ],
+        [
+          43.62320327762776,
+          51.14758727128595
+        ]
+      ],
+      "body_bounds_approx": [
+        20,
+        20,
+        55,
+        62
+      ],
+      "width": 36,
+      "height": 43,
+      "torso_angle_deg": 22.6,
+      "head_lead_px": 7,
+      "wrist_horizontal_separation_px": 25,
+      "ankle_horizontal_separation_px": 18,
+      "joint_chains_length_preserved": true,
+      "mirror_lengths_preserved": true,
+      "safe_box_fit": true,
+      "grip_local_offset": [
+        21,
+        -28
+      ],
+      "support_note": "At least one sole allowance meets row62.",
+      "all_eight_mirrored_segments_preserved": true
+    },
+    {
+      "candidate": "B",
+      "state": "IDLE",
+      "pelvis": [
+        31,
+        42
+      ],
+      "rib": [
+        33,
+        30
+      ],
+      "neck": [
+        34,
+        20
+      ],
+      "head": [
+        34,
+        14
+      ],
+      "shoulders": [
+        [
+          28,
+          24
+        ],
+        [
+          38,
+          22
+        ]
+      ],
+      "wrists": [
+        [
+          26,
+          40
+        ],
+        [
+          48,
+          32
+        ]
+      ],
+      "ankles": [
+        [
+          25,
+          60
+        ],
+        [
+          36,
+          60
+        ]
+      ],
+      "hips": [
+        [
+          28,
+          42
+        ],
+        [
+          34,
+          42
+        ]
+      ],
+      "elbows": [
+        [
+          22.92307692307692,
+          32.61538461538461
+        ],
+        [
+          47.79743505398101,
+          24.00256494601899
+        ]
+      ],
+      "knees": [
+        [
+          29.74693917426492,
+          52.35365652904415
+        ],
+        [
+          38.66893777188283,
+          51.40484024756858
+        ]
+      ],
+      "body_bounds_approx": [
+        20,
+        18,
+        50,
+        62
+      ],
+      "width": 31,
+      "height": 45,
+      "torso_angle_deg": 9.5,
+      "head_lead_px": 3,
+      "wrist_horizontal_separation_px": 22,
+      "ankle_horizontal_separation_px": 11,
+      "joint_chains_length_preserved": true,
+      "mirror_lengths_preserved": true,
+      "safe_box_fit": true,
+      "grip_local_offset": [
+        16,
+        -30
+      ],
+      "support_note": "At least one sole allowance meets row62.",
+      "all_eight_mirrored_segments_preserved": true
+    },
+    {
+      "candidate": "B",
+      "state": "RUN",
+      "pelvis": [
+        33,
+        44
+      ],
+      "rib": [
+        36,
+        32
+      ],
+      "neck": [
+        38,
+        25
+      ],
+      "head": [
+        39,
+        19
+      ],
+      "shoulders": [
+        [
+          30,
+          29
+        ],
+        [
+          40,
+          27
+        ]
+      ],
+      "wrists": [
+        [
+          23,
+          38
+        ],
+        [
+          49,
+          37
+        ]
+      ],
+      "ankles": [
+        [
+          22,
+          56
+        ],
+        [
+          46,
+          60
+        ]
+      ],
+      "hips": [
+        [
+          30,
+          44
+        ],
+        [
+          36,
+          44
+        ]
+      ],
+      "elbows": [
+        [
+          20.118800246746535,
+          30.536844636358413
+        ],
+        [
+          49.78989811193164,
+          29.03909169926152
+        ]
+      ],
+      "knees": [
+        [
+          30.867970422939717,
+          54.46406361529314
+        ],
+        [
+          43.49215965804204,
+          51.35646271372372
+        ]
+      ],
+      "body_bounds_approx": [
+        18,
+        23,
+        52,
+        62
+      ],
+      "width": 35,
+      "height": 40,
+      "torso_angle_deg": 14,
+      "head_lead_px": 6,
+      "wrist_horizontal_separation_px": 26,
+      "ankle_horizontal_separation_px": 24,
+      "joint_chains_length_preserved": true,
+      "mirror_lengths_preserved": true,
+      "safe_box_fit": true,
+      "grip_local_offset": [
+        17,
+        -25
+      ],
+      "support_note": "Right sole proxy meets y62; left recovery foot is 4px above it.",
+      "all_eight_mirrored_segments_preserved": true
+    },
+    {
+      "candidate": "B",
+      "state": "DASH",
+      "pelvis": [
+        31,
+        47
+      ],
+      "rib": [
+        36,
+        36
+      ],
+      "neck": [
+        41,
+        30
+      ],
+      "head": [
+        43,
+        24
+      ],
+      "shoulders": [
+        [
+          31,
+          34
+        ],
+        [
+          41,
+          31
+        ]
+      ],
+      "wrists": [
+        [
+          23,
+          39
+        ],
+        [
+          52,
+          40
+        ]
+      ],
+      "ankles": [
+        [
+          15,
+          60
+        ],
+        [
+          45,
+          60
+        ]
+      ],
+      "hips": [
+        [
+          28,
+          47
+        ],
+        [
+          34,
+          47
+        ]
+      ],
+      "elbows": [
+        [
+          21.411996060364444,
+          31.159193696583113
+        ],
+        [
+          50.942569444244484,
+          32.07019290147897
+        ]
+      ],
+      "knees": [
+        [
+          23.227935275226084,
+          56.35293527522609
+        ],
+        [
+          43.66673213539722,
+          51.09930357774081
+        ]
+      ],
+      "body_bounds_approx": [
+        11,
+        28,
+        54,
+        62
+      ],
+      "width": 44,
+      "height": 35,
+      "torso_angle_deg": 24.4,
+      "head_lead_px": 12,
+      "wrist_horizontal_separation_px": 29,
+      "ankle_horizontal_separation_px": 30,
+      "joint_chains_length_preserved": true,
+      "mirror_lengths_preserved": true,
+      "safe_box_fit": true,
+      "grip_local_offset": [
+        20,
+        -22
+      ],
+      "support_note": "At least one sole allowance meets row62.",
+      "all_eight_mirrored_segments_preserved": true
+    },
+    {
+      "candidate": "B",
+      "state": "ANTICIPATION",
+      "pelvis": [
+        31,
+        43
+      ],
+      "rib": [
+        31,
+        31
+      ],
+      "neck": [
+        32,
+        21
+      ],
+      "head": [
+        33,
+        15
+      ],
+      "shoulders": [
+        [
+          26,
+          25
+        ],
+        [
+          36,
+          23
+        ]
+      ],
+      "wrists": [
+        [
+          25,
+          40
+        ],
+        [
+          45,
+          32
+        ]
+      ],
+      "ankles": [
+        [
+          25,
+          60
+        ],
+        [
+          37,
+          60
+        ]
+      ],
+      "hips": [
+        [
+          28,
+          43
+        ],
+        [
+          34,
+          43
+        ]
+      ],
+      "elbows": [
+        [
+          20.52547060155072,
+          33.36836470677005
+        ],
+        [
+          45.944097208657794,
+          24.055902791342206
+        ]
+      ],
+      "knees": [
+        [
+          30.801467142122657,
+          53.119376554492234
+        ],
+        [
+          40.09593022937098,
+          51.54924760658159
+        ]
+      ],
+      "body_bounds_approx": [
+        18,
+        19,
+        48,
+        62
+      ],
+      "width": 31,
+      "height": 44,
+      "torso_angle_deg": 0,
+      "head_lead_px": 2,
+      "wrist_horizontal_separation_px": 20,
+      "ankle_horizontal_separation_px": 12,
+      "joint_chains_length_preserved": true,
+      "mirror_lengths_preserved": true,
+      "safe_box_fit": true,
+      "grip_local_offset": [
+        13,
+        -30
+      ],
+      "support_note": "At least one sole allowance meets row62.",
+      "all_eight_mirrored_segments_preserved": true
+    },
+    {
+      "candidate": "B",
+      "state": "CONTACT",
+      "pelvis": [
+        36,
+        44
+      ],
+      "rib": [
+        42,
+        31
+      ],
+      "neck": [
+        44,
+        23
+      ],
+      "head": [
+        45,
+        17
+      ],
+      "shoulders": [
+        [
+          36,
+          27
+        ],
+        [
+          46,
+          25
+        ]
+      ],
+      "wrists": [
+        [
+          28,
+          39
+        ],
+        [
+          56,
+          32
+        ]
+      ],
+      "ankles": [
+        [
+          22,
+          60
+        ],
+        [
+          48,
+          60
+        ]
+      ],
+      "hips": [
+        [
+          33,
+          44
+        ],
+        [
+          39,
+          44
+        ]
+      ],
+      "elbows": [
+        [
+          26.870257417762446,
+          31.08017161184163
+        ],
+        [
+          55.94989014276906,
+          24.000156938901345
+        ]
+      ],
+      "knees": [
+        [
+          27.813837375121373,
+          53.129825695395944
+        ],
+        [
+          46.74694187226724,
+          51.087657696849675
+        ]
+      ],
+      "body_bounds_approx": [
+        18,
+        21,
+        58,
+        62
+      ],
+      "width": 41,
+      "height": 42,
+      "torso_angle_deg": 24.8,
+      "head_lead_px": 9,
+      "wrist_horizontal_separation_px": 28,
+      "ankle_horizontal_separation_px": 26,
+      "joint_chains_length_preserved": true,
+      "mirror_lengths_preserved": true,
+      "safe_box_fit": true,
+      "grip_local_offset": [
+        24,
+        -30
+      ],
+      "support_note": "At least one sole allowance meets row62.",
+      "all_eight_mirrored_segments_preserved": true
+    },
+    {
+      "candidate": "B",
+      "state": "RECOVERY",
+      "pelvis": [
+        33,
+        43
+      ],
+      "rib": [
+        35,
+        31
+      ],
+      "neck": [
+        35,
+        21
+      ],
+      "head": [
+        35,
+        15
+      ],
+      "shoulders": [
+        [
+          30,
+          25
+        ],
+        [
+          40,
+          23
+        ]
+      ],
+      "wrists": [
+        [
+          27,
+          40
+        ],
+        [
+          49,
+          33
+        ]
+      ],
+      "ankles": [
+        [
+          25,
+          60
+        ],
+        [
+          39,
+          60
+        ]
+      ],
+      "hips": [
+        [
+          30,
+          43
+        ],
+        [
+          36,
+          43
+        ]
+      ],
+      "elbows": [
+        [
+          23.657854304507,
+          32.7315708609014
+        ],
+        [
+          49.78989811193164,
+          25.039091699261522
+        ]
+      ],
+      "knees": [
+        [
+          31.15743894641757,
+          53.436011454828694
+        ],
+        [
+          42.09593022937098,
+          51.54924760658159
+        ]
+      ],
+      "body_bounds_approx": [
+        21,
+        19,
+        52,
+        62
+      ],
+      "width": 32,
+      "height": 44,
+      "torso_angle_deg": 9.5,
+      "head_lead_px": 2,
+      "wrist_horizontal_separation_px": 22,
+      "ankle_horizontal_separation_px": 14,
+      "joint_chains_length_preserved": true,
+      "mirror_lengths_preserved": true,
+      "safe_box_fit": true,
+      "grip_local_offset": [
+        17,
+        -29
+      ],
+      "support_note": "At least one sole allowance meets row62.",
+      "all_eight_mirrored_segments_preserved": true
+    }
+  ],
+  "evidence_read_receipt": [
+    {
+      "file": "project_runtime_audit.md",
+      "characters": 13042,
+      "lines": 116,
+      "sha256": "0bedbffa6801a9a40aba37a32f1601a5e3630eea5f498d75d76ec426bea72fdd",
+      "read_complete": true
+    },
+    {
+      "file": "reference_sprite_audit.md",
+      "characters": 15031,
+      "lines": 127,
+      "sha256": "475462f62045adcff3cf29c8e3ac8a176c919acfee4acf5a7ec47a6f87761e4b",
+      "read_complete": true
+    },
+    {
+      "file": "reference_animation_audit.md",
+      "characters": 50428,
+      "lines": 537,
+      "sha256": "2e5e3e29a134175fda688ae2c38ec00f7b0da37a9125f72b928bd0d2e71d9655",
+      "read_complete": true
+    },
+    {
+      "file": "research_synthesis.md",
+      "characters": 28891,
+      "lines": 165,
+      "sha256": "6d28ebc0b7dcc8cd69d179a49dec498bf6e875499458fa6d17a896611e02b8dc",
+      "read_complete": true
+    },
+    {
+      "file": "movement_law_candidates.md",
+      "characters": 13271,
+      "lines": 108,
+      "sha256": "7e4a17b6377f8e9447b201b52cba5b8e29cd5e24b39bb4a885faa0b023cdc351",
+      "read_complete": true
+    }
+  ],
+  "production_raster_started": false,
+  "visual_proof_performed": false,
+  "additional_prop_contract": {
+    "free_pickup_blocked_during_blink": true,
+    "held_transform_independent_process": true,
+    "swing_resolves_pre_snap_to_ms": 285,
+    "lift_initial_y_px": 26,
+    "lift_reaches_zero_at_ms": 70,
+    "source": "baseline_sources/prop.gd.txt:_process_free/_process_held/_advance_transform",
+    "presentation_risk": "Frozen body/grip lookup can disagree with progressing prop lift; preserve clocks and inspect later."
+  },
+  "final_law_sentence": "The support leg drives the pelvis while the ribcage stays enclosed beneath the neckward right shoulder, opens briefly for the action, and returns over support before the arms and attached flame settle.",
+  "final_invariants": [
+    {
+      "id": 1,
+      "name": "Registered physical construction",
+      "rule": "Every BODY/FLAME frame keeps the 64×64 native canvas, pivot (32,62), connected anatomy and the same material volumes; projection/occlusion and articulated bending replace scaling or changing limb length. A separate weapon module keeps its own registered hilt pivot."
+    },
+    {
+      "id": 2,
+      "name": "Persistent upper-body ownership",
+      "rule": "The anatomical right shoulder is the collar-side shoulder (about 2 px higher than the left in upright enclosed keys), and the left elbow owns the open rib-side wedge; contact may release enclosure but never swaps these anatomical roles. Carry this relationship in torso-local construction through oblique poses and collapse, not as a fixed screen-up offset."
+    },
+    {
+      "id": 3,
+      "name": "One grip/striker",
+      "rule": "The anatomical right hand is the grip and primary contact hand in every frame and facing; its connected shoulder/elbow/wrist chain and pose anchor persist even when occluded or the weapon is broken. The left hand never silently becomes the grip."
+    },
+    {
+      "id": 4,
+      "name": "Support-led causal rhythm",
+      "rule": "Voluntary exertion starts from support/pelvis drive and a protected torso, with brief opening and support retrieval where time survives; interruption selects the real destination without an obligatory completion. Airborne release and fatal support failure are consequences of that chain, not invented grounded steps."
+    },
+    {
+      "id": 5,
+      "name": "Body before attached self-image",
+      "rule": "BODY alone must retain the person and action; FLAME is faceless secondary anatomy rooted at the same neck, obeys the selected/frozen presentation and never supplies damage, an independent projectile, glow or a substitute for physical body mass."
+    }
+  ],
+  "drawable_delay_rule": "Drawable overlap target: when a return is actually displayed, put the rib center back within its +1–3 px recovery relation while the left wrist is still 1–2 px short of its final settle position and the flame tips still trail the prior opening. Resolve them in at most the next available authored exposure. During run, place the pelvis at its loading/contact relation before the key that opens the ribs. This is redrawn pose spacing, not a separately simulated limb or an added millisecond delay; if the enclosing state is replaced or too short, omit the delayed settle."
+}

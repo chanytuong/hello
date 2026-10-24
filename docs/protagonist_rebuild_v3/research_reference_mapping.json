@@ -1,0 +1,197 @@
+{
+  "phase": "D",
+  "groups": [
+    {
+      "id": "head_idle",
+      "verdict": "FIX",
+      "reference_problem": "HEAD VARIATION (IDLE): eye-like paired lights, changing void width/tilt, unknown attachment.",
+      "why_it_fails": "Face cues defeat the faceless brief; separate studies cannot establish continuity.",
+      "research_principle": "Primary construction remains stable beneath secondary variation.",
+      "source_ids": [
+        "S12",
+        "S15"
+      ],
+      "production_rule": "Build one registered void/root system; vary unequal tips around it. Remove eyes/skull pips. Body-hidden tests cannot substitute for body-only tests."
+    },
+    {
+      "id": "head_action",
+      "verdict": "FIX",
+      "reference_problem": "HEAD DURING ACTION: missile-like leading void, no root or returning shape.",
+      "why_it_fails": "Shape change lacks a causal origin and recovery.",
+      "research_principle": "A smear must connect to its preceding anatomical source.",
+      "source_ids": [
+        "S12",
+        "S22"
+      ],
+      "production_rule": "Keep neck/root attachment, deform along the actual body motion, then recover a recognizable void. A stretched head cannot read as a launched projectile."
+    },
+    {
+      "id": "idle",
+      "verdict": "FIX",
+      "reference_problem": "IDLE: final frontal turn mixed with breathing; neck/limb continuity unclear.",
+      "why_it_fails": "An orientation change masquerades as a loop; quiet body remains interchangeable.",
+      "research_principle": "Gesture and unequal overlap convey intent more clearly than a contour bob.",
+      "source_ids": [
+        "S09",
+        "S11"
+      ],
+      "production_rule": "Keep one facing, support and grip ownership through the loop; use unequal body rhythms derived from the eventual law, not a whole-sprite bob."
+    },
+    {
+      "id": "walk",
+      "verdict": "REPLACE",
+      "reference_problem": "WALK: repeated wide splits; missing passing/opposite support; reads as slow run.",
+      "why_it_fails": "No complete weight-transfer cycle is visible.",
+      "research_principle": "Locomotion must show distinct phases and alternating support.",
+      "source_ids": [
+        "S18",
+        "S23"
+      ],
+      "production_rule": "Author contact, low, passing and opposite contact for the actual locomotion cycle. Do not add a walk input or new walk speed because the reference has a row."
+    },
+    {
+      "id": "run",
+      "verdict": "REPLACE",
+      "reference_problem": "RUN: athletic lunge repetition, ambiguous paired limbs, hand/shirt changes, unproven seam.",
+      "why_it_fails": "A heroic wedge and incoherent ownership conceal the person's movement.",
+      "research_principle": "Arm participation and torso motion are coupled; contact phases must remain identifiable.",
+      "source_ids": [
+        "S20",
+        "S23"
+      ],
+      "production_rule": "Track both legs and anatomical arms through a complete cycle. Couple arm restriction to torso compensation. Preserve clothes and grip; check three loops and both facings."
+    },
+    {
+      "id": "jump",
+      "verdict": "FIX",
+      "reference_problem": "JUMP: no launch coil; overlapping limbs; compressed ending; board positions are not a trajectory.",
+      "why_it_fails": "Intent and release cannot be distinguished from a tuck or kick.",
+      "research_principle": "Connected torso construction and purposeful spacing distinguish release from a folded pose.",
+      "source_ids": [
+        "S10",
+        "S13"
+      ],
+      "production_rule": "Show release immediately after real launch, optional compact rising pose, apex adjustment and descent transition. Fit visual compression around existing movement, never before input takes effect."
+    },
+    {
+      "id": "fall",
+      "verdict": "REPLACE",
+      "reference_problem": "FALL: grounded first pose, seated/kick-like forward feet, unclear descent and restoration.",
+      "why_it_fails": "A passive loss of support reads as another commanded action.",
+      "research_principle": "Gesture identifies intention; an unexpected loss of support is not the same action as a jump.",
+      "source_ids": [
+        "S09",
+        "S19"
+      ],
+      "production_rule": "Separate falling from rising using unsupported pelvis, preparation for landing and non-kicking feet. A ledge fall must work without any jump anticipation."
+    },
+    {
+      "id": "dash",
+      "verdict": "REPLACE",
+      "reference_problem": "DASH: fixed lunge, giant final head, no exit/reconnection.",
+      "why_it_fails": "Head spectacle replaces state change and body consequence.",
+      "research_principle": "Visual direction and transition must communicate the core mechanic.",
+      "source_ids": [
+        "S08",
+        "S22"
+      ],
+      "production_rule": "Give body distinct entry, transit and exit shapes within 150 ms; use directionally attached deformation. Exit reconnects to the true grounded/air/attack state."
+    },
+    {
+      "id": "attack_quick",
+      "verdict": "REPLACE",
+      "reference_problem": "ATTACK 1: repeated guards, changing striker, lifted foot/arm detour, no source return.",
+      "why_it_fails": "The strike lacks one cause, contact and consequence.",
+      "research_principle": "Strong keys and a readable return must fit responsive action timing.",
+      "source_ids": [
+        "S01",
+        "S24"
+      ],
+      "production_rule": "Use one consistent anatomical striker/grip; compact startup, forward contact, distinct whiff/confirmed recovery. Keep a supported foot and a readable return."
+    },
+    {
+      "id": "attack_heavy",
+      "verdict": "REPLACE",
+      "reference_problem": "ATTACK 2: flame as weapon, giant smear with small body change, unstable return; no heavy action in game.",
+      "why_it_fails": "It promises mechanics and reach that do not exist.",
+      "research_principle": "The actual mechanic and context determine the visual promise.",
+      "source_ids": [
+        "S02",
+        "S07"
+      ],
+      "production_rule": "Do not produce a heavy state. Reuse only the abstract compression/contact/recovery lesson in existing armed/finisher confirmation, without larger reach or fire damage."
+    },
+    {
+      "id": "attack_up",
+      "verdict": "REPLACE",
+      "reference_problem": "ATTACK 3: absent upward mechanic, changing strike direction, arm/flame ambiguity, spell arc.",
+      "why_it_fails": "An unsupported move and magical ownership obscure actual direction.",
+      "research_principle": "Action cues must identify the mechanic and direction the player actually controls.",
+      "source_ids": [
+        "S06",
+        "S08"
+      ],
+      "production_rule": "Do not produce an up-attack state. Every existing attack must clearly face and contact in its actual direction, with attached body and weapon."
+    },
+    {
+      "id": "hurt",
+      "verdict": "FIX",
+      "reference_problem": "HURT: attack-like guards, unspecified impact direction, no restored support, torso/limb drift.",
+      "why_it_fails": "A voluntary attack and involuntary flinch become indistinguishable.",
+      "research_principle": "Unexpected postural disturbance and support restoration differ from deliberate action.",
+      "source_ids": [
+        "S19",
+        "S21"
+      ],
+      "production_rule": "Show unexpected contraction/support disturbance followed by restoration within the hurt visual window. Use directional response only if existing data provides direction."
+    },
+    {
+      "id": "death",
+      "verdict": "FIX",
+      "reference_problem": "DEATH: merged legs, disappearing final body, unknown final contacts.",
+      "why_it_fails": "Collapse loses material mass and anatomical cause.",
+      "research_principle": "Solid connected masses must survive changing balance and contact.",
+      "source_ids": [
+        "S10",
+        "S21"
+      ],
+      "production_rule": "Track loss of support into a settled body with both limbs accounted for. Keep physical body present; flame loses structure separately. Respect actual floor and reload clock."
+    },
+    {
+      "id": "extra_effect",
+      "verdict": "REPLACE",
+      "reference_problem": "EXTRA: detached blobs/streak/U-curl, no event/root/endpoints, particle/aura association.",
+      "why_it_fails": "Decoration invents an emitter or projectile.",
+      "research_principle": "Secondary motion and smear require an attached cause and temporal endpoints.",
+      "source_ids": [
+        "S12",
+        "S22"
+      ],
+      "production_rule": "No autonomous effect animation from these samples. A needed smear belongs to an existing event and named attached part, with readable source and destination."
+    },
+    {
+      "id": "turnaround",
+      "verdict": "FIX",
+      "reference_problem": "Large views: unregistered feet/stance, shifting head volume, jacket/hand uncertainty.",
+      "why_it_fails": "Inconsistent construction cannot be a production model sheet.",
+      "research_principle": "Stable construction and selective detail preserve identity through projection.",
+      "source_ids": [
+        "S10",
+        "S14"
+      ],
+      "production_rule": "Derive a fresh native-size construction sheet, fixed landmarks and material masses. Track projected shortening rather than shrinking body dimensions per pose."
+    },
+    {
+      "id": "silhouette",
+      "verdict": "REPLACE",
+      "reference_problem": "SILHOUETTE: faint generic outline, flame included, no distinct pose exploration.",
+      "why_it_fails": "The head can conceal a body without identity.",
+      "research_principle": "Body shape, pose variety and gameplay-background readability must be established before polish.",
+      "source_ids": [
+        "S07",
+        "S17"
+      ],
+      "production_rule": "Judge new body-only poses at actual gameplay size and compare transitions. Require the chosen later law to survive flame, texture and color removal."
+    }
+  ]
+}

@@ -6,15 +6,22 @@ const PIVOT := Vector2(40.499926203, 75.579576591)
 const BRIDGE_TIME := 2.0 / 60.0
 const RUN_RETURN_FRAME := 13 # existing source preview's matched RUN_14
 var state: String = "IDLE"
+var roll_duration: float = 0.29
+var roll_cooldown: float = 0.35
+var _roll_duration_frames: float = 15.0 / 30.0
+var _roll_cooldown_s: float = 0.35
 var state_time: float = 0.0
 var state_changes: int = 0
 var body := AnimatedSprite2D.new()
 var flame: Node2D
 var anchors: Dictionary
 var _skid_left: float = 0.0
+var _roll_timescale: float = 1.0
 var _last_direction: int = 1
 var neck_local := Vector2.ZERO
 var _roll_clock: float = 0.0
+var _roll_active: bool = false
+var _roll_end_t: float = 0.0
 var _entry_family: String = "IDLE"
 var _exit_poses: Array[Dictionary] = []
 var _exit_clock: float = 0.0
@@ -63,6 +70,9 @@ func advance(dt: float, input_dir: float, release_skid: bool, old_velocity: Vect
 	var next := "IDLE"
 	if player.roll_remaining > 0.0:
 		next = "DODGE_ROLL"
+		if not _roll_active:
+			_roll_active = true
+			_roll_end_t = _roll_duration_frames
 	elif not player.is_on_floor():
 		next = "JUMP"
 	elif _skid_left > 0.0:
@@ -87,8 +97,11 @@ func advance(dt: float, input_dir: float, release_skid: bool, old_velocity: Vect
 	if state == "DODGE_ROLL":
 		# One tumble per accepted action. Rejected presses never rewind or extend it.
 		if previous == state:
-			_roll_clock += dt
-		_last_roll_frame = mini(int(_roll_clock * 60.0 + 0.00001), 17)
+			_roll_clock += dt * _roll_timescale
+			if _roll_clock >= _roll_end_t and _roll_active:
+				_roll_active = false
+				player._end_movement_roll()
+			_last_roll_frame = mini(int(_roll_clock * 60.0 + 0.00001), 17)
 		if _roll_clock < BRIDGE_TIME - 0.00001:
 			var entry_index := mini(int(_roll_clock * 60.0 + 0.00001), 1)
 			_apply_frame(entry_index, "ROLL_IN_" + _entry_family)
@@ -105,7 +118,7 @@ func advance(dt: float, input_dir: float, release_skid: bool, old_velocity: Vect
 			if state == "RUN":
 				# Exact target cel was already shown on the preceding update.
 				state_time = float(RUN_RETURN_FRAME) / 30.0 + 1.0 / 60.0
-			_apply_frame(int(state_time * 30.0 + 0.00001))
+		_apply_frame(int(state_time * 30.0 + 0.00001))
 	else:
 		_apply_frame(int(state_time * 30.0 + 0.00001))
 	# Keep visual pixels on the pixel grid; never snap the physics body.

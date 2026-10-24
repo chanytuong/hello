@@ -1,0 +1,498 @@
+[
+	{
+		"a2_cache": 15,
+		"attack_clock": -1.0,
+		"base_cache": 15,
+		"body_visible": false,
+		"camera_position": [
+			640.0,
+			360.0
+		],
+		"camera_zoom": [
+			1.0,
+			1.0
+		],
+		"canvas_transform": "[X: (1.0, 0.0), Y: (0.0, 1.0), O: (0.0, 0.0)]",
+		"capture_error": 0,
+		"engine": {
+			"build": "official",
+			"hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+			"hex": 263938,
+			"major": 4,
+			"minor": 7,
+			"patch": 2,
+			"status": "stable",
+			"string": "4.7.2-stable (official)",
+			"timestamp": 0
+		},
+		"facing": 1,
+		"frame": "neutral.png",
+		"frozen": false,
+		"hp": 5,
+		"hurt_clock": -0.38,
+		"label": "01_idle",
+		"move_state": 0,
+		"on_floor": true,
+		"player_position": [
+			140.0,
+			599.954711914063
+		],
+		"sprite_offset": [
+			-32.0,
+			-62.0
+		],
+		"sprite_rotation": 0.0,
+		"sprite_scale": [
+			1.0,
+			1.0
+		],
+		"texture": "res://art/prototype/character_a2/neutral.png",
+		"texture_filter": 1,
+		"texture_size": [
+			64,
+			64
+		],
+		"velocity": [
+			0.0,
+			0.0
+		],
+		"window_size": [
+			1280,
+			720
+		]
+	},
+	{
+		"a2_cache": 15,
+		"attack_clock": -1.0,
+		"base_cache": 15,
+		"body_visible": false,
+		"camera_position": [
+			640.0,
+			360.0
+		],
+		"camera_zoom": [
+			1.0,
+			1.0
+		],
+		"canvas_transform": "[X: (1.0, 0.0), Y: (0.0, 1.0), O: (0.0, 0.0)]",
+		"capture_error": 0,
+		"engine": {
+			"build": "official",
+			"hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+			"hex": 263938,
+			"major": 4,
+			"minor": 7,
+			"patch": 2,
+			"status": "stable",
+			"string": "4.7.2-stable (official)",
+			"timestamp": 0
+		},
+		"facing": 1,
+		"frame": "run_02.png",
+		"frozen": false,
+		"hp": 5,
+		"hurt_clock": -0.58,
+		"label": "02_run",
+		"move_state": 0,
+		"on_floor": true,
+		"player_position": [
+			183.165740966797,
+			599.934875488281
+		],
+		"sprite_offset": [
+			-32.0,
+			-62.0
+		],
+		"sprite_rotation": 0.0,
+		"sprite_scale": [
+			1.0,
+			1.0
+		],
+		"texture": "res://art/prototype/character_a2/run_02.png",
+		"texture_filter": 1,
+		"texture_size": [
+			64,
+			64
+		],
+		"velocity": [
+			280.0,
+			0.0
+		],
+		"window_size": [
+			1280,
+			720
+		]
+	},
+	{
+		"a2_cache": 15,
+		"attack_clock": -1.0,
+		"base_cache": 15,
+		"body_visible": false,
+		"camera_position": [
+			640.0,
+			360.0
+		],
+		"camera_zoom": [
+			1.0,
+			1.0
+		],
+		"canvas_transform": "[X: (1.0, 0.0), Y: (0.0, 1.0), O: (0.0, 0.0)]",
+		"capture_error": 0,
+		"engine": {
+			"build": "official",
+			"hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+			"hex": 263938,
+			"major": 4,
+			"minor": 7,
+			"patch": 2,
+			"status": "stable",
+			"string": "4.7.2-stable (official)",
+			"timestamp": 0
+		},
+		"facing": 1,
+		"frame": "neutral.png",
+		"frozen": false,
+		"hp": 5,
+		"hurt_clock": -0.713333333333334,
+		"label": "03_jump_rise",
+		"move_state": 0,
+		"on_floor": false,
+		"player_position": [
+			200.946594238281,
+			530.59326171875
+		],
+		"sprite_offset": [
+			-32.0,
+			-62.0
+		],
+		"sprite_rotation": 0.0,
+		"sprite_scale": [
+			1.0,
+			1.0
+		],
+		"texture": "res://art/prototype/character_a2/neutral.png",
+		"texture_filter": 1,
+		"texture_size": [
+			64,
+			64
+		],
+		"velocity": [
+			39.9999961853027,
+			-426.666625976563
+		],
+		"window_size": [
+			1280,
+			720
+		]
+	},
+	{
+		"a2_cache": 15,
+		"attack_clock": -1.0,
+		"base_cache": 15,
+		"body_visible": false,
+		"camera_position": [
+			640.0,
+			360.0
+		],
+		"camera_zoom": [
+			1.0,
+			1.0
+		],
+		"canvas_transform": "[X: (1.0, 0.0), Y: (0.0, 1.0), O: (0.0, 0.0)]",
+		"capture_error": 0,
+		"engine": {
+			"build": "official",
+			"hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+			"hex": 263938,
+			"major": 4,
+			"minor": 7,
+			"patch": 2,
+			"status": "stable",
+			"string": "4.7.2-stable (official)",
+			"timestamp": 0
+		},
+		"facing": 1,
+		"frame": "neutral.png",
+		"frozen": false,
+		"hp": 5,
+		"hurt_clock": -0.996666666666668,
+		"label": "04_fall",
+		"move_state": 0,
+		"on_floor": false,
+		"player_position": [
+			201.168823242188,
+			560.193298339844
+		],
+		"sprite_offset": [
+			-32.0,
+			-62.0
+		],
+		"sprite_rotation": 0.0,
+		"sprite_scale": [
+			1.0,
+			1.0
+		],
+		"texture": "res://art/prototype/character_a2/neutral.png",
+		"texture_filter": 1,
+		"texture_size": [
+			64,
+			64
+		],
+		"velocity": [
+			0.0,
+			453.333374023438
+		],
+		"window_size": [
+			1280,
+			720
+		]
+	},
+	{
+		"a2_cache": 15,
+		"attack_clock": -1.0,
+		"base_cache": 15,
+		"body_visible": false,
+		"camera_position": [
+			640.0,
+			360.0
+		],
+		"camera_zoom": [
+			1.0,
+			1.0
+		],
+		"canvas_transform": "[X: (1.0, 0.0), Y: (0.0, 1.0), O: (0.0, 0.0)]",
+		"capture_error": 0,
+		"engine": {
+			"build": "official",
+			"hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+			"hex": 263938,
+			"major": 4,
+			"minor": 7,
+			"patch": 2,
+			"status": "stable",
+			"string": "4.7.2-stable (official)",
+			"timestamp": 0
+		},
+		"facing": 1,
+		"frame": "d1_hold.png",
+		"frozen": false,
+		"hp": 5,
+		"hurt_clock": -1.51333333333333,
+		"label": "05_dash",
+		"move_state": 1,
+		"on_floor": true,
+		"player_position": [
+			222.83528137207,
+			599.929443359375
+		],
+		"sprite_offset": [
+			-32.0,
+			-62.0
+		],
+		"sprite_rotation": 0.0,
+		"sprite_scale": [
+			1.0,
+			1.0
+		],
+		"texture": "res://art/prototype/character_a2/d1_hold.png",
+		"texture_filter": 1,
+		"texture_size": [
+			64,
+			64
+		],
+		"velocity": [
+			650.0,
+			0.0
+		],
+		"window_size": [
+			1280,
+			720
+		]
+	},
+	{
+		"a2_cache": 15,
+		"attack_clock": 0.0666666666666667,
+		"base_cache": 15,
+		"body_visible": false,
+		"camera_position": [
+			640.0,
+			360.0
+		],
+		"camera_zoom": [
+			1.0,
+			1.0
+		],
+		"canvas_transform": "[X: (1.0, 0.0), Y: (0.0, 1.0), O: (0.0, 0.0)]",
+		"capture_error": 0,
+		"engine": {
+			"build": "official",
+			"hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+			"hex": 263938,
+			"major": 4,
+			"minor": 7,
+			"patch": 2,
+			"status": "stable",
+			"string": "4.7.2-stable (official)",
+			"timestamp": 0
+		},
+		"facing": 1,
+		"frame": "attack_a1.png",
+		"frozen": false,
+		"hp": 5,
+		"hurt_clock": -1.86333333333333,
+		"label": "06_attack_active",
+		"move_state": 0,
+		"on_floor": true,
+		"player_position": [
+			384.419891357422,
+			599.933715820313
+		],
+		"sprite_offset": [
+			-32.0,
+			-62.0
+		],
+		"sprite_rotation": 0.0,
+		"sprite_scale": [
+			1.0,
+			1.0
+		],
+		"texture": "res://art/prototype/character_a2/attack_a1.png",
+		"texture_filter": 1,
+		"texture_size": [
+			64,
+			64
+		],
+		"velocity": [
+			256.0,
+			0.0
+		],
+		"window_size": [
+			1280,
+			720
+		]
+	},
+	{
+		"a2_cache": 15,
+		"attack_clock": -1.0,
+		"base_cache": 15,
+		"body_visible": false,
+		"camera_position": [
+			640.0,
+			360.0
+		],
+		"camera_zoom": [
+			1.0,
+			1.0
+		],
+		"canvas_transform": "[X: (1.0, 0.0), Y: (0.0, 1.0), O: (3.928888, 4.563971)]",
+		"capture_error": 0,
+		"engine": {
+			"build": "official",
+			"hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+			"hex": 263938,
+			"major": 4,
+			"minor": 7,
+			"patch": 2,
+			"status": "stable",
+			"string": "4.7.2-stable (official)",
+			"timestamp": 0
+		},
+		"facing": 1,
+		"frame": "neutral.png",
+		"frozen": true,
+		"hp": 4,
+		"hurt_clock": -0.13,
+		"label": "07_blink_transition",
+		"move_state": 0,
+		"on_floor": true,
+		"player_position": [
+			426.537078857422,
+			599.933776855469
+		],
+		"sprite_offset": [
+			-32.0,
+			-62.0
+		],
+		"sprite_rotation": 0.0,
+		"sprite_scale": [
+			1.0,
+			1.0
+		],
+		"texture": "res://art/prototype/character_a2/neutral.png",
+		"texture_filter": 1,
+		"texture_size": [
+			64,
+			64
+		],
+		"velocity": [
+			0.0,
+			0.0
+		],
+		"window_size": [
+			1280,
+			720
+		]
+	},
+	{
+		"a2_cache": 15,
+		"attack_clock": -1.0,
+		"base_cache": 15,
+		"body_visible": false,
+		"camera_position": [
+			640.0,
+			360.0
+		],
+		"camera_zoom": [
+			1.0,
+			1.0
+		],
+		"canvas_transform": "[X: (1.0, 0.0), Y: (0.0, 1.0), O: (-0.02823, -0.824477)]",
+		"capture_error": 0,
+		"engine": {
+			"build": "official",
+			"hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+			"hex": 263938,
+			"major": 4,
+			"minor": 7,
+			"patch": 2,
+			"status": "stable",
+			"string": "4.7.2-stable (official)",
+			"timestamp": 0
+		},
+		"facing": 1,
+		"frame": "neutral.png",
+		"frozen": false,
+		"hp": 4,
+		"hurt_clock": -0.296666666666667,
+		"label": "08_blink_arrival",
+		"move_state": 0,
+		"on_floor": true,
+		"player_position": [
+			426.537078857422,
+			599.933776855469
+		],
+		"sprite_offset": [
+			-32.0,
+			-62.0
+		],
+		"sprite_rotation": 0.0,
+		"sprite_scale": [
+			1.0,
+			1.0
+		],
+		"texture": "res://art/prototype/character_a2/neutral.png",
+		"texture_filter": 1,
+		"texture_size": [
+			64,
+			64
+		],
+		"velocity": [
+			0.0,
+			0.0
+		],
+		"window_size": [
+			1280,
+			720
+		]
+	}
+]

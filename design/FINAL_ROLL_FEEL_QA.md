@@ -4,6 +4,8 @@
 
 > Subsequent visual repair: [Roll visual transition QA](ROLL_VISUAL_TRANSITION_QA.md) replaces the transition presentation described here. The approved 0.29 s / approximately 100 px controller tuning is preserved.
 
+> Current input contract (2026-10-24): directional input and extra roll presses no longer cancel an accepted roll; it plays its full clip and only jump-cancel / Motion Swap interruption end it early.
+
 2026-10-18 · `E:\neverlookback` · Godot 4.7.2 stable · Windows / Compatibility / ANGLE.
 
 **The final roll measures 100 px with 0.29 s configured duration.** Ground/air use and immediate input cancellation remain. Human gameplay and visual approval are pending. This pass stops at roll tuning; M1/M2 production has not started.

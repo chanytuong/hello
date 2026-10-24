@@ -1,0 +1,18 @@
+{
+    "tag":  "before_controlled",
+    "capture_start_unix_ms":  1792721110703,
+    "capture_end_unix_ms":  1792721136858,
+    "raw":  "E:\\neverlookback\\scripts\\lab\\m1_fps_debug\\before_controlled_raw.mp4",
+    "json":  "E:\\neverlookback\\scripts\\lab\\m1_fps_debug\\record_before_controlled.json",
+    "sequence_start_unix_ms":  1792721110854,
+    "sequence_end_unix_ms":  1792721121521,
+    "trim_start_s":  0.151,
+    "trim_duration_s":  10.667,
+    "hits":  9,
+    "strikes":  {
+                    "1":  3,
+                    "2":  3,
+                    "3":  3
+                },
+    "final":  "E:\\neverlookback\\scripts\\lab\\m1_fps_debug\\M1_FPS_BEFORE_CONTROLLED.mp4"
+}

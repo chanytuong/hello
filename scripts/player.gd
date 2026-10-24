@@ -23,6 +23,7 @@ enum MoveState { NORMAL, DASH }
 @export var m1_combo_enabled: bool = false
 @export var m1_rebuild_enabled: bool = false
 @export var m1_natural_enabled: bool = false
+@export var m1_crowbar_enabled: bool = false
 @export var roll_duration: float = 0.29
 @export var roll_speed: float = 333.3333333 # 100 px across 18 active ticks at 60 Hz
 @export var roll_cooldown: float = 0.35 # starts on completion or cancellation
@@ -340,11 +341,17 @@ func _ready() -> void:
 	if movement_preview:
 		body_vis.hide()
 		movement_visual = preload("res://scripts/iven_movement_visual.gd").new()
+		movement_visual.roll_duration = 0.50
+		movement_visual.roll_cooldown = 0.35
 		movement_visual.name = "IvenVisual"
 		add_child(movement_visual)
 		jumped.connect(_on_movement_jump)
-		if m1_combo_enabled or m1_rebuild_enabled or m1_natural_enabled:
-			var combo := (preload("res://scripts/combat/m1_natural_combo.gd").new() if m1_natural_enabled else (preload("res://scripts/combat/m1_rebuild.gd").new() if m1_rebuild_enabled else preload("res://scripts/combat/m1_combo.gd").new()))
+		if m1_combo_enabled or m1_rebuild_enabled or m1_natural_enabled or m1_crowbar_enabled:
+			var combo: NLBM1Combo
+			if m1_crowbar_enabled:combo=preload("res://scripts/combat/m1_crowbar.gd").new()
+			elif m1_natural_enabled:combo=preload("res://scripts/combat/m1_natural_combo.gd").new()
+			elif m1_rebuild_enabled:combo=preload("res://scripts/combat/m1_rebuild.gd").new()
+			else:combo=preload("res://scripts/combat/m1_combo.gd").new()
 			combo.name = "M1Combo"
 			add_child(combo)
 	else:
@@ -461,12 +468,14 @@ func _movement_physics(delta: float) -> void:
 	if was_rolling and roll_remaining <= 0.0 and not _movement_jumped:
 		velocity.x = dir * run_speed # resume intended RUN / IDLE speed without overshoot or recovery
 	var fresh_roll := Input.is_action_just_pressed("dash")
-	var fresh_direction := dir != 0.0 and (dir != _previous_input or Input.is_action_just_pressed("move_left") or Input.is_action_just_pressed("move_right"))
-	var released_direction := dir == 0.0 and _previous_input != 0.0
-	if roll_remaining > 0.0 and (fresh_direction or released_direction):
-		_end_movement_roll()
-		velocity.x = dir * run_speed # immediate intentional reversal, no residual roll drive
-	if _movement_jumped:
+	# An accepted roll plays its full clip: extra roll presses and direction
+	# changes are ignored instead of cancelling it, so mashing can neither cut
+	# the tumble short nor rewind its frames. Jump and Motion Swap still interrupt.
+	if roll_remaining > 0.0:
+		_dash_buf = 0.0
+		velocity.x = float(roll_direction) * roll_speed # assignment, never accumulated impulses
+		facing = roll_direction
+	elif _movement_jumped:
 		_dash_buf = 0.0 # simultaneous jump wins; never queue a surprise roll
 	elif fresh_roll and can_movement_roll():
 		roll_direction = facing if dir == 0.0 else (1 if dir > 0.0 else -1)
@@ -474,9 +483,7 @@ func _movement_physics(delta: float) -> void:
 		roll_remaining = roll_duration
 		_dash_buf = 0.0
 		dashed.emit() # existing movement notification; no immunity or attack
-	if roll_remaining > 0.0:
-		velocity.x = float(roll_direction) * roll_speed # assignment, never accumulated impulses
-		facing = roll_direction
+		velocity.x = float(roll_direction) * roll_speed
 	if is_instance_valid(movement_attack_preview) and movement_attack_preview.has_method("apply_attack_motion"):
 		movement_attack_preview.apply_attack_motion(delta)
 	# Carrier step FIRST, through the same collision solver: a belt can never

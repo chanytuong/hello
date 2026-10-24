@@ -1,0 +1,207 @@
+extends SceneTree
+## PHASE 11 - art-test capture: drive real input, screenshot the real renderer,
+## print the frame the sprite actually showed next to the combat state that
+## chose it. Run NON-headless (drop --headless) or there are no pixels.
+## Output: art/prototype/character/capture/*.png + one log line per shot.
+## Shots trigger on frame STATE (first time a frame name is shown), so
+## single-tick frames (d0_entry, a0) cannot be skipped by frame counting.
+
+const SHOT_DIR := "res://art/prototype/character/capture/"
+const MAX_F := 4000   # hard stop so a missed trigger never hangs the run
+
+var _f: int = 0
+var _t: int = 0
+var _shot_n: int = 0
+var _vx_peak: float = 0.0
+var _phase: String = "boot"
+var _seen: Dictionary = {}
+var _main: Node = null
+var _p: Node = null
+
+func _init() -> void:
+	DirAccess.make_dir_recursive_absolute(SHOT_DIR)
+	_main = load("res://scenes/main.tscn").instantiate()
+	get_root().add_child(_main)
+
+func _player() -> Node:
+	if _p == null:
+		_p = _main.get_node("Player")
+	return _p
+
+func _first(key: String) -> bool:
+	# true exactly once per phase for this key
+	if _seen.has(key):
+		return false
+	_seen[key] = true
+	return true
+
+func _shot(tag: String) -> void:
+	_shot_n += 1
+	var p := _player()
+	var tex_path := "none"
+	var sx := 0.0
+	var shown := "?"
+	if p.sprite != null:
+		sx = p.sprite.scale.x
+		if p.sprite.texture != null:
+			tex_path = str(p.sprite.texture.resource_path).get_file()
+		shown = p._frame_shown
+	get_root().get_texture().get_image().save_png(SHOT_DIR + tag + ".png")
+	print("SHOT %02d %-22s tex=%-14s shown=%-14s sx=%.0f body_vis=%s | face=%d vx=%7.1f x=%7.1f y=%6.1f | move=%d atk_t=%.3f bite=%-5s frozen=%-5s perception=%d" % [
+		_shot_n, tag, tex_path, shown, sx, str(p.body_vis.visible),
+		p.facing, p.velocity.x, p.global_position.x, p.global_position.y,
+		p.move_state, p._atk_t, str(p._bite_done), str(p.fight_frozen),
+		p.perception_pose])
+
+func _next(phase: String) -> void:
+	_phase = phase
+	_t = 0
+	_seen = {}
+
+func _teleport_melee(p: Node, dx: float) -> void:
+	var m = _main.get_node_or_null("Melee")
+	if m != null:
+		m.global_position.x = clampf(p.global_position.x + dx, 70.0, 1200.0)
+		m.global_position.y = 540.0
+	print("  melee_x=%.0f player_x=%.0f" % [
+		m.global_position.x if m != null else -1.0, p.global_position.x])
+
+func _physics_process(_delta: float) -> bool:
+	_f += 1
+	if _f >= MAX_F:
+		print("CAPTURE_TIMEOUT phase=%s shots=%d" % [_phase, _shot_n])
+		quit(1)
+		return true
+	if _f < 30:
+		return false
+	_t += 1
+	var p := _player()
+	match _phase:
+		"boot":
+			print("BOOT sprite_loaded=%s body_hidden=%s cache_files=%d pos=%s" % [
+				str(p.sprite != null and p.sprite.texture != null),
+				str(not p.body_vis.visible), p._frame_cache.size(),
+				str(p.global_position)])
+			_next("idle_r")
+		"idle_r":
+			if _t >= 15:
+				_shot("01_idle_right")
+				Input.action_press("move_right")
+				_next("run_r")
+		"run_r":
+			_vx_peak = maxf(_vx_peak, absf(p.velocity.x))
+			if p._frame_shown.begins_with("run_") and _first(p._frame_shown) and _shot_n <= 4:
+				_shot("02_run_r_" + p._frame_shown)
+			if _shot_n >= 5:
+				Input.action_release("move_right")
+				print("RUN_R peak_vx=%.0f (tuning 280)" % _vx_peak)
+				_next("settle_l")
+			elif _t > 400:
+				print("WARN run_r stuck at shots=%d" % _shot_n)
+				Input.action_release("move_right")
+				_next("settle_l")
+		"settle_l":
+			if absf(p.velocity.x) < 5.0 and _t >= 8:
+				Input.action_press("move_left")
+				_next("run_l")
+		"run_l":
+			if p._frame_shown.begins_with("run_") and _first(p._frame_shown) and _shot_n <= 7:
+				_shot("03_run_l_" + p._frame_shown)
+			if _shot_n >= 7:
+				Input.action_release("move_left")
+				_next("settle_idle")
+			elif _t > 300:
+				print("WARN run_l stuck at shots=%d" % _shot_n)
+				Input.action_release("move_left")
+				_next("settle_idle")
+		"settle_idle":
+			if absf(p.velocity.x) < 5.0 and _t >= 8:
+				_shot("04_idle_left")
+				_next("dash_l")
+		"dash_l":
+			if _t == 2:
+				Input.action_press("dash")
+			if p.move_state == 1:
+				if p._frame_shown == "d0_entry.png" and _first("e"):
+					_shot("05_dash_entry")
+				elif p._frame_shown == "d1_hold.png" and _first("h"):
+					_shot("06_dash_hold")
+				elif p._frame_shown == "d2_exit.png" and _first("x"):
+					_shot("07_dash_exit")
+			if _seen.has("e") and _seen.has("h") and _seen.has("x"):
+				Input.action_release("dash")
+				_next("settle_turn")
+			elif _t > 200:
+				print("WARN dash stuck seen=%s" % str(_seen))
+				Input.action_release("dash")
+				_next("settle_turn")
+		"settle_turn":
+			if absf(p.velocity.x) < 5.0 and _t >= 14:
+				Input.action_press("move_right")
+				_next("turn_r")
+		"turn_r":
+			if _t >= 6:
+				Input.action_release("move_right")
+				_next("settle_whiff")
+		"settle_whiff":
+			if absf(p.velocity.x) < 5.0 and _t >= 8:
+				_teleport_melee(p, -420.0)   # WHIFF setup: scenario, not logic
+				Input.action_press("attack")
+				_next("whiff")
+		"whiff":
+			if p._frame_shown == "attack_a0.png" and _first("a0"):
+				_shot("08_whiff_a0_coil")
+			elif p._frame_shown == "attack_a1.png" and _first("a1"):
+				_shot("09_whiff_a1_commit")
+			elif p._frame_shown == "attack_a3.png" and _first("a3"):
+				_shot("10_whiff_a3_follow")
+			elif p._frame_shown == "attack_a4.png" and _first("a4"):
+				_shot("11_whiff_a4_recovery")
+				Input.action_release("attack")
+				_next("wait_cd")
+			elif _t > 200:
+				print("WARN whiff stuck shown=%s atk_t=%.3f" % [p._frame_shown, p._atk_t])
+				Input.action_release("attack")
+				_next("wait_cd")
+		"wait_cd":
+			# swing buffer is 0.6 s; wait it fully out before the confirmed hit
+			if p._atk_t < 0.0 and p._atk_cd <= 0.0 and _t >= 30:
+				_teleport_melee(p, 56.0)     # HIT setup: within reach 82
+				Input.action_press("attack")
+				_next("hit")
+		"hit":
+			if p._frame_shown == "attack_a0.png" and _first("a0"):
+				_shot("12_hit_a0_coil")
+			elif p._frame_shown == "attack_a2.png" and _first("a2"):
+				_shot("13_hit_a2_contact")
+			elif p.fight_frozen and p._frame_shown == "attack_a2.png" and _first("fz"):
+				_shot("14_hit_a2_frozen")
+			elif p._frame_shown == "attack_a4.png" and _first("a4"):
+				_shot("15_hit_a4_recovery")
+				Input.action_release("attack")
+				_next("jump")
+			elif _t > 200:
+				print("WARN hit stuck shown=%s bite=%s" % [p._frame_shown, str(p._bite_done)])
+				Input.action_release("attack")
+				_next("jump")
+		"jump":
+			if _t == 3:
+				Input.action_press("jump")
+			if not p.is_on_floor() and _first("air"):
+				_shot("16_air_neutral")
+				Input.action_release("jump")
+				_next("final_idle")
+			elif _t > 300:
+				Input.action_release("jump")
+				_next("final_idle")
+		"final_idle":
+			if p.is_on_floor() and absf(p.velocity.x) < 5.0 and _t >= 20:
+				_shot("17_final_idle")
+				_next("done")
+			elif _t > 300:
+				_next("done")
+		"done":
+			print("CAPTURE_DONE shots=%d" % _shot_n)
+			quit(0)
+			return true
+	return false

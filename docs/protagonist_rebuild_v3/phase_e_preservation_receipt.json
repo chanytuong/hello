@@ -1,0 +1,143 @@
+{
+  "phase": "E",
+  "verified_at": "2026-10-06T13:33:53.050Z",
+  "selected_law": "Brace, then drive",
+  "one_sentence": "The support leg drives the pelvis while the ribcage stays enclosed beneath the neckward right shoulder, opens briefly for the action, and returns over support before the arms and attached flame settle.",
+  "hybrid": false,
+  "source_files_checked": 45,
+  "source_changes": [],
+  "legacy_runtime_pngs_checked": 30,
+  "legacy_runtime_png_changes": [],
+  "reference_unchanged": true,
+  "reference_sha256": "fe48d42836313d2ec7b8191e943d7b49d85fb00dbd5baee11eb7e1af8980db9d",
+  "phase_D_artifacts_checked": 19,
+  "phase_D_artifact_changes": [],
+  "evidence_read_receipt": [
+    {
+      "file": "project_runtime_audit.md",
+      "characters": 13042,
+      "lines": 116,
+      "sha256": "0bedbffa6801a9a40aba37a32f1601a5e3630eea5f498d75d76ec426bea72fdd",
+      "read_complete": true
+    },
+    {
+      "file": "reference_sprite_audit.md",
+      "characters": 15031,
+      "lines": 127,
+      "sha256": "475462f62045adcff3cf29c8e3ac8a176c919acfee4acf5a7ec47a6f87761e4b",
+      "read_complete": true
+    },
+    {
+      "file": "reference_animation_audit.md",
+      "characters": 50428,
+      "lines": 537,
+      "sha256": "2e5e3e29a134175fda688ae2c38ec00f7b0da37a9125f72b928bd0d2e71d9655",
+      "read_complete": true
+    },
+    {
+      "file": "research_synthesis.md",
+      "characters": 28891,
+      "lines": 165,
+      "sha256": "6d28ebc0b7dcc8cd69d179a49dec498bf6e875499458fa6d17a896611e02b8dc",
+      "read_complete": true
+    },
+    {
+      "file": "movement_law_candidates.md",
+      "characters": 13271,
+      "lines": 108,
+      "sha256": "7e4a17b6377f8e9447b201b52cba5b8e29cd5e24b39bb4a885faa0b023cdc351",
+      "read_complete": true
+    }
+  ],
+  "structural_evidence": {
+    "candidate_fields": 19,
+    "states_per_candidate": 12,
+    "criteria_per_state": 10,
+    "state_assessments": 240,
+    "interrupt_cases": 9,
+    "anti_generic_cases": 6,
+    "construction_probes": 12
+  },
+  "visual_studies_drawn": 0,
+  "production_raster_started": false,
+  "pixelorama_actions_in_phase_E": 0,
+  "godot_actions_in_phase_E": 0,
+  "python_pillow_actions_in_phase_E": 0,
+  "tests_rerun": false,
+  "gameplay_modified": false,
+  "legacy_deleted": false,
+  "output_validation": {
+    "required_evidence_count": true,
+    "required_evidence_fully_read": true,
+    "candidate_definitions_19": true,
+    "both_candidates_12_states": true,
+    "state_assessments_240": true,
+    "nine_interrupt_comparisons": true,
+    "six_generic_tests": true,
+    "twelve_construction_probes": true,
+    "limb_chain_and_mirror_checks": true,
+    "one_selected_law": true,
+    "five_invariants": true,
+    "eight_law_sections": true,
+    "runtime_frame_contract": true,
+    "grip_right_only": true,
+    "palette_15_unique_roles": true,
+    "no_raster_or_visual_claim": true,
+    "all_sources_unchanged": true,
+    "legacy_pngs_unchanged": true,
+    "reference_unchanged": true,
+    "phase_D_artifacts_unchanged": true,
+    "all_mirrored_limb_segments": true,
+    "checkpoint_E_complete_F_pending": true,
+    "local_links_resolve": true,
+    "drawable_overlap_rule_present": true
+  },
+  "phase_boundary": "E COMPLETE; F PENDING; STOP",
+  "output_files_written": [
+    "final_movement_law.md",
+    "phase_e_decision_matrix.md",
+    "phase_e_structural_checks.json",
+    "phase_f_constraints.md",
+    "phase_f_constraints.json",
+    "checkpoint.json",
+    "checkpoint.md",
+    "phase_e_preservation_receipt.json"
+  ],
+  "document_hashes": [
+    {
+      "path": "final_movement_law.md",
+      "bytes": 15996,
+      "sha256": "eca7c7ccf267ba33e6052992b4c53c13b1f453a5ae0971dcb0bf8efeb05a6773"
+    },
+    {
+      "path": "phase_e_decision_matrix.md",
+      "bytes": 41669,
+      "sha256": "8f9b15d3e06ceac618a41764e103ce281a4cf52792c7b6304baebd684e366168"
+    },
+    {
+      "path": "phase_e_structural_checks.json",
+      "bytes": 61384,
+      "sha256": "1a011398cf74de63019e133e032d342fb47bb52ddc11a208c7744c8ead760c09"
+    },
+    {
+      "path": "phase_f_constraints.md",
+      "bytes": 15064,
+      "sha256": "e3d3f0119dada10273e36965cbac178550c585857dc21f73748ae90915c581c3"
+    },
+    {
+      "path": "phase_f_constraints.json",
+      "bytes": 4915,
+      "sha256": "e1bfa1cbf3c035cb2b193f419f2ff2e2a19577702d636033c43e6029d2233e8b"
+    },
+    {
+      "path": "checkpoint.json",
+      "bytes": 14618,
+      "sha256": "5937814f2e4100b6c8e8fa5f45376bc7a56f24ca4772ad35e11c46560e429242"
+    },
+    {
+      "path": "checkpoint.md",
+      "bytes": 11984,
+      "sha256": "e229d8bba953535a3a293411e8ba4960f774f052c2e02d3a8e5f92ab90b91ca4"
+    }
+  ]
+}

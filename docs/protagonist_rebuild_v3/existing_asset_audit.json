@@ -1,0 +1,4067 @@
+[
+  {
+    "path": "art/prototype/character/neutral.png",
+    "sha256": "a82b810d539b619872d1d81faf8fd31b454d2a93cb24e676ffe141aa07760cd4",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      24,
+      5,
+      41,
+      63
+    ],
+    "visible_color_count": 11,
+    "visible_pixel_count": 747,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 280
+      },
+      {
+        "rgba": [
+          26,
+          30,
+          41,
+          255
+        ],
+        "pixels": 109
+      },
+      {
+        "rgba": [
+          46,
+          53,
+          71,
+          255
+        ],
+        "pixels": 102
+      },
+      {
+        "rgba": [
+          38,
+          44,
+          58,
+          255
+        ],
+        "pixels": 68
+      },
+      {
+        "rgba": [
+          70,
+          80,
+          100,
+          255
+        ],
+        "pixels": 48
+      },
+      {
+        "rgba": [
+          35,
+          40,
+          53,
+          255
+        ],
+        "pixels": 41
+      },
+      {
+        "rgba": [
+          29,
+          32,
+          48,
+          255
+        ],
+        "pixels": 25
+      },
+      {
+        "rgba": [
+          52,
+          59,
+          75,
+          255
+        ],
+        "pixels": 24
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 21
+      },
+      {
+        "rgba": [
+          49,
+          54,
+          73,
+          255
+        ],
+        "pixels": 19
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 10
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character/run_00.png",
+    "sha256": "b381cdb3c86b5638c93c45a4e60fd8bffac6b1abfa53476a8bd7e9f45a548f9c",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      17,
+      6,
+      51,
+      63
+    ],
+    "visible_color_count": 11,
+    "visible_pixel_count": 899,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 360
+      },
+      {
+        "rgba": [
+          46,
+          53,
+          71,
+          255
+        ],
+        "pixels": 137
+      },
+      {
+        "rgba": [
+          26,
+          30,
+          41,
+          255
+        ],
+        "pixels": 118
+      },
+      {
+        "rgba": [
+          38,
+          44,
+          58,
+          255
+        ],
+        "pixels": 74
+      },
+      {
+        "rgba": [
+          70,
+          80,
+          100,
+          255
+        ],
+        "pixels": 64
+      },
+      {
+        "rgba": [
+          35,
+          40,
+          53,
+          255
+        ],
+        "pixels": 40
+      },
+      {
+        "rgba": [
+          29,
+          32,
+          48,
+          255
+        ],
+        "pixels": 30
+      },
+      {
+        "rgba": [
+          52,
+          59,
+          75,
+          255
+        ],
+        "pixels": 28
+      },
+      {
+        "rgba": [
+          49,
+          54,
+          73,
+          255
+        ],
+        "pixels": 20
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 16
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 12
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character/run_01.png",
+    "sha256": "873278248245720352665c546f4330978f872e7529c832f2630ed50e82253fec",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      21,
+      7,
+      51,
+      64
+    ],
+    "visible_color_count": 11,
+    "visible_pixel_count": 835,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 325
+      },
+      {
+        "rgba": [
+          46,
+          53,
+          71,
+          255
+        ],
+        "pixels": 129
+      },
+      {
+        "rgba": [
+          26,
+          30,
+          41,
+          255
+        ],
+        "pixels": 106
+      },
+      {
+        "rgba": [
+          38,
+          44,
+          58,
+          255
+        ],
+        "pixels": 73
+      },
+      {
+        "rgba": [
+          70,
+          80,
+          100,
+          255
+        ],
+        "pixels": 61
+      },
+      {
+        "rgba": [
+          35,
+          40,
+          53,
+          255
+        ],
+        "pixels": 37
+      },
+      {
+        "rgba": [
+          29,
+          32,
+          48,
+          255
+        ],
+        "pixels": 30
+      },
+      {
+        "rgba": [
+          52,
+          59,
+          75,
+          255
+        ],
+        "pixels": 26
+      },
+      {
+        "rgba": [
+          49,
+          54,
+          73,
+          255
+        ],
+        "pixels": 20
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 16
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 12
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character/run_02.png",
+    "sha256": "ad6303cdc6c0b32c32a8d392408c4669cd59f0da6b120546254fe0ddea9e7d34",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      22,
+      4,
+      51,
+      63
+    ],
+    "visible_color_count": 11,
+    "visible_pixel_count": 796,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 309
+      },
+      {
+        "rgba": [
+          46,
+          53,
+          71,
+          255
+        ],
+        "pixels": 161
+      },
+      {
+        "rgba": [
+          70,
+          80,
+          100,
+          255
+        ],
+        "pixels": 69
+      },
+      {
+        "rgba": [
+          38,
+          44,
+          58,
+          255
+        ],
+        "pixels": 66
+      },
+      {
+        "rgba": [
+          26,
+          30,
+          41,
+          255
+        ],
+        "pixels": 50
+      },
+      {
+        "rgba": [
+          35,
+          40,
+          53,
+          255
+        ],
+        "pixels": 43
+      },
+      {
+        "rgba": [
+          29,
+          32,
+          48,
+          255
+        ],
+        "pixels": 26
+      },
+      {
+        "rgba": [
+          52,
+          59,
+          75,
+          255
+        ],
+        "pixels": 24
+      },
+      {
+        "rgba": [
+          49,
+          54,
+          73,
+          255
+        ],
+        "pixels": 20
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 17
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 11
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character/run_03.png",
+    "sha256": "26e1d12986ed914655e3e72ce7c91e0b006ceb1273c095efcc778990d312e5b1",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      17,
+      6,
+      51,
+      63
+    ],
+    "visible_color_count": 11,
+    "visible_pixel_count": 903,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 365
+      },
+      {
+        "rgba": [
+          46,
+          53,
+          71,
+          255
+        ],
+        "pixels": 139
+      },
+      {
+        "rgba": [
+          26,
+          30,
+          41,
+          255
+        ],
+        "pixels": 133
+      },
+      {
+        "rgba": [
+          70,
+          80,
+          100,
+          255
+        ],
+        "pixels": 63
+      },
+      {
+        "rgba": [
+          38,
+          44,
+          58,
+          255
+        ],
+        "pixels": 59
+      },
+      {
+        "rgba": [
+          35,
+          40,
+          53,
+          255
+        ],
+        "pixels": 44
+      },
+      {
+        "rgba": [
+          29,
+          32,
+          48,
+          255
+        ],
+        "pixels": 28
+      },
+      {
+        "rgba": [
+          52,
+          59,
+          75,
+          255
+        ],
+        "pixels": 27
+      },
+      {
+        "rgba": [
+          49,
+          54,
+          73,
+          255
+        ],
+        "pixels": 20
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 15
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 10
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character/run_04.png",
+    "sha256": "4ab48b939e14ad4973374f2b550c5536b115ebadb89e46dfaa15290bf355c2cd",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      23,
+      7,
+      51,
+      64
+    ],
+    "visible_color_count": 11,
+    "visible_pixel_count": 814,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 320
+      },
+      {
+        "rgba": [
+          46,
+          53,
+          71,
+          255
+        ],
+        "pixels": 131
+      },
+      {
+        "rgba": [
+          26,
+          30,
+          41,
+          255
+        ],
+        "pixels": 125
+      },
+      {
+        "rgba": [
+          70,
+          80,
+          100,
+          255
+        ],
+        "pixels": 60
+      },
+      {
+        "rgba": [
+          38,
+          44,
+          58,
+          255
+        ],
+        "pixels": 48
+      },
+      {
+        "rgba": [
+          35,
+          40,
+          53,
+          255
+        ],
+        "pixels": 38
+      },
+      {
+        "rgba": [
+          29,
+          32,
+          48,
+          255
+        ],
+        "pixels": 28
+      },
+      {
+        "rgba": [
+          49,
+          54,
+          73,
+          255
+        ],
+        "pixels": 20
+      },
+      {
+        "rgba": [
+          52,
+          59,
+          75,
+          255
+        ],
+        "pixels": 19
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 15
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 10
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character/run_05.png",
+    "sha256": "c9809486a21db2ab2c2b04c88fe776bffbb7f5668694374961c77e8acad86023",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      22,
+      4,
+      51,
+      63
+    ],
+    "visible_color_count": 11,
+    "visible_pixel_count": 784,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 307
+      },
+      {
+        "rgba": [
+          46,
+          53,
+          71,
+          255
+        ],
+        "pixels": 161
+      },
+      {
+        "rgba": [
+          70,
+          80,
+          100,
+          255
+        ],
+        "pixels": 69
+      },
+      {
+        "rgba": [
+          26,
+          30,
+          41,
+          255
+        ],
+        "pixels": 56
+      },
+      {
+        "rgba": [
+          38,
+          44,
+          58,
+          255
+        ],
+        "pixels": 54
+      },
+      {
+        "rgba": [
+          35,
+          40,
+          53,
+          255
+        ],
+        "pixels": 43
+      },
+      {
+        "rgba": [
+          29,
+          32,
+          48,
+          255
+        ],
+        "pixels": 26
+      },
+      {
+        "rgba": [
+          49,
+          54,
+          73,
+          255
+        ],
+        "pixels": 20
+      },
+      {
+        "rgba": [
+          52,
+          59,
+          75,
+          255
+        ],
+        "pixels": 20
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 17
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 11
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character/d0_entry.png",
+    "sha256": "7b745088f55a6622f054cd9e23a4bf88e20441278b36a5783bfb14c7a714f193",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      14,
+      12,
+      51,
+      64
+    ],
+    "visible_color_count": 11,
+    "visible_pixel_count": 805,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 344
+      },
+      {
+        "rgba": [
+          26,
+          30,
+          41,
+          255
+        ],
+        "pixels": 131
+      },
+      {
+        "rgba": [
+          46,
+          53,
+          71,
+          255
+        ],
+        "pixels": 89
+      },
+      {
+        "rgba": [
+          70,
+          80,
+          100,
+          255
+        ],
+        "pixels": 57
+      },
+      {
+        "rgba": [
+          38,
+          44,
+          58,
+          255
+        ],
+        "pixels": 57
+      },
+      {
+        "rgba": [
+          29,
+          32,
+          48,
+          255
+        ],
+        "pixels": 30
+      },
+      {
+        "rgba": [
+          35,
+          40,
+          53,
+          255
+        ],
+        "pixels": 26
+      },
+      {
+        "rgba": [
+          52,
+          59,
+          75,
+          255
+        ],
+        "pixels": 21
+      },
+      {
+        "rgba": [
+          49,
+          54,
+          73,
+          255
+        ],
+        "pixels": 20
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 16
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 14
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character/d1_hold.png",
+    "sha256": "f8dcfe2afa123f20e42fefd6dc510e106cd2c4f68412982c4183e4cb1e39cb57",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      12,
+      12,
+      52,
+      62
+    ],
+    "visible_color_count": 11,
+    "visible_pixel_count": 823,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 369
+      },
+      {
+        "rgba": [
+          26,
+          30,
+          41,
+          255
+        ],
+        "pixels": 123
+      },
+      {
+        "rgba": [
+          46,
+          53,
+          71,
+          255
+        ],
+        "pixels": 93
+      },
+      {
+        "rgba": [
+          38,
+          44,
+          58,
+          255
+        ],
+        "pixels": 61
+      },
+      {
+        "rgba": [
+          70,
+          80,
+          100,
+          255
+        ],
+        "pixels": 56
+      },
+      {
+        "rgba": [
+          29,
+          32,
+          48,
+          255
+        ],
+        "pixels": 29
+      },
+      {
+        "rgba": [
+          49,
+          54,
+          73,
+          255
+        ],
+        "pixels": 23
+      },
+      {
+        "rgba": [
+          52,
+          59,
+          75,
+          255
+        ],
+        "pixels": 21
+      },
+      {
+        "rgba": [
+          35,
+          40,
+          53,
+          255
+        ],
+        "pixels": 19
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 15
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 14
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character/d2_exit.png",
+    "sha256": "345d8e1a039495f443510f6a039469c36377c7e843ab4191774e632f74f7c357",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      19,
+      12,
+      51,
+      63
+    ],
+    "visible_color_count": 11,
+    "visible_pixel_count": 826,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 346
+      },
+      {
+        "rgba": [
+          26,
+          30,
+          41,
+          255
+        ],
+        "pixels": 112
+      },
+      {
+        "rgba": [
+          46,
+          53,
+          71,
+          255
+        ],
+        "pixels": 104
+      },
+      {
+        "rgba": [
+          38,
+          44,
+          58,
+          255
+        ],
+        "pixels": 71
+      },
+      {
+        "rgba": [
+          70,
+          80,
+          100,
+          255
+        ],
+        "pixels": 59
+      },
+      {
+        "rgba": [
+          29,
+          32,
+          48,
+          255
+        ],
+        "pixels": 30
+      },
+      {
+        "rgba": [
+          35,
+          40,
+          53,
+          255
+        ],
+        "pixels": 30
+      },
+      {
+        "rgba": [
+          52,
+          59,
+          75,
+          255
+        ],
+        "pixels": 25
+      },
+      {
+        "rgba": [
+          49,
+          54,
+          73,
+          255
+        ],
+        "pixels": 20
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 16
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 13
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character/attack_a0.png",
+    "sha256": "18c19f216aa5dace4ec25da54badd6780b77fb71414b36abfbad1c3ac31d625f",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      20,
+      6,
+      51,
+      63
+    ],
+    "visible_color_count": 11,
+    "visible_pixel_count": 899,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 370
+      },
+      {
+        "rgba": [
+          46,
+          53,
+          71,
+          255
+        ],
+        "pixels": 132
+      },
+      {
+        "rgba": [
+          26,
+          30,
+          41,
+          255
+        ],
+        "pixels": 128
+      },
+      {
+        "rgba": [
+          38,
+          44,
+          58,
+          255
+        ],
+        "pixels": 68
+      },
+      {
+        "rgba": [
+          70,
+          80,
+          100,
+          255
+        ],
+        "pixels": 58
+      },
+      {
+        "rgba": [
+          35,
+          40,
+          53,
+          255
+        ],
+        "pixels": 49
+      },
+      {
+        "rgba": [
+          29,
+          32,
+          48,
+          255
+        ],
+        "pixels": 27
+      },
+      {
+        "rgba": [
+          49,
+          54,
+          73,
+          255
+        ],
+        "pixels": 23
+      },
+      {
+        "rgba": [
+          52,
+          59,
+          75,
+          255
+        ],
+        "pixels": 23
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 11
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 10
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character/attack_a1.png",
+    "sha256": "a549290a16437795cd03b0c4f21c7048fd60c7f31f826a32b40dbd9b55ee1787",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      19,
+      6,
+      51,
+      63
+    ],
+    "visible_color_count": 11,
+    "visible_pixel_count": 909,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 369
+      },
+      {
+        "rgba": [
+          46,
+          53,
+          71,
+          255
+        ],
+        "pixels": 134
+      },
+      {
+        "rgba": [
+          26,
+          30,
+          41,
+          255
+        ],
+        "pixels": 129
+      },
+      {
+        "rgba": [
+          38,
+          44,
+          58,
+          255
+        ],
+        "pixels": 70
+      },
+      {
+        "rgba": [
+          70,
+          80,
+          100,
+          255
+        ],
+        "pixels": 64
+      },
+      {
+        "rgba": [
+          35,
+          40,
+          53,
+          255
+        ],
+        "pixels": 42
+      },
+      {
+        "rgba": [
+          52,
+          59,
+          75,
+          255
+        ],
+        "pixels": 27
+      },
+      {
+        "rgba": [
+          29,
+          32,
+          48,
+          255
+        ],
+        "pixels": 26
+      },
+      {
+        "rgba": [
+          49,
+          54,
+          73,
+          255
+        ],
+        "pixels": 20
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 17
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 11
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character/attack_a2.png",
+    "sha256": "2856263a6c2da423e188535f324052688c35b84ef6b74a2f299a727a50b273a7",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      15,
+      8,
+      51,
+      63
+    ],
+    "visible_color_count": 11,
+    "visible_pixel_count": 952,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 396
+      },
+      {
+        "rgba": [
+          46,
+          53,
+          71,
+          255
+        ],
+        "pixels": 129
+      },
+      {
+        "rgba": [
+          26,
+          30,
+          41,
+          255
+        ],
+        "pixels": 125
+      },
+      {
+        "rgba": [
+          38,
+          44,
+          58,
+          255
+        ],
+        "pixels": 83
+      },
+      {
+        "rgba": [
+          70,
+          80,
+          100,
+          255
+        ],
+        "pixels": 65
+      },
+      {
+        "rgba": [
+          35,
+          40,
+          53,
+          255
+        ],
+        "pixels": 32
+      },
+      {
+        "rgba": [
+          29,
+          32,
+          48,
+          255
+        ],
+        "pixels": 29
+      },
+      {
+        "rgba": [
+          52,
+          59,
+          75,
+          255
+        ],
+        "pixels": 27
+      },
+      {
+        "rgba": [
+          49,
+          54,
+          73,
+          255
+        ],
+        "pixels": 23
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 23
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 20
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character/attack_a3.png",
+    "sha256": "bde91bc03091f1f139d87190df2a9f5fdd025f83518ad77f0f19d0fb1f5d34b5",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      14,
+      9,
+      51,
+      63
+    ],
+    "visible_color_count": 11,
+    "visible_pixel_count": 965,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 413
+      },
+      {
+        "rgba": [
+          26,
+          30,
+          41,
+          255
+        ],
+        "pixels": 129
+      },
+      {
+        "rgba": [
+          46,
+          53,
+          71,
+          255
+        ],
+        "pixels": 113
+      },
+      {
+        "rgba": [
+          38,
+          44,
+          58,
+          255
+        ],
+        "pixels": 90
+      },
+      {
+        "rgba": [
+          70,
+          80,
+          100,
+          255
+        ],
+        "pixels": 66
+      },
+      {
+        "rgba": [
+          29,
+          32,
+          48,
+          255
+        ],
+        "pixels": 31
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 29
+      },
+      {
+        "rgba": [
+          35,
+          40,
+          53,
+          255
+        ],
+        "pixels": 29
+      },
+      {
+        "rgba": [
+          52,
+          59,
+          75,
+          255
+        ],
+        "pixels": 28
+      },
+      {
+        "rgba": [
+          49,
+          54,
+          73,
+          255
+        ],
+        "pixels": 23
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 14
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character/attack_a4.png",
+    "sha256": "0ecb71d79637c98ec701c9a61ce0fdd73745e5f5758d3ff74770b9e2378c11d8",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      19,
+      6,
+      51,
+      63
+    ],
+    "visible_color_count": 11,
+    "visible_pixel_count": 888,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 354
+      },
+      {
+        "rgba": [
+          46,
+          53,
+          71,
+          255
+        ],
+        "pixels": 133
+      },
+      {
+        "rgba": [
+          26,
+          30,
+          41,
+          255
+        ],
+        "pixels": 129
+      },
+      {
+        "rgba": [
+          38,
+          44,
+          58,
+          255
+        ],
+        "pixels": 66
+      },
+      {
+        "rgba": [
+          70,
+          80,
+          100,
+          255
+        ],
+        "pixels": 63
+      },
+      {
+        "rgba": [
+          35,
+          40,
+          53,
+          255
+        ],
+        "pixels": 43
+      },
+      {
+        "rgba": [
+          29,
+          32,
+          48,
+          255
+        ],
+        "pixels": 26
+      },
+      {
+        "rgba": [
+          52,
+          59,
+          75,
+          255
+        ],
+        "pixels": 26
+      },
+      {
+        "rgba": [
+          49,
+          54,
+          73,
+          255
+        ],
+        "pixels": 20
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 17
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 11
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character_a2/neutral.png",
+    "sha256": "398b7ea6d2d2cb500a2a43f8b60a87229afd9b8b7bc950dd40956bfdac048662",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      23,
+      7,
+      45,
+      63
+    ],
+    "visible_color_count": 14,
+    "visible_pixel_count": 728,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 284
+      },
+      {
+        "rgba": [
+          74,
+          85,
+          104,
+          255
+        ],
+        "pixels": 94
+      },
+      {
+        "rgba": [
+          30,
+          33,
+          42,
+          255
+        ],
+        "pixels": 65
+      },
+      {
+        "rgba": [
+          94,
+          107,
+          128,
+          255
+        ],
+        "pixels": 48
+      },
+      {
+        "rgba": [
+          54,
+          62,
+          76,
+          255
+        ],
+        "pixels": 39
+      },
+      {
+        "rgba": [
+          42,
+          46,
+          58,
+          255
+        ],
+        "pixels": 39
+      },
+      {
+        "rgba": [
+          45,
+          43,
+          44,
+          255
+        ],
+        "pixels": 25
+      },
+      {
+        "rgba": [
+          78,
+          70,
+          62,
+          255
+        ],
+        "pixels": 25
+      },
+      {
+        "rgba": [
+          122,
+          111,
+          98,
+          255
+        ],
+        "pixels": 24
+      },
+      {
+        "rgba": [
+          69,
+          66,
+          68,
+          255
+        ],
+        "pixels": 19
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 19
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 16
+      },
+      {
+        "rgba": [
+          201,
+          196,
+          186,
+          255
+        ],
+        "pixels": 16
+      },
+      {
+        "rgba": [
+          56,
+          61,
+          75,
+          255
+        ],
+        "pixels": 15
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character_a2/run_00.png",
+    "sha256": "fcd805d15978cb10e88df0953e211d219497d363b7e20ba2781447e2f30bf741",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      17,
+      8,
+      51,
+      63
+    ],
+    "visible_color_count": 14,
+    "visible_pixel_count": 895,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 367
+      },
+      {
+        "rgba": [
+          74,
+          85,
+          104,
+          255
+        ],
+        "pixels": 135
+      },
+      {
+        "rgba": [
+          30,
+          33,
+          42,
+          255
+        ],
+        "pixels": 68
+      },
+      {
+        "rgba": [
+          94,
+          107,
+          128,
+          255
+        ],
+        "pixels": 64
+      },
+      {
+        "rgba": [
+          42,
+          46,
+          58,
+          255
+        ],
+        "pixels": 46
+      },
+      {
+        "rgba": [
+          54,
+          62,
+          76,
+          255
+        ],
+        "pixels": 43
+      },
+      {
+        "rgba": [
+          78,
+          70,
+          62,
+          255
+        ],
+        "pixels": 34
+      },
+      {
+        "rgba": [
+          45,
+          43,
+          44,
+          255
+        ],
+        "pixels": 30
+      },
+      {
+        "rgba": [
+          122,
+          111,
+          98,
+          255
+        ],
+        "pixels": 24
+      },
+      {
+        "rgba": [
+          69,
+          66,
+          68,
+          255
+        ],
+        "pixels": 20
+      },
+      {
+        "rgba": [
+          56,
+          61,
+          75,
+          255
+        ],
+        "pixels": 19
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 16
+      },
+      {
+        "rgba": [
+          201,
+          196,
+          186,
+          255
+        ],
+        "pixels": 16
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 13
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character_a2/run_01.png",
+    "sha256": "245e34ef1164509e450110eda075a9746fb54d22be09cfdcfe1f46fe3d085ecc",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      20,
+      9,
+      51,
+      64
+    ],
+    "visible_color_count": 14,
+    "visible_pixel_count": 836,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 336
+      },
+      {
+        "rgba": [
+          74,
+          85,
+          104,
+          255
+        ],
+        "pixels": 133
+      },
+      {
+        "rgba": [
+          94,
+          107,
+          128,
+          255
+        ],
+        "pixels": 64
+      },
+      {
+        "rgba": [
+          30,
+          33,
+          42,
+          255
+        ],
+        "pixels": 49
+      },
+      {
+        "rgba": [
+          54,
+          62,
+          76,
+          255
+        ],
+        "pixels": 43
+      },
+      {
+        "rgba": [
+          42,
+          46,
+          58,
+          255
+        ],
+        "pixels": 38
+      },
+      {
+        "rgba": [
+          78,
+          70,
+          62,
+          255
+        ],
+        "pixels": 36
+      },
+      {
+        "rgba": [
+          45,
+          43,
+          44,
+          255
+        ],
+        "pixels": 30
+      },
+      {
+        "rgba": [
+          122,
+          111,
+          98,
+          255
+        ],
+        "pixels": 24
+      },
+      {
+        "rgba": [
+          69,
+          66,
+          68,
+          255
+        ],
+        "pixels": 20
+      },
+      {
+        "rgba": [
+          56,
+          61,
+          75,
+          255
+        ],
+        "pixels": 18
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 16
+      },
+      {
+        "rgba": [
+          201,
+          196,
+          186,
+          255
+        ],
+        "pixels": 16
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 13
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character_a2/run_02.png",
+    "sha256": "c93b86b9134429c2ded59cf02a4777d4caeab7d1369f8a1bc58beda412c892fe",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      21,
+      6,
+      51,
+      63
+    ],
+    "visible_color_count": 14,
+    "visible_pixel_count": 779,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 316
+      },
+      {
+        "rgba": [
+          74,
+          85,
+          104,
+          255
+        ],
+        "pixels": 142
+      },
+      {
+        "rgba": [
+          94,
+          107,
+          128,
+          255
+        ],
+        "pixels": 62
+      },
+      {
+        "rgba": [
+          54,
+          62,
+          76,
+          255
+        ],
+        "pixels": 43
+      },
+      {
+        "rgba": [
+          42,
+          46,
+          58,
+          255
+        ],
+        "pixels": 40
+      },
+      {
+        "rgba": [
+          30,
+          33,
+          42,
+          255
+        ],
+        "pixels": 31
+      },
+      {
+        "rgba": [
+          45,
+          43,
+          44,
+          255
+        ],
+        "pixels": 26
+      },
+      {
+        "rgba": [
+          122,
+          111,
+          98,
+          255
+        ],
+        "pixels": 24
+      },
+      {
+        "rgba": [
+          69,
+          66,
+          68,
+          255
+        ],
+        "pixels": 20
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 17
+      },
+      {
+        "rgba": [
+          56,
+          61,
+          75,
+          255
+        ],
+        "pixels": 16
+      },
+      {
+        "rgba": [
+          201,
+          196,
+          186,
+          255
+        ],
+        "pixels": 16
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 13
+      },
+      {
+        "rgba": [
+          78,
+          70,
+          62,
+          255
+        ],
+        "pixels": 13
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character_a2/run_03.png",
+    "sha256": "a2ba1235424dedc513369b2182d1127c8cfad1ab6d590936f0544011f4112369",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      17,
+      8,
+      51,
+      63
+    ],
+    "visible_color_count": 14,
+    "visible_pixel_count": 890,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 368
+      },
+      {
+        "rgba": [
+          74,
+          85,
+          104,
+          255
+        ],
+        "pixels": 137
+      },
+      {
+        "rgba": [
+          30,
+          33,
+          42,
+          255
+        ],
+        "pixels": 84
+      },
+      {
+        "rgba": [
+          94,
+          107,
+          128,
+          255
+        ],
+        "pixels": 63
+      },
+      {
+        "rgba": [
+          54,
+          62,
+          76,
+          255
+        ],
+        "pixels": 44
+      },
+      {
+        "rgba": [
+          78,
+          70,
+          62,
+          255
+        ],
+        "pixels": 40
+      },
+      {
+        "rgba": [
+          42,
+          46,
+          58,
+          255
+        ],
+        "pixels": 30
+      },
+      {
+        "rgba": [
+          45,
+          43,
+          44,
+          255
+        ],
+        "pixels": 28
+      },
+      {
+        "rgba": [
+          122,
+          111,
+          98,
+          255
+        ],
+        "pixels": 22
+      },
+      {
+        "rgba": [
+          69,
+          66,
+          68,
+          255
+        ],
+        "pixels": 20
+      },
+      {
+        "rgba": [
+          56,
+          61,
+          75,
+          255
+        ],
+        "pixels": 16
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 15
+      },
+      {
+        "rgba": [
+          201,
+          196,
+          186,
+          255
+        ],
+        "pixels": 12
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 11
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character_a2/run_04.png",
+    "sha256": "7aa7a72d57cadae1e7aaa0db32e379dd16676cca2bc5ce1498619de99b8e50d1",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      22,
+      9,
+      51,
+      64
+    ],
+    "visible_color_count": 14,
+    "visible_pixel_count": 804,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 317
+      },
+      {
+        "rgba": [
+          74,
+          85,
+          104,
+          255
+        ],
+        "pixels": 135
+      },
+      {
+        "rgba": [
+          30,
+          33,
+          42,
+          255
+        ],
+        "pixels": 72
+      },
+      {
+        "rgba": [
+          94,
+          107,
+          128,
+          255
+        ],
+        "pixels": 62
+      },
+      {
+        "rgba": [
+          54,
+          62,
+          76,
+          255
+        ],
+        "pixels": 44
+      },
+      {
+        "rgba": [
+          78,
+          70,
+          62,
+          255
+        ],
+        "pixels": 40
+      },
+      {
+        "rgba": [
+          45,
+          43,
+          44,
+          255
+        ],
+        "pixels": 28
+      },
+      {
+        "rgba": [
+          122,
+          111,
+          98,
+          255
+        ],
+        "pixels": 24
+      },
+      {
+        "rgba": [
+          69,
+          66,
+          68,
+          255
+        ],
+        "pixels": 20
+      },
+      {
+        "rgba": [
+          201,
+          196,
+          186,
+          255
+        ],
+        "pixels": 16
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 15
+      },
+      {
+        "rgba": [
+          42,
+          46,
+          58,
+          255
+        ],
+        "pixels": 12
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 11
+      },
+      {
+        "rgba": [
+          56,
+          61,
+          75,
+          255
+        ],
+        "pixels": 8
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character_a2/run_05.png",
+    "sha256": "5739976fd01f29dcdeeae5db1929d091387e4c219d24a5d1c96590bed1a06e9e",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      21,
+      6,
+      51,
+      63
+    ],
+    "visible_color_count": 14,
+    "visible_pixel_count": 769,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 312
+      },
+      {
+        "rgba": [
+          74,
+          85,
+          104,
+          255
+        ],
+        "pixels": 142
+      },
+      {
+        "rgba": [
+          94,
+          107,
+          128,
+          255
+        ],
+        "pixels": 62
+      },
+      {
+        "rgba": [
+          54,
+          62,
+          76,
+          255
+        ],
+        "pixels": 43
+      },
+      {
+        "rgba": [
+          42,
+          46,
+          58,
+          255
+        ],
+        "pixels": 30
+      },
+      {
+        "rgba": [
+          78,
+          70,
+          62,
+          255
+        ],
+        "pixels": 28
+      },
+      {
+        "rgba": [
+          45,
+          43,
+          44,
+          255
+        ],
+        "pixels": 26
+      },
+      {
+        "rgba": [
+          122,
+          111,
+          98,
+          255
+        ],
+        "pixels": 24
+      },
+      {
+        "rgba": [
+          30,
+          33,
+          42,
+          255
+        ],
+        "pixels": 23
+      },
+      {
+        "rgba": [
+          69,
+          66,
+          68,
+          255
+        ],
+        "pixels": 20
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 17
+      },
+      {
+        "rgba": [
+          201,
+          196,
+          186,
+          255
+        ],
+        "pixels": 16
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 13
+      },
+      {
+        "rgba": [
+          56,
+          61,
+          75,
+          255
+        ],
+        "pixels": 13
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character_a2/d0_entry.png",
+    "sha256": "42fc593235cf146c43cfae001810738f1bc0e888f21688f3e23f952a6a5e5fe9",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      14,
+      14,
+      51,
+      64
+    ],
+    "visible_color_count": 14,
+    "visible_pixel_count": 807,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 342
+      },
+      {
+        "rgba": [
+          74,
+          85,
+          104,
+          255
+        ],
+        "pixels": 114
+      },
+      {
+        "rgba": [
+          94,
+          107,
+          128,
+          255
+        ],
+        "pixels": 66
+      },
+      {
+        "rgba": [
+          30,
+          33,
+          42,
+          255
+        ],
+        "pixels": 62
+      },
+      {
+        "rgba": [
+          78,
+          70,
+          62,
+          255
+        ],
+        "pixels": 34
+      },
+      {
+        "rgba": [
+          54,
+          62,
+          76,
+          255
+        ],
+        "pixels": 33
+      },
+      {
+        "rgba": [
+          45,
+          43,
+          44,
+          255
+        ],
+        "pixels": 30
+      },
+      {
+        "rgba": [
+          42,
+          46,
+          58,
+          255
+        ],
+        "pixels": 30
+      },
+      {
+        "rgba": [
+          122,
+          111,
+          98,
+          255
+        ],
+        "pixels": 22
+      },
+      {
+        "rgba": [
+          69,
+          66,
+          68,
+          255
+        ],
+        "pixels": 20
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 16
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 13
+      },
+      {
+        "rgba": [
+          56,
+          61,
+          75,
+          255
+        ],
+        "pixels": 13
+      },
+      {
+        "rgba": [
+          201,
+          196,
+          186,
+          255
+        ],
+        "pixels": 12
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character_a2/d1_hold.png",
+    "sha256": "a269eaf525f66a9eeb0054fed7dc02f295e97643ef5c193431cd8793652b4b5c",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      12,
+      13,
+      52,
+      62
+    ],
+    "visible_color_count": 14,
+    "visible_pixel_count": 826,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 370
+      },
+      {
+        "rgba": [
+          74,
+          85,
+          104,
+          255
+        ],
+        "pixels": 112
+      },
+      {
+        "rgba": [
+          94,
+          107,
+          128,
+          255
+        ],
+        "pixels": 64
+      },
+      {
+        "rgba": [
+          30,
+          33,
+          42,
+          255
+        ],
+        "pixels": 59
+      },
+      {
+        "rgba": [
+          78,
+          70,
+          62,
+          255
+        ],
+        "pixels": 34
+      },
+      {
+        "rgba": [
+          42,
+          46,
+          58,
+          255
+        ],
+        "pixels": 33
+      },
+      {
+        "rgba": [
+          45,
+          43,
+          44,
+          255
+        ],
+        "pixels": 29
+      },
+      {
+        "rgba": [
+          54,
+          62,
+          76,
+          255
+        ],
+        "pixels": 25
+      },
+      {
+        "rgba": [
+          69,
+          66,
+          68,
+          255
+        ],
+        "pixels": 23
+      },
+      {
+        "rgba": [
+          122,
+          111,
+          98,
+          255
+        ],
+        "pixels": 22
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 15
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 15
+      },
+      {
+        "rgba": [
+          56,
+          61,
+          75,
+          255
+        ],
+        "pixels": 13
+      },
+      {
+        "rgba": [
+          201,
+          196,
+          186,
+          255
+        ],
+        "pixels": 12
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character_a2/d2_exit.png",
+    "sha256": "ba6ef4c4c505036a0644ba4cccb6a4320ee111c93e1868439c69efbfccb4f48e",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      19,
+      12,
+      51,
+      63
+    ],
+    "visible_color_count": 14,
+    "visible_pixel_count": 831,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 358
+      },
+      {
+        "rgba": [
+          74,
+          85,
+          104,
+          255
+        ],
+        "pixels": 120
+      },
+      {
+        "rgba": [
+          94,
+          107,
+          128,
+          255
+        ],
+        "pixels": 62
+      },
+      {
+        "rgba": [
+          30,
+          33,
+          42,
+          255
+        ],
+        "pixels": 50
+      },
+      {
+        "rgba": [
+          42,
+          46,
+          58,
+          255
+        ],
+        "pixels": 38
+      },
+      {
+        "rgba": [
+          54,
+          62,
+          76,
+          255
+        ],
+        "pixels": 35
+      },
+      {
+        "rgba": [
+          78,
+          70,
+          62,
+          255
+        ],
+        "pixels": 34
+      },
+      {
+        "rgba": [
+          45,
+          43,
+          44,
+          255
+        ],
+        "pixels": 30
+      },
+      {
+        "rgba": [
+          122,
+          111,
+          98,
+          255
+        ],
+        "pixels": 24
+      },
+      {
+        "rgba": [
+          69,
+          66,
+          68,
+          255
+        ],
+        "pixels": 20
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 16
+      },
+      {
+        "rgba": [
+          201,
+          196,
+          186,
+          255
+        ],
+        "pixels": 16
+      },
+      {
+        "rgba": [
+          56,
+          61,
+          75,
+          255
+        ],
+        "pixels": 15
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 13
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character_a2/attack_a0.png",
+    "sha256": "eb976b5992040ac946a93e56716fa8113937ce3d82a59f784a2f8ea286dd4009",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      20,
+      10,
+      51,
+      63
+    ],
+    "visible_color_count": 14,
+    "visible_pixel_count": 873,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 370
+      },
+      {
+        "rgba": [
+          74,
+          85,
+          104,
+          255
+        ],
+        "pixels": 128
+      },
+      {
+        "rgba": [
+          30,
+          33,
+          42,
+          255
+        ],
+        "pixels": 72
+      },
+      {
+        "rgba": [
+          94,
+          107,
+          128,
+          255
+        ],
+        "pixels": 55
+      },
+      {
+        "rgba": [
+          54,
+          62,
+          76,
+          255
+        ],
+        "pixels": 48
+      },
+      {
+        "rgba": [
+          78,
+          70,
+          62,
+          255
+        ],
+        "pixels": 40
+      },
+      {
+        "rgba": [
+          42,
+          46,
+          58,
+          255
+        ],
+        "pixels": 36
+      },
+      {
+        "rgba": [
+          45,
+          43,
+          44,
+          255
+        ],
+        "pixels": 27
+      },
+      {
+        "rgba": [
+          122,
+          111,
+          98,
+          255
+        ],
+        "pixels": 24
+      },
+      {
+        "rgba": [
+          69,
+          66,
+          68,
+          255
+        ],
+        "pixels": 23
+      },
+      {
+        "rgba": [
+          201,
+          196,
+          186,
+          255
+        ],
+        "pixels": 16
+      },
+      {
+        "rgba": [
+          56,
+          61,
+          75,
+          255
+        ],
+        "pixels": 13
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 11
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 10
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character_a2/attack_a1.png",
+    "sha256": "03ae01e1dde1e2a9d83eccbebd6027121e1ae98fd34c3dff6c34940c6a642e3c",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      19,
+      10,
+      51,
+      63
+    ],
+    "visible_color_count": 14,
+    "visible_pixel_count": 859,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 360
+      },
+      {
+        "rgba": [
+          74,
+          85,
+          104,
+          255
+        ],
+        "pixels": 119
+      },
+      {
+        "rgba": [
+          30,
+          33,
+          42,
+          255
+        ],
+        "pixels": 72
+      },
+      {
+        "rgba": [
+          94,
+          107,
+          128,
+          255
+        ],
+        "pixels": 58
+      },
+      {
+        "rgba": [
+          42,
+          46,
+          58,
+          255
+        ],
+        "pixels": 40
+      },
+      {
+        "rgba": [
+          78,
+          70,
+          62,
+          255
+        ],
+        "pixels": 40
+      },
+      {
+        "rgba": [
+          54,
+          62,
+          76,
+          255
+        ],
+        "pixels": 38
+      },
+      {
+        "rgba": [
+          45,
+          43,
+          44,
+          255
+        ],
+        "pixels": 26
+      },
+      {
+        "rgba": [
+          122,
+          111,
+          98,
+          255
+        ],
+        "pixels": 24
+      },
+      {
+        "rgba": [
+          69,
+          66,
+          68,
+          255
+        ],
+        "pixels": 20
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 17
+      },
+      {
+        "rgba": [
+          56,
+          61,
+          75,
+          255
+        ],
+        "pixels": 17
+      },
+      {
+        "rgba": [
+          201,
+          196,
+          186,
+          255
+        ],
+        "pixels": 16
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 12
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character_a2/attack_a2.png",
+    "sha256": "55ea570363d997798a30493babafa98bd1fdb28661d1280e8e80bf88c0aab774",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      14,
+      18,
+      51,
+      63
+    ],
+    "visible_color_count": 14,
+    "visible_pixel_count": 751,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 338
+      },
+      {
+        "rgba": [
+          30,
+          33,
+          42,
+          255
+        ],
+        "pixels": 68
+      },
+      {
+        "rgba": [
+          74,
+          85,
+          104,
+          255
+        ],
+        "pixels": 58
+      },
+      {
+        "rgba": [
+          94,
+          107,
+          128,
+          255
+        ],
+        "pixels": 48
+      },
+      {
+        "rgba": [
+          78,
+          70,
+          62,
+          255
+        ],
+        "pixels": 40
+      },
+      {
+        "rgba": [
+          42,
+          46,
+          58,
+          255
+        ],
+        "pixels": 36
+      },
+      {
+        "rgba": [
+          45,
+          43,
+          44,
+          255
+        ],
+        "pixels": 29
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 24
+      },
+      {
+        "rgba": [
+          122,
+          111,
+          98,
+          255
+        ],
+        "pixels": 24
+      },
+      {
+        "rgba": [
+          69,
+          66,
+          68,
+          255
+        ],
+        "pixels": 23
+      },
+      {
+        "rgba": [
+          54,
+          62,
+          76,
+          255
+        ],
+        "pixels": 18
+      },
+      {
+        "rgba": [
+          201,
+          196,
+          186,
+          255
+        ],
+        "pixels": 16
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 15
+      },
+      {
+        "rgba": [
+          56,
+          61,
+          75,
+          255
+        ],
+        "pixels": 14
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character_a2/attack_a3.png",
+    "sha256": "dbb0d1890b4a4d2f091e89a3de3f83e7a674850be3cc39678f05aad720ff7955",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      11,
+      19,
+      52,
+      63
+    ],
+    "visible_color_count": 14,
+    "visible_pixel_count": 779,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 358
+      },
+      {
+        "rgba": [
+          30,
+          33,
+          42,
+          255
+        ],
+        "pixels": 86
+      },
+      {
+        "rgba": [
+          74,
+          85,
+          104,
+          255
+        ],
+        "pixels": 49
+      },
+      {
+        "rgba": [
+          94,
+          107,
+          128,
+          255
+        ],
+        "pixels": 48
+      },
+      {
+        "rgba": [
+          42,
+          46,
+          58,
+          255
+        ],
+        "pixels": 44
+      },
+      {
+        "rgba": [
+          78,
+          70,
+          62,
+          255
+        ],
+        "pixels": 34
+      },
+      {
+        "rgba": [
+          45,
+          43,
+          44,
+          255
+        ],
+        "pixels": 31
+      },
+      {
+        "rgba": [
+          122,
+          111,
+          98,
+          255
+        ],
+        "pixels": 24
+      },
+      {
+        "rgba": [
+          69,
+          66,
+          68,
+          255
+        ],
+        "pixels": 23
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 22
+      },
+      {
+        "rgba": [
+          54,
+          62,
+          76,
+          255
+        ],
+        "pixels": 16
+      },
+      {
+        "rgba": [
+          201,
+          196,
+          186,
+          255
+        ],
+        "pixels": 16
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 14
+      },
+      {
+        "rgba": [
+          56,
+          61,
+          75,
+          255
+        ],
+        "pixels": 14
+      }
+    ]
+  },
+  {
+    "path": "art/prototype/character_a2/attack_a4.png",
+    "sha256": "34ea65415fe23cc37bd95ff036cc12974fc9fa8b646cc12294a9fa71cef66df5",
+    "mode": "RGBA",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "alpha_bbox_exclusive": [
+      19,
+      12,
+      51,
+      63
+    ],
+    "visible_color_count": 14,
+    "visible_pixel_count": 819,
+    "colors": [
+      {
+        "rgba": [
+          18,
+          19,
+          26,
+          255
+        ],
+        "pixels": 348
+      },
+      {
+        "rgba": [
+          74,
+          85,
+          104,
+          255
+        ],
+        "pixels": 111
+      },
+      {
+        "rgba": [
+          30,
+          33,
+          42,
+          255
+        ],
+        "pixels": 65
+      },
+      {
+        "rgba": [
+          94,
+          107,
+          128,
+          255
+        ],
+        "pixels": 55
+      },
+      {
+        "rgba": [
+          78,
+          70,
+          62,
+          255
+        ],
+        "pixels": 40
+      },
+      {
+        "rgba": [
+          54,
+          62,
+          76,
+          255
+        ],
+        "pixels": 36
+      },
+      {
+        "rgba": [
+          42,
+          46,
+          58,
+          255
+        ],
+        "pixels": 34
+      },
+      {
+        "rgba": [
+          45,
+          43,
+          44,
+          255
+        ],
+        "pixels": 26
+      },
+      {
+        "rgba": [
+          122,
+          111,
+          98,
+          255
+        ],
+        "pixels": 24
+      },
+      {
+        "rgba": [
+          69,
+          66,
+          68,
+          255
+        ],
+        "pixels": 20
+      },
+      {
+        "rgba": [
+          194,
+          151,
+          122,
+          255
+        ],
+        "pixels": 17
+      },
+      {
+        "rgba": [
+          56,
+          61,
+          75,
+          255
+        ],
+        "pixels": 16
+      },
+      {
+        "rgba": [
+          201,
+          196,
+          186,
+          255
+        ],
+        "pixels": 16
+      },
+      {
+        "rgba": [
+          106,
+          78,
+          62,
+          255
+        ],
+        "pixels": 11
+      }
+    ]
+  }
+]

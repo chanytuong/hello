@@ -1,0 +1,340 @@
+extends SceneTree
+## Perception-weapon experiment (PHASE 4-11): ONE ordinary object, walk-over
+## pickup, sub-0.5s perception transformation, ONE weapon attack, break and
+## respawn, and the single Blink/access relation.
+## Run: godot --headless --path E:\neverlookback --script res://tests/test_weapon.gd
+##
+## This suite deliberately does NOT park the prop - it is the suite that
+## measures it. It parks the prop itself between phases instead.
+## Unrelated noise is parked: the ranged enemy is frozen (it has no part in
+## this experiment) and the chaser is parked far after each measurement so it
+## cannot kill the fixture.
+
+var _failures: int = 0
+var _pf: int = 0
+var _phase: int = 0
+
+var _prop: NLBProp
+var _hz: NLBHazard
+var _slot: Vector2
+var _haz_x0: float = 0.0
+var _haz_x1: float = 0.0
+
+var _contact_x: float = 0.0
+var _foe_max_x: float = -99999.0
+var _confirmed: bool = false
+var _bare_dx: float = 0.0
+var _armed_dx: float = 0.0
+var _lock_checked: bool = false
+var _kb_checked: bool = false
+var _snap_checked: bool = false
+var _tf_done_t: float = -1.0
+var _overlap_seen: bool = false
+var _fracture_seen: bool = false
+var _pose_seen: bool = false
+
+func _init() -> void:
+	var main = load("res://scenes/main.tscn").instantiate()
+	get_root().add_child(main)
+	current_scene = main
+	# NOTE: node _ready() has not run yet inside _init, so group lookups must
+	# happen on the first frame, not here.
+
+## Groups are only populated after node _ready(), which _init predates.
+func _resolve() -> void:
+	if _prop == null:
+		_prop = get_first_node_in_group("props") as NLBProp
+	if _hz == null:
+		_hz = get_first_node_in_group("hazards") as NLBHazard
+
+func _check(cond: bool, name: String) -> void:
+	if cond:
+		print("PASS: " + name)
+	else:
+		printerr("FAIL: " + name)
+		_failures += 1
+
+func _p() -> NLBPlayer:
+	return get_first_node_in_group("player") as NLBPlayer
+
+func _m() -> NLBMeleeChaser:
+	for e in get_nodes_in_group("enemies"):
+		if e is NLBMeleeChaser:
+			return e
+	return null
+
+func _r() -> NLBRangedEnemy:
+	for e in get_nodes_in_group("enemies"):
+		if e is NLBRangedEnemy:
+			return e
+	return null
+
+func _g() -> NLBGame:
+	return current_scene as NLBGame
+
+func _snap(p: NLBPlayer, x: float) -> void:
+	p.global_position = Vector2(x, 599)
+	p.velocity = Vector2.ZERO
+	p.move_state = NLBPlayer.MoveState.NORMAL
+	p._atk_t = -1.0
+	p._dash_cd = 0.0
+	p._dash_buf = 0.0
+	p._dash_t = 0.0
+	p._atk_cd = 0.0
+	p._atk_buf = 0.0
+	p._hurt_t = 0.0
+	p._bite_done = false
+	p._struck_from_dash = false
+	p.body_vis.rotation = 0.0
+	p.body_vis.scale = Vector2.ONE
+	p.set_fight_frozen(false)
+
+func _place(m: NLBMeleeChaser, x: float) -> void:
+	m.global_position = Vector2(x, 599)
+	m.velocity = Vector2.ZERO
+	m._kb = Vector2.ZERO
+	m._cd = 99.0            # never winds up: pure CHASE, so knockback is measurable
+	m.ai_state = NLBMeleeChaser.AIState.CHASE
+	m.fight_frozen = false
+	m.health.hp = m.health.max_hp
+
+func _watch(p: NLBPlayer, m: NLBMeleeChaser) -> void:
+	if m == null:
+		return
+	if p._bite_done and not _confirmed:
+		_confirmed = true
+		_contact_x = m.global_position.x
+		_foe_max_x = m.global_position.x
+	if _confirmed:
+		_foe_max_x = maxf(_foe_max_x, m.global_position.x)
+
+func _next() -> void:
+	_phase += 1
+	_pf = 0
+
+func _physics_process(_delta: float) -> bool:
+	_pf += 1
+	_resolve()
+	var p := _p()
+	var m := _m()
+	match _phase:
+		# ---------------------------------------------------- 0: authored slot
+		0:
+			if p == null or _prop == null or _hz == null:
+				printerr("FAIL: fixture missing (player=%s prop=%s hazard=%s)" % [
+					str(p != null), str(_prop != null), str(_hz != null)])
+				_failures += 1
+				return true
+			_slot = _prop.global_position
+			var sh := _hz.get_node("HitBox/Shape") as CollisionShape2D
+			var rc := sh.shape as RectangleShape2D
+			_haz_x0 = _hz.global_position.x + sh.position.x - rc.size.x * 0.5
+			_haz_x1 = _haz_x0 + rc.size.x
+			var r := _r()
+			if r != null:
+				r.fight_frozen = true   # unrelated to this experiment
+			_check(_slot.y > 560.0 and _slot.y < 601.0, "pipe rests on the floor (y=%.0f)" % _slot.y)
+			_check(_slot.x > _haz_x0 and _slot.x < _haz_x1,
+				"pipe authored INSIDE the hazard strip (%.0f in [%.0f, %.0f])" % [_slot.x, _haz_x0, _haz_x1])
+			_check(_hz.active, "hazard live in State A => access costs a hit point")
+			_check(_prop.state == NLBProp.State.FREE and not _prop.armed(), "prop starts FREE, player unarmed")
+			_check(p.weapon_power == 0.0, "bare hands before pickup (power=%.1f)" % p.weapon_power)
+			_next()
+		# ---------------------------------------- 1: bare-hand baseline swing
+		1:
+			if _pf == 1:
+				_prop.global_position = Vector2(1190, 200)  # parked out of reach
+				_snap(p, 300.0)
+				_place(m, 360.0)
+				_confirmed = false
+				_contact_x = 0.0
+				_foe_max_x = -99999.0
+			if _pf == 4:
+				Input.action_press("attack")
+			if _pf == 6:
+				Input.action_release("attack")
+			_watch(p, m)
+			if _pf == 70:
+				_check(_confirmed, "bare-hand swing confirms")
+				_bare_dx = _foe_max_x - _contact_x
+				_place(m, 1180.0)   # out of reach for the rest of the run
+				_next()
+		# ------------------------------------------------ 2: walk-over pickup
+		2:
+			if _pf == 1:
+				_prop.global_position = Vector2(400, 594)
+				_snap(p, 300.0)
+				_place(m, 1050.0)
+				Input.action_press("move_right")
+			if _prop.armed() and _pf > 1:
+				Input.action_release("move_right")
+				_check(true, "picked up by WALKING over it (no key pressed)")
+				_check(_prop.state == NLBProp.State.HELD, "prop state HELD")
+				_check(_prop.holder == p, "prop bound to the player")
+				_check(p.weapon_power == 1.0, "player armed on the same pickup (power=%.1f)" % p.weapon_power)
+				_check(not p.weapon_finish, "first swings are not the finisher")
+				_next()
+			if _pf >= 90:
+				Input.action_release("move_right")
+				_check(false, "picked up by WALKING over it (never armed)")
+				_next()
+		# --------------------------------- 3: perception break, never locks
+		3:
+			if _pf == 1:
+				_check(_prop._tf_t < NLBProp.TRANSFORM_TIME,
+					"transform still running at pickup (t=%.3fs)" % _prop._tf_t)
+			# Observe the fracture with nothing interfering. The double image
+			# is only real if BOTH interpretations are on screen at once, and
+			# the break is only real if the pipe's own bands come apart first.
+			if _prop.armed():
+				if _prop.reality.visible and _prop.hero.visible and _prop.hero.modulate.a > 0.05:
+					_overlap_seen = true
+				if _prop.reality.visible and absf(_prop.seg1.rotation) > 0.03:
+					_fracture_seen = true
+				if p.perception_pose >= 0:
+					_pose_seen = true
+			# Fire the swing only after the hard snap, so the beats get to
+			# play - but still well inside the transform, which is the point.
+			if _pf == 20:
+				Input.action_press("attack")
+			if _pf == 22:
+				Input.action_release("attack")
+			# action_press reaches the player one frame later, so watch a
+			# window instead of a single frame, bounded by the transform.
+			if not _lock_checked and p._atk_t >= 0.0 and _prop._tf_t < NLBProp.TRANSFORM_TIME:
+				_lock_checked = true
+				_check(true, "attack accepted DURING the perception break (no gameplay lock)")
+			if not _lock_checked and _pf >= 34:
+				_lock_checked = true
+				_check(false, "attack accepted DURING the perception break (never started)")
+			if _tf_done_t < 0.0 and _prop._tf_t >= NLBProp.TRANSFORM_TIME:
+				_tf_done_t = _prop._tf_t
+				_check(_prop._tf_t <= 0.5, "transformation finishes under 0.5s (%.3fs)" % _prop._tf_t)
+				_check(not _prop.reality.visible, "reality bar swapped OUT (one hard swap)")
+				_check(_prop.hero.visible, "hero silhouette swapped IN")
+				_check(absf(_prop.hero.scale.x - 1.0) < 0.01,
+					"overshoot settled back to 1.0 (scale=%.3f)" % _prop.hero.scale.x)
+				var real_w := 46.0
+				var hero_w := 84.0 - (-16.0)  # grip end to blade tip
+				_check(hero_w > real_w * 1.5,
+					"silhouette SHAPE changed, not just colour (%.0fpx vs %.0fpx)" % [hero_w, real_w])
+				_check(_overlap_seen, "reality AND hero shown together (one double image)")
+				_check(_fracture_seen, "reality silhouette tore apart BEFORE the swap")
+				_check(_pose_seen, "player body pose driven by the perception break")
+			if _tf_done_t >= 0.0 and p._atk_t < 0.0:
+				_check(p.perception_pose == -1,
+					"perception pose released at rest (pose=%d)" % p.perception_pose)
+				_next()
+			if _pf > 120:
+				_check(false, "transformation completed (stuck at %.3fs)" % _prop._tf_t)
+				_next()
+		# --------------------------------------------------- 4: armed numbers
+		4:
+			_check(p.weapon_power == 1.0, "still armed for stats")
+			_check(p.weapon_reach() > 82.0, "reach grows %.0f > 82" % p.weapon_reach())
+			_check(p.weapon_kb_x() > 260.0, "knockback grows %.0f > 260" % p.weapon_kb_x())
+			_check(p.weapon_hitstop() > 0.045, "hitstop grows %.3f > 0.045" % p.weapon_hitstop())
+			_check(p.weapon_bite() < 0.55, "bite drops %.2f < 0.55 (harder stop)" % p.weapon_bite())
+			_check(absf(p._swing_shape.radius - 64.0) < 0.01,
+				"hitbox radius 64 => reach 104 (radius=%.1f)" % p._swing_shape.radius)
+			_next()
+		# ------------------------------------------- 5: armed hit separation
+		5:
+			if _pf == 1:
+				_snap(p, 300.0)
+				_place(m, 360.0)
+				_confirmed = false
+				_contact_x = 0.0
+				_foe_max_x = -99999.0
+			if _pf == 4:
+				Input.action_press("attack")
+			if _pf == 5:
+				Input.action_release("attack")
+			if _pf == 6 and not _kb_checked:
+				_kb_checked = true
+				_check(p._atk_t >= 0.0, "armed swing is running")
+				_check(p.swing_box.knockback.y == 0.0,
+					"armed knockback is horizontal only (kb=%s)" % str(p.swing_box.knockback))
+				_check(absf(p.swing_box.knockback.x) >= p.weapon_kb_x() - 0.01,
+					"knockback carries the armed value (%.0f)" % p.swing_box.knockback.x)
+			_watch(p, m)
+			if _pf == 70:
+				_check(_confirmed, "armed swing confirms")
+				_armed_dx = _foe_max_x - _contact_x
+				print("WEAPON_DX bare=%.1f armed=%.1f reach=%.0f kb=%.0f hitstop=%.3f" % [
+					_bare_dx, _armed_dx, p.weapon_reach(), p.weapon_kb_x(), p.weapon_hitstop()])
+				_check(_armed_dx > _bare_dx + 10.0,
+					"weapon separates far harder than bare hands (%.1f > %.1f + 10)" % [_armed_dx, _bare_dx])
+				_check(_prop.uses_left == 4, "one confirm spent one use (uses=%d)" % _prop.uses_left)
+				_place(m, 1180.0)
+				_next()
+		# ---------------------------------------------- 6: uses, finish, break
+		6:
+			if _pf == 1:
+				_check(_prop.state == NLBProp.State.HELD, "still held before the payoff")
+				_prop.on_use()
+				_prop.on_use()
+				_prop.on_use()
+				_check(_prop.uses_left == 1, "three more uses spent (uses=%d)" % _prop.uses_left)
+				_check(p.weapon_finish, "LAST swing telegraphs as the finisher (finish=%s)" % str(p.weapon_finish))
+				# Throw the finisher for real; its impact must be snapshotted
+				# at swing start, BEFORE the prop reacts to the confirm.
+				_snap(p, 300.0)
+				Input.action_press("attack")
+			if _pf == 3:
+				Input.action_release("attack")
+			if not _snap_checked and p._atk_t >= 0.0 and _pf >= 2:
+				_snap_checked = true
+				_check(absf(p.impact_hitstop() - 0.100) < 0.0005,
+					"finisher swing snapshots heavy impact (%.3fs)" % p.impact_hitstop())
+				_prop.on_use()
+				_check(_prop.state == NLBProp.State.BROKEN, "pipe BREAKS on the payoff confirm")
+				_check(p.weapon_power == 0.0, "player returned to bare hands (power=%.1f)" % p.weapon_power)
+				_check(not p.weapon_finish, "finisher flag cleared")
+				_check(p.impact_hitstop() >= 0.0999,
+					"impact snapshot SURVIVES the break (%.3fs) => the payoff keeps its hitstop" % p.impact_hitstop())
+				_check(p.weapon_hitstop() < 0.05,
+					"live weapon_hitstop already back to bare hands (%.3fs)" % p.weapon_hitstop())
+				_check(absf(p._swing_shape.radius - 42.0) < 0.01,
+					"reach reset to 82 (radius=%.1f)" % p._swing_shape.radius)
+				_next()
+			if _pf > 40 and not _snap_checked:
+				_snap_checked = true
+				_check(false, "finisher swing started (atk_t=%s)" % str(p._atk_t))
+				_next()
+		# ------------------------------------------------------------ 7: respawn
+		7:
+			if _prop.state == NLBProp.State.FREE:
+				_check(_prop.global_position.distance_to(_slot) < 0.5,
+					"pipe respawns at its authored slot (%.0f, %.0f)" % [
+						_prop.global_position.x, _prop.global_position.y])
+				_check(_prop.uses_left == NLBProp.MAX_USES, "uses reset to %d" % _prop.uses_left)
+				_check(not _prop.hero.visible and _prop.reality.visible,
+					"silhouette back to the mundane reality form")
+				_next()
+			if _pf > 300:
+				_check(false, "pipe respawned (still %d after %d frames)" % [_prop.state, _pf])
+				_next()
+		# ---------------------------------------- 8: ONE Blink relation (access)
+		8:
+			if _pf == 1:
+				_check(_hz.active, "State A: strip live, pipe access costs HP")
+				_check(_g().blink.try_blink(), "blink accepted")
+			if _pf > 10 and _pf < 60:
+				if not _hz.active:
+					_check(_g().blink.is_b, "Blink landed in State B")
+					_check(_prop.state == NLBProp.State.FREE,
+						"Blink did NOT transform, move or consume the prop (separate mechanics)")
+					_check(_prop.global_position.distance_to(_slot) < 0.5,
+						"prop still resting on its slot through the Blink")
+					_next()
+			if _pf >= 60:
+				_check(false, "blink deactivated the hazard strip (still active=%s)" % str(_hz.active))
+				_next()
+		9:
+			if _failures == 0:
+				print("WEAPON_TESTS: ALL PASS")
+			else:
+				printerr("WEAPON_TESTS: %d FAILURES" % _failures)
+			return true
+	return false

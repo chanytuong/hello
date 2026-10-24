@@ -1,0 +1,28 @@
+extends SceneTree
+## State-B visibility check: blink once, dump A/B visual deltas.
+
+var _frames: int = 0
+var _main: Node
+
+func _init() -> void:
+	_main = load("res://scenes/main.tscn").instantiate()
+	get_root().add_child(_main)
+
+func _physics_process(_delta: float) -> bool:
+	_frames += 1
+	if _frames == 10:
+		var blink := _main.get_node("BlinkManager") as NLBBlinkManager
+		blink.try_blink()
+	if _frames == 45:
+		var plat := _main.get_node("Arena/PlatformA") as StaticBody2D
+		var b1 := _main.get_node("Arena/Blocker1") as StaticBody2D
+		var b2 := _main.get_node("Arena/Blocker2") as StaticBody2D
+		var hz := _main.get_node("Arena/Hazard") as NLBHazard
+		var hz_vis := _main.get_node("Arena/Hazard/Visual") as ColorRect
+		print("BSTATE: platform_visible=%s (want false)" % str(plat.visible))
+		print("BSTATE: blocker1_visible=%s blocker2_visible=%s (want true/true)" % [str(b1.visible), str(b2.visible)])
+		print("BSTATE: hazard_active=%s color=%s (want false/grey)" % [str(hz.active), str(hz_vis.color)])
+		print("BSTATE: blocker1_rect=%s" % str((b1.get_node("Visual") as ColorRect).get_global_rect()))
+		quit(0)
+		return true
+	return false

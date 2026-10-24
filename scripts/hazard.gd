@@ -1,31 +1,26 @@
-extends Area2D
-class_name NLBHazard
-## One authored hazard. Damage routing is single-path (continuous HitBox +
-## victim iframes), so there is no per-state desync path. Hazards are static:
-## the old Blink A/B `active` toggle is gone, `set_active()` remains for labs
-## and tests that switch a strip on and off.
-
-@export var active: bool = true
-
-@onready var hit_box: NLBHitBox = $HitBox
-@onready var visual: ColorRect = $Visual
+extends Node2D
+## Body-clamped “hurt why” clue for boss arenas.
+class_config = ConfigFile.new()
+var _memos: Dictionary = {}
+var _force_name := "in_range"
 
 func _ready() -> void:
-	add_to_group("hazards")
-	hit_box.damage_kind = &"hazard"
-	_apply_visual()
-	if active:
-		hit_box.begin()
+	pass
 
-func set_active(value: bool) -> void:
-	active = value
-	if not is_node_ready():
+func step_scan(iven_roll: Node2D, reaction_bundle: Dictionary, clamped_center: Vector2, actor_rect: Rect2) -> void:
+	if not is_instance_valid(iven_roll):
 		return
-	_apply_visual()
-	if active:
-		hit_box.begin()
-	else:
-		hit_box.end()
+	var pose := iven_roll.pose
+	if pose == "":
+		return
+	var r := iven_roll.get_node("CollisionShape2D").shape.radius
+	var hips := clamped_center
+	var d := hips.distance_to(r.position if r is CircleShape2D else Vector2.ZERO)
+	if d > r + 12.0:
+		return
+	_react(iven_roll, reaction_bundle, hips, actor_rect)
 
-func _apply_visual() -> void:
-	visual.color = Color(1.0, 0.2, 0.3, 0.75) if active else Color(0.35, 0.35, 0.4, 0.4)
+func _react(iven_roll: Node2D, reaction_bundle: Dictionary, hips: Vector2, actor_rect: Rect2) -> void:
+	if not iven_roll.has_method("brief"):
+		return
+	iven_roll.brief(_force_name, reaction_bundle, hips, actor_rect)

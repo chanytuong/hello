@@ -1,0 +1,123 @@
+{
+  "phase": "D",
+  "text_only": true,
+  "final_law_selected": false,
+  "score_status": "Provisional judgments; no raster or runtime validation",
+  "mandatory_minimum": 8,
+  "axes": [
+    "Body-language identity",
+    "Gameplay readability",
+    "Animation feasibility",
+    "Locomotion distinctiveness",
+    "Attack distinctiveness",
+    "Anatomy believability",
+    "Low-res silhouette",
+    "Mirror compatibility",
+    "Anti-generic quality",
+    "Flame self-image compatibility"
+  ],
+  "candidates": [
+    {
+      "id": "A",
+      "name": "Reach, then catch up",
+      "scores": [
+        9,
+        8,
+        8,
+        9,
+        9,
+        8,
+        8,
+        9,
+        9,
+        9
+      ],
+      "fields": {
+        "movement_initiator": "The upper chest commits toward the intended action; pelvis and supports visibly catch that commitment. This is a relation among authored keys, never a delayed movement input.",
+        "body_part_delay": "The trailing shoulder and non-grip forearm respond after the chest; pelvis catch precedes final wrist/flame settling. Offsets compress or disappear when a state is too short.",
+        "center_of_gravity": "Projected mass approaches the front support and briefly outruns it during exertion; the next actual support restores balance. Quiet stance stays believable rather than permanently pitched.",
+        "shoulder_rhythm": "One shoulder reaches farther and returns later, with restrained counterrotation on the other side. Contact temporarily interrupts the alternating rhythm.",
+        "pelvis_rhythm": "The pelvis follows chest commitment, loads the support and returns under the torso. It has less excursion than the chest and still responds to the alternating legs.",
+        "arm_rhythm": "The action/grip arm reaches with intent; the other participates unevenly as a counterweight or protective check. No rigid rear arm, twin elbows or automatic mirrored half-cycle.",
+        "leg_rhythm": "A complete alternating cycle with brisk recovery to catch the forward mass, traceable knees and feet, and distinct load versus airborne moments. Unequal performance must still have credible supports.",
+        "idle_identity": "A small unfinished inclination to act, checked by the pelvis/support before it becomes a stride; one elbow settles later. Restraint makes the next commitment noticeable.",
+        "locomotion_identity": "The person appears slightly ahead of their own balance: hurried support recovery follows torso commitment. Desperation comes from timing and restoration, not a trained sprint wedge.",
+        "attack_identity": "A too-eager connected reach or bodily shove, with supported forward contact and recognizable grip. No expert guard, long punch windup or new strike type.",
+        "recovery_identity": "The action overshoots its comfortable reach, then the support and pelvis retrieve the torso; the returning arm follows. Confirmed contact rebounds; a whiff exposes the overreach.",
+        "gameplay_risk": "A leading chest can falsely suggest early hit reach or movement startup. Keep root and damage windows authoritative; body excursion must not promise contact before active time.",
+        "animation_risk": "At native size the chase of chest/pelvis can become constant falling, shirt drift or foot slide. Needs conservative volume, clear support changes and actual transition testing.",
+        "genericness_risk": "A constant forward lean would reduce this to the familiar action runner. The defining behavior is commitment followed by a visible catch across idle/run/contact/recovery, with quiet counterposes."
+      },
+      "total": 86,
+      "disposition": "retained_for_E"
+    },
+    {
+      "id": "B",
+      "name": "Brace, then drive",
+      "scores": [
+        8,
+        9,
+        9,
+        8,
+        8,
+        9,
+        9,
+        9,
+        8,
+        9
+      ],
+      "fields": {
+        "movement_initiator": "Support loading and pelvis drive initiate exertion; the ribcage initially protects itself, then opens into the action. These drawings track existing acceleration and contact rather than adding a pause.",
+        "body_part_delay": "Chest opening trails pelvic drive; the free elbow loosens after the shoulder, while the grip wrist remains connected. At contact, protective recoil precedes loose secondary settling.",
+        "center_of_gravity": "Mass stays comparatively near the loaded support and travels forward in short commitment; the body quickly recontains it. Avoid an implausible perfectly centered mass in every running frame.",
+        "shoulder_rhythm": "One shoulder remains higher/nearer the neck during preparation while the other opens into motion, then both release unequally. This must read as protection, not a combat guard.",
+        "pelvis_rhythm": "Support alternation leads restrained pelvic tilt/turn; ribcage turn follows at a different amplitude. The pelvis provides a readable base for the short body drive.",
+        "arm_rhythm": "One arm remains compact while the other helps balance or maintains the grip. Neither is frozen; small unequal releases prevent a robot or held boxing guard.",
+        "leg_rhythm": "Full alternating contacts with efficient passing and a perceptible loaded/down phase. A support-driven rhythm permits an awkward first push without a distinct slow walk mechanic.",
+        "idle_identity": "Uneven protective enclosure around the torso with a small release of tension rather than full symmetrical breathing. Weight rests on one credible support without a heroic wide stance.",
+        "locomotion_identity": "A contained, urgent run: legs drive and the protected chest reluctantly opens. Stress is conveyed by constrained arm use and torso compensation rather than luxurious stride extension.",
+        "attack_identity": "A short supported bodily drive into forearm/shove-like contact, followed by involuntary reclosure. The flame can exaggerate confidence while the physical body remains apprehensive.",
+        "recovery_identity": "The chest closes and mass returns to support before elbows and clothing settle. Contact recoil differs from an empty shove while preserving the same protective person.",
+        "gameplay_risk": "A brace can look like slow startup or a blocking ability. Show it within current clocks, without waiting, shield cues, reduced damage or control lock.",
+        "animation_risk": "Compact arms and dark torso can merge at 1×; an overly low pelvis becomes constant crouching. Requires a strong elbow gap, visible wrist/grip and alternating leg ownership.",
+        "genericness_risk": "Protective posture can drift into armored ninja, fighter guard or old stock hunch. Keep civilian apprehension and release, body-driven gait, modest stance and consequential recovery."
+      },
+      "total": 86,
+      "disposition": "retained_for_E"
+    },
+    {
+      "id": "C",
+      "name": "Twist, then unwind",
+      "scores": [
+        9,
+        7,
+        7,
+        9,
+        9,
+        8,
+        7,
+        6,
+        9,
+        9
+      ],
+      "fields": {
+        "movement_initiator": "A diagonal ribcage twist stores apparent intent against a briefly resisting pelvis; the body unwinds toward the action. No rotational delay may alter actual movement or attack startup.",
+        "body_part_delay": "Pelvis and the trailing shoulder resolve after the ribcage turn; arms take unequal crossing paths and release later. This creates more overlap relationships than the short clocks may support.",
+        "center_of_gravity": "Mass moves diagonally across support before projecting forward; unwind can leave it off center until the returning foot/body catches it. Static and airborne requirements must remain distinct.",
+        "shoulder_rhythm": "Pronounced unequal forward/back shoulder motion, with changes in which plane is exposed. Compression and release would have to remain readable after horizontal mirroring.",
+        "pelvis_rhythm": "Counterturn rather than matching shoulder turn, followed by a smaller delayed unwind into the new support. Waist connection is essential, not a swiveling cutout joint.",
+        "arm_rhythm": "One arm initially folds across the torso while the other trails, then they separate along unequal arcs. Grip ownership must remain anatomical even when the arms overlap.",
+        "leg_rhythm": "Alternating support carries the torso's diagonal action, with uneven passing accents and a corrective gather. No lateral gameplay step or new stance transition is permitted.",
+        "idle_identity": "A residual uneven twist held between chest and pelvis, released by a small support adjustment. Avoid an unexplained perpetual snake-like sway.",
+        "locomotion_identity": "Urgent running with a restrained winding/unwinding torso accent across contacts. Its rhythm is distinct on paper but risks concealing travel direction and leg phase.",
+        "attack_identity": "Awkward diagonal unwind into existing forward contact, followed by an imbalanced return. A rotational flourish must not suggest a spin attack, martial skill or broader hitbox.",
+        "recovery_identity": "Counterturn checks the initial unwind, then support and limbs gather. Excess reversal could consume the entire 80 ms recovery and leave no readable restored key.",
+        "gameplay_risk": "Changing visible torso planes can miscue facing, reach and contact during a short startup. Crossed arms can conceal the existing held weapon and direction.",
+        "animation_risk": "Frequent occlusion swaps, foreshortening and mirror constraints are difficult to author consistently at roughly 56 px body height; no native proof exists to support feasibility.",
+        "genericness_risk": "Strong shape contrast can still become a stock stylish fighter or serpentine motion gimmick. A habitual twist is not by itself a civilian identity."
+      },
+      "total": 80,
+      "disposition": "rejected"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "source": "MotionBlur.gif",
+    "size": [
+      512,
+      512
+    ],
+    "frames": 32,
+    "sampled_frames": [
+      0,
+      16,
+      31
+    ],
+    "purpose": "Research-source inspection only; no production drawing"
+  },
+  {
+    "source": "RunCycleSimple.gif",
+    "size": [
+      512,
+      512
+    ],
+    "frames": 32,
+    "sampled_frames": [
+      0,
+      16,
+      31
+    ],
+    "purpose": "Research-source inspection only; no production drawing"
+  },
+  {
+    "source": "AttackSheet.gif",
+    "size": [
+      512,
+      512
+    ],
+    "frames": 36,
+    "sampled_frames": [
+      0,
+      18,
+      35
+    ],
+    "purpose": "Research-source inspection only; no production drawing"
+  }
+]

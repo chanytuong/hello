@@ -1,0 +1,1758 @@
+﻿{
+    "count":  421,
+    "read_complete":  true,
+    "method":  "Entire UTF-8 contents read in bounded, contiguous chunks; coverage checked against recorded character counts; truncated outputs reread.",
+    "skill_files":  [
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\2dimg2motion-main\\SKILL.md",
+                            "chars":  36161
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\2dimg2motion-main\\skills\\img2mo-learn\\SKILL.md",
+                            "chars":  6898
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\2dimg2motion-main\\skills\\img2mo-std\\SKILL.md",
+                            "chars":  3376
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agent-skill-pixel-art-4.3.0\\skills\\pixel-art\\SKILL.md",
+                            "chars":  18519
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\accessibility-compliance\\skills\\screen-reader-testing\\SKILL.md",
+                            "chars":  12020
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\accessibility-compliance\\skills\\wcag-audit-patterns\\SKILL.md",
+                            "chars":  2439
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\agent-teams\\skills\\multi-reviewer-patterns\\SKILL.md",
+                            "chars":  5182
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\agent-teams\\skills\\parallel-debugging\\SKILL.md",
+                            "chars":  4748
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\agent-teams\\skills\\parallel-feature-development\\SKILL.md",
+                            "chars":  6629
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\agent-teams\\skills\\task-coordination-strategies\\SKILL.md",
+                            "chars":  4604
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\agent-teams\\skills\\team-communication-protocols\\SKILL.md",
+                            "chars":  7340
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\agent-teams\\skills\\team-composition-patterns\\SKILL.md",
+                            "chars":  8152
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\api-scaffolding\\skills\\fastapi-templates\\SKILL.md",
+                            "chars":  3602
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\avoid-ai-writing\\skills\\avoid-ai-writing\\SKILL.md",
+                            "chars":  7666
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\backend-development\\skills\\api-design-principles\\SKILL.md",
+                            "chars":  3603
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\backend-development\\skills\\architecture-patterns\\SKILL.md",
+                            "chars":  7926
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\backend-development\\skills\\cqrs-implementation\\SKILL.md",
+                            "chars":  2875
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\backend-development\\skills\\event-store-design\\SKILL.md",
+                            "chars":  3310
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\backend-development\\skills\\microservices-patterns\\SKILL.md",
+                            "chars":  2125
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\backend-development\\skills\\projection-patterns\\SKILL.md",
+                            "chars":  2260
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\backend-development\\skills\\saga-orchestration\\SKILL.md",
+                            "chars":  6007
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\backend-development\\skills\\temporal-python-testing\\SKILL.md",
+                            "chars":  4931
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\backend-development\\skills\\workflow-orchestration-patterns\\SKILL.md",
+                            "chars":  3478
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\before-you-build\\skills\\before-you-build\\SKILL.md",
+                            "chars":  2794
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\blockchain-web3\\skills\\defi-protocol-templates\\SKILL.md",
+                            "chars":  7460
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\blockchain-web3\\skills\\nft-standards\\SKILL.md",
+                            "chars":  7633
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\blockchain-web3\\skills\\solidity-security\\SKILL.md",
+                            "chars":  3565
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\blockchain-web3\\skills\\web3-testing\\SKILL.md",
+                            "chars":  7906
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\block-no-verify\\skills\\block-no-verify-hook\\SKILL.md",
+                            "chars":  7505
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\brand-landingpage\\skills\\brand-landingpage\\SKILL.md",
+                            "chars":  15626
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\business-analytics\\skills\\data-storytelling\\SKILL.md",
+                            "chars":  2115
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\business-analytics\\skills\\kpi-dashboard-design\\SKILL.md",
+                            "chars":  5423
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\cicd-automation\\skills\\deployment-pipeline-design\\SKILL.md",
+                            "chars":  5514
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\cicd-automation\\skills\\github-actions-templates\\SKILL.md",
+                            "chars":  7076
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\cicd-automation\\skills\\gitlab-ci-patterns\\SKILL.md",
+                            "chars":  5427
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\cicd-automation\\skills\\secrets-management\\SKILL.md",
+                            "chars":  7531
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\cloud-infrastructure\\skills\\cost-optimization\\SKILL.md",
+                            "chars":  6844
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\cloud-infrastructure\\skills\\hybrid-cloud-networking\\SKILL.md",
+                            "chars":  6066
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\cloud-infrastructure\\skills\\istio-traffic-management\\SKILL.md",
+                            "chars":  6805
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\cloud-infrastructure\\skills\\linkerd-patterns\\SKILL.md",
+                            "chars":  7110
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\cloud-infrastructure\\skills\\mtls-configuration\\SKILL.md",
+                            "chars":  2352
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\cloud-infrastructure\\skills\\multi-cloud-architecture\\SKILL.md",
+                            "chars":  5708
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\cloud-infrastructure\\skills\\service-mesh-observability\\SKILL.md",
+                            "chars":  2427
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\cloud-infrastructure\\skills\\terraform-module-library\\SKILL.md",
+                            "chars":  5396
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\conductor\\skills\\context-driven-development\\SKILL.md",
+                            "chars":  2130
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\conductor\\skills\\track-management\\SKILL.md",
+                            "chars":  1680
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\conductor\\skills\\workflow-patterns\\SKILL.md",
+                            "chars":  1703
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\database-design\\skills\\postgresql-table-design\\SKILL.md",
+                            "chars":  7906
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\data-engineering\\skills\\airflow-dag-patterns\\SKILL.md",
+                            "chars":  3135
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\data-engineering\\skills\\data-quality-frameworks\\SKILL.md",
+                            "chars":  4446
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\data-engineering\\skills\\dbt-transformation-patterns\\SKILL.md",
+                            "chars":  3123
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\data-engineering\\skills\\spark-optimization\\SKILL.md",
+                            "chars":  3154
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\developer-essentials\\skills\\auth-implementation-patterns\\SKILL.md",
+                            "chars":  2677
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\developer-essentials\\skills\\bazel-build-optimization\\SKILL.md",
+                            "chars":  2005
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\developer-essentials\\skills\\code-review-excellence\\SKILL.md",
+                            "chars":  13127
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\developer-essentials\\skills\\debugging-strategies\\SKILL.md",
+                            "chars":  11879
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\developer-essentials\\skills\\e2e-testing-patterns\\SKILL.md",
+                            "chars":  3959
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\developer-essentials\\skills\\error-handling-patterns\\SKILL.md",
+                            "chars":  4090
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\developer-essentials\\skills\\git-advanced-workflows\\SKILL.md",
+                            "chars":  5036
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\developer-essentials\\skills\\monorepo-management\\SKILL.md",
+                            "chars":  5150
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\developer-essentials\\skills\\nx-workspace-patterns\\SKILL.md",
+                            "chars":  2187
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\developer-essentials\\skills\\sql-optimization-patterns\\SKILL.md",
+                            "chars":  5961
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\developer-essentials\\skills\\turborepo-caching\\SKILL.md",
+                            "chars":  7980
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\dgx-spark-ops\\skills\\spark-environment-setup\\SKILL.md",
+                            "chars":  8067
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\dgx-spark-ops\\skills\\spark-memory-thermal-ops\\SKILL.md",
+                            "chars":  7930
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\dgx-spark-ops\\skills\\spark-training-gotchas\\SKILL.md",
+                            "chars":  7931
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\documentation-generation\\skills\\architecture-decision-records\\SKILL.md",
+                            "chars":  12668
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\documentation-generation\\skills\\changelog-automation\\SKILL.md",
+                            "chars":  3344
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\documentation-generation\\skills\\openapi-spec-generation\\SKILL.md",
+                            "chars":  2043
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\documentation-standards\\skills\\grounded-vault\\SKILL.md",
+                            "chars":  5445
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\documentation-standards\\skills\\hads\\SKILL.md",
+                            "chars":  6066
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\dotnet-contribution\\skills\\dotnet-backend-patterns\\SKILL.md",
+                            "chars":  26290
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\file-conversion\\skills\\file-conversion\\SKILL.md",
+                            "chars":  2949
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\framework-migration\\skills\\angular-migration\\SKILL.md",
+                            "chars":  7123
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\framework-migration\\skills\\database-migration\\SKILL.md",
+                            "chars":  8155
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\framework-migration\\skills\\dependency-upgrade\\SKILL.md",
+                            "chars":  7624
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\framework-migration\\skills\\react-modernization\\SKILL.md",
+                            "chars":  6811
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\frontend-mobile-development\\skills\\nextjs-app-router-patterns\\SKILL.md",
+                            "chars":  3658
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\frontend-mobile-development\\skills\\react-native-architecture\\SKILL.md",
+                            "chars":  3520
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\frontend-mobile-development\\skills\\react-state-management\\SKILL.md",
+                            "chars":  3997
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\frontend-mobile-development\\skills\\tailwind-design-system\\SKILL.md",
+                            "chars":  5266
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\game-development\\skills\\godot-gdscript-patterns\\SKILL.md",
+                            "chars":  2133
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\game-development\\skills\\unity-ecs-patterns\\SKILL.md",
+                            "chars":  2066
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\hermes-tweet\\skills\\hermes-tweet\\SKILL.md",
+                            "chars":  5508
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\hr-legal-compliance\\skills\\employment-contract-templates\\SKILL.md",
+                            "chars":  2365
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\hr-legal-compliance\\skills\\gdpr-data-handling\\SKILL.md",
+                            "chars":  2628
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\incident-response\\skills\\connectivity-triage\\SKILL.md",
+                            "chars":  8085
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\incident-response\\skills\\incident-runbook-templates\\SKILL.md",
+                            "chars":  5461
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\incident-response\\skills\\on-call-handoff-patterns\\SKILL.md",
+                            "chars":  3667
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\incident-response\\skills\\postmortem-writing\\SKILL.md",
+                            "chars":  6795
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\javascript-typescript\\skills\\javascript-testing-patterns\\SKILL.md",
+                            "chars":  14629
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\javascript-typescript\\skills\\modern-javascript-patterns\\SKILL.md",
+                            "chars":  2189
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\javascript-typescript\\skills\\nodejs-backend-patterns\\SKILL.md",
+                            "chars":  1995
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\javascript-typescript\\skills\\typescript-advanced-types\\SKILL.md",
+                            "chars":  8035
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\kubernetes-operations\\skills\\gitops-workflow\\SKILL.md",
+                            "chars":  5815
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\kubernetes-operations\\skills\\helm-chart-scaffolding\\SKILL.md",
+                            "chars":  2104
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\kubernetes-operations\\skills\\k8s-manifest-generator\\SKILL.md",
+                            "chars":  3096
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\kubernetes-operations\\skills\\k8s-security-policies\\SKILL.md",
+                            "chars":  7192
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\llm-application-dev\\skills\\embedding-strategies\\SKILL.md",
+                            "chars":  2838
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\llm-application-dev\\skills\\hybrid-search-implementation\\SKILL.md",
+                            "chars":  1988
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\llm-application-dev\\skills\\langchain-architecture\\SKILL.md",
+                            "chars":  8022
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\llm-application-dev\\skills\\llm-evaluation\\SKILL.md",
+                            "chars":  3929
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\llm-application-dev\\skills\\prompt-engineering-patterns\\SKILL.md",
+                            "chars":  5216
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\llm-application-dev\\skills\\rag-implementation\\SKILL.md",
+                            "chars":  4555
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\llm-application-dev\\skills\\similarity-search-patterns\\SKILL.md",
+                            "chars":  2306
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\llm-application-dev\\skills\\vector-index-tuning\\SKILL.md",
+                            "chars":  2228
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\llm-finetuning\\skills\\checkpoint-promotion\\SKILL.md",
+                            "chars":  8045
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\llm-finetuning\\skills\\dataset-curation\\SKILL.md",
+                            "chars":  7917
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\llm-finetuning\\skills\\eval-harness-first\\SKILL.md",
+                            "chars":  7830
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\llm-finetuning\\skills\\finetuning-method-selection\\SKILL.md",
+                            "chars":  7832
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\llm-finetuning\\skills\\grpo-rlvr-training\\SKILL.md",
+                            "chars":  7775
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\llm-finetuning\\skills\\lora-qlora-recipes\\SKILL.md",
+                            "chars":  7625
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\llm-finetuning\\skills\\preference-optimization\\SKILL.md",
+                            "chars":  7837
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\llm-finetuning\\skills\\quantized-export\\SKILL.md",
+                            "chars":  7913
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\llm-finetuning\\skills\\trace-to-training-data\\SKILL.md",
+                            "chars":  6201
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\llm-finetuning\\skills\\vision-sft\\SKILL.md",
+                            "chars":  7816
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\machine-learning-ops\\skills\\ml-pipeline-workflow\\SKILL.md",
+                            "chars":  7077
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\machine-learning-ops\\skills\\recsys-pipeline-architect\\SKILL.md",
+                            "chars":  8098
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\observability-monitoring\\skills\\distributed-tracing\\SKILL.md",
+                            "chars":  2105
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\observability-monitoring\\skills\\grafana-dashboards\\SKILL.md",
+                            "chars":  7662
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\observability-monitoring\\skills\\prometheus-configuration\\SKILL.md",
+                            "chars":  1795
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\observability-monitoring\\skills\\slo-implementation\\SKILL.md",
+                            "chars":  6723
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\payment-processing\\skills\\billing-automation\\SKILL.md",
+                            "chars":  1889
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\payment-processing\\skills\\paypal-integration\\SKILL.md",
+                            "chars":  4011
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\payment-processing\\skills\\pci-compliance\\SKILL.md",
+                            "chars":  7693
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\payment-processing\\skills\\stripe-integration\\SKILL.md",
+                            "chars":  4177
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\plugin-eval\\skills\\evaluation-methodology\\SKILL.md",
+                            "chars":  7908
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\pptx-deck-creation\\skills\\pptx-deck-context\\SKILL.md",
+                            "chars":  1661
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\pptx-deck-creation\\skills\\pptx-quality-gates\\SKILL.md",
+                            "chars":  1635
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\pptx-deck-creation\\skills\\pptx-reference-deck-analysis\\SKILL.md",
+                            "chars":  2755
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\pptx-deck-creation\\skills\\pptx-slide-specification\\SKILL.md",
+                            "chars":  1954
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\pptx-deck-creation\\skills\\pptx-visual-assets\\SKILL.md",
+                            "chars":  1375
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\protect-mcp\\skills\\protect-mcp-setup\\SKILL.md",
+                            "chars":  8428
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\python-development\\skills\\async-python-patterns\\SKILL.md",
+                            "chars":  7522
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\python-development\\skills\\python-anti-patterns\\SKILL.md",
+                            "chars":  8161
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\python-development\\skills\\python-background-jobs\\SKILL.md",
+                            "chars":  7308
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\python-development\\skills\\python-code-style\\SKILL.md",
+                            "chars":  7970
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\python-development\\skills\\python-configuration\\SKILL.md",
+                            "chars":  6219
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\python-development\\skills\\python-design-patterns\\SKILL.md",
+                            "chars":  4721
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\python-development\\skills\\python-error-handling\\SKILL.md",
+                            "chars":  6164
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\python-development\\skills\\python-observability\\SKILL.md",
+                            "chars":  7098
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\python-development\\skills\\python-packaging\\SKILL.md",
+                            "chars":  3642
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\python-development\\skills\\python-performance-optimization\\SKILL.md",
+                            "chars":  3253
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\python-development\\skills\\python-project-structure\\SKILL.md",
+                            "chars":  6371
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\python-development\\skills\\python-resilience\\SKILL.md",
+                            "chars":  6031
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\python-development\\skills\\python-resource-management\\SKILL.md",
+                            "chars":  7012
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\python-development\\skills\\python-testing-patterns\\SKILL.md",
+                            "chars":  7282
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\python-development\\skills\\python-type-safety\\SKILL.md",
+                            "chars":  5763
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\python-development\\skills\\uv-package-manager\\SKILL.md",
+                            "chars":  7113
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\quantitative-trading\\skills\\backtesting-frameworks\\SKILL.md",
+                            "chars":  2899
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\quantitative-trading\\skills\\risk-metrics-calculation\\SKILL.md",
+                            "chars":  2008
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\reverse-engineering\\skills\\anti-reversing-techniques\\SKILL.md",
+                            "chars":  3919
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\reverse-engineering\\skills\\binary-analysis-patterns\\SKILL.md",
+                            "chars":  7856
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\reverse-engineering\\skills\\memory-forensics\\SKILL.md",
+                            "chars":  8426
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\reverse-engineering\\skills\\protocol-reverse-engineering\\SKILL.md",
+                            "chars":  12626
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\review-agent-governance\\skills\\review-agent-setup\\SKILL.md",
+                            "chars":  6056
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\security-scanning\\skills\\attack-tree-construction\\SKILL.md",
+                            "chars":  2491
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\security-scanning\\skills\\sast-configuration\\SKILL.md",
+                            "chars":  5403
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\security-scanning\\skills\\security-requirement-extraction\\SKILL.md",
+                            "chars":  2527
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\security-scanning\\skills\\stride-analysis-patterns\\SKILL.md",
+                            "chars":  2440
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\security-scanning\\skills\\threat-mitigation-mapping\\SKILL.md",
+                            "chars":  2968
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\shell-scripting\\skills\\bash-defensive-patterns\\SKILL.md",
+                            "chars":  1991
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\shell-scripting\\skills\\bats-testing-patterns\\SKILL.md",
+                            "chars":  5172
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\shell-scripting\\skills\\shellcheck-configuration\\SKILL.md",
+                            "chars":  1610
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\ship-mate\\skills\\scan\\SKILL.md",
+                            "chars":  8781
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\signed-audit-trails\\skills\\signed-audit-trails-recipe\\SKILL.md",
+                            "chars":  10072
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\skill-forge-essentials\\skills\\ai-debt-detector\\SKILL.md",
+                            "chars":  3398
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\skill-forge-essentials\\skills\\session-guard\\SKILL.md",
+                            "chars":  3969
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\skill-forge-essentials\\skills\\visual-edit-precision\\SKILL.md",
+                            "chars":  2187
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\social-publishing\\skills\\social-publishing\\SKILL.md",
+                            "chars":  3653
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\startup-business-analyst\\skills\\competitive-landscape\\SKILL.md",
+                            "chars":  11936
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\startup-business-analyst\\skills\\market-sizing-analysis\\SKILL.md",
+                            "chars":  2477
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\startup-business-analyst\\skills\\startup-financial-modeling\\SKILL.md",
+                            "chars":  7727
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\startup-business-analyst\\skills\\startup-metrics-framework\\SKILL.md",
+                            "chars":  10026
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\startup-business-analyst\\skills\\team-composition-analysis\\SKILL.md",
+                            "chars":  7436
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\superself\\skills\\superself\\SKILL.md",
+                            "chars":  5281
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\systems-programming\\skills\\go-concurrency-patterns\\SKILL.md",
+                            "chars":  2771
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\systems-programming\\skills\\memory-safety-patterns\\SKILL.md",
+                            "chars":  2582
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\systems-programming\\skills\\rust-async-patterns\\SKILL.md",
+                            "chars":  2669
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\ui-design\\skills\\accessibility-compliance\\SKILL.md",
+                            "chars":  2402
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\ui-design\\skills\\design-system-patterns\\SKILL.md",
+                            "chars":  4003
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\ui-design\\skills\\interaction-design\\SKILL.md",
+                            "chars":  7572
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\ui-design\\skills\\mobile-android-design\\SKILL.md",
+                            "chars":  3797
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\ui-design\\skills\\mobile-ios-design\\SKILL.md",
+                            "chars":  6921
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\ui-design\\skills\\react-native-design\\SKILL.md",
+                            "chars":  3949
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\ui-design\\skills\\responsive-design\\SKILL.md",
+                            "chars":  1989
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\ui-design\\skills\\visual-design-foundations\\SKILL.md",
+                            "chars":  7218
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agents-main\\plugins\\ui-design\\skills\\web-component-design\\SKILL.md",
+                            "chars":  7475
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agent-sprites-main\\skills\\game-integration\\SKILL.md",
+                            "chars":  9781
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agent-sprites-main\\skills\\sprite-character\\SKILL.md",
+                            "chars":  7531
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agent-sprites-main\\skills\\sprite-composition\\SKILL.md",
+                            "chars":  9032
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agent-sprites-main\\skills\\sprite-craft\\SKILL.md",
+                            "chars":  6794
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agent-sprites-main\\skills\\sprite-editing\\SKILL.md",
+                            "chars":  14220
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agent-sprites-main\\skills\\sprite-export\\SKILL.md",
+                            "chars":  2129
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agent-sprites-main\\skills\\sprite-motion\\SKILL.md",
+                            "chars":  8250
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agent-sprites-main\\skills\\sprite-new\\SKILL.md",
+                            "chars":  1513
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agent-sprites-main\\skills\\sprite-open\\SKILL.md",
+                            "chars":  1131
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agent-sprites-main\\skills\\sprite-palette\\SKILL.md",
+                            "chars":  5730
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agent-sprites-main\\skills\\sprite-review\\SKILL.md",
+                            "chars":  6995
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agent-sprites-main\\skills\\sprite-setup\\SKILL.md",
+                            "chars":  3593
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agent-sprites-main\\skills\\sprite-shading\\SKILL.md",
+                            "chars":  8221
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\agent-sprites-main\\skills\\sprite-verification\\SKILL.md",
+                            "chars":  13127
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\router\\SKILL.md",
+                            "chars":  15270
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\disciplines\\ai-behavior-trees-utility-ai\\SKILL.md",
+                            "chars":  8200
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\disciplines\\audio-design\\SKILL.md",
+                            "chars":  6791
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\disciplines\\camera-systems\\SKILL.md",
+                            "chars":  8498
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\disciplines\\create-game-assets\\SKILL.md",
+                            "chars":  7968
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\disciplines\\dialogue-systems\\SKILL.md",
+                            "chars":  7368
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\disciplines\\game-ai\\SKILL.md",
+                            "chars":  7969
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\disciplines\\game-feel\\SKILL.md",
+                            "chars":  8953
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\disciplines\\game-ui-ux\\SKILL.md",
+                            "chars":  8400
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\disciplines\\input-systems\\SKILL.md",
+                            "chars":  7645
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\disciplines\\level-design\\SKILL.md",
+                            "chars":  7051
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\disciplines\\performance-optimization\\SKILL.md",
+                            "chars":  8963
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\disciplines\\physics-tuning\\SKILL.md",
+                            "chars":  7528
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\disciplines\\procedural-gen\\SKILL.md",
+                            "chars":  7129
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\disciplines\\save-systems\\SKILL.md",
+                            "chars":  7303
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\disciplines\\shader-programming\\SKILL.md",
+                            "chars":  6795
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\genres\\card-game\\SKILL.md",
+                            "chars":  6463
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\genres\\fps-shooter\\SKILL.md",
+                            "chars":  6111
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\genres\\platformer\\SKILL.md",
+                            "chars":  6696
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\genres\\puzzle\\SKILL.md",
+                            "chars":  6945
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\genres\\roguelike\\SKILL.md",
+                            "chars":  7215
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\genres\\rpg\\SKILL.md",
+                            "chars":  6301
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\genres\\survival-crafting\\SKILL.md",
+                            "chars":  7341
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\genres\\tower-defense\\SKILL.md",
+                            "chars":  6613
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\genres\\visual-novel\\SKILL.md",
+                            "chars":  6709
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\godot\\godot-2d-movement\\SKILL.md",
+                            "chars":  5991
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\godot\\godot-3d-essentials\\SKILL.md",
+                            "chars":  5679
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\godot\\godot-animation\\SKILL.md",
+                            "chars":  5408
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\godot\\godot-audio\\SKILL.md",
+                            "chars":  5220
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\godot\\godot-csharp\\SKILL.md",
+                            "chars":  6652
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\godot\\godot-export\\SKILL.md",
+                            "chars":  5573
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\godot\\godot-gdscript\\SKILL.md",
+                            "chars":  5261
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\godot\\godot-gdscript-headless-testing\\SKILL.md",
+                            "chars":  9154
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\godot\\godot-multiplayer\\SKILL.md",
+                            "chars":  6460
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\godot\\godot-nodes-scenes\\SKILL.md",
+                            "chars":  5485
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\godot\\godot-physics\\SKILL.md",
+                            "chars":  8268
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\godot\\godot-resources\\SKILL.md",
+                            "chars":  4971
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\godot\\godot-shaders\\SKILL.md",
+                            "chars":  5507
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\godot\\godot-signals-groups\\SKILL.md",
+                            "chars":  5037
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\godot\\godot-tilemap\\SKILL.md",
+                            "chars":  5735
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\godot\\godot-ui-control\\SKILL.md",
+                            "chars":  5758
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\other-engines\\bevy-ecs\\SKILL.md",
+                            "chars":  7867
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\other-engines\\love2d-core\\SKILL.md",
+                            "chars":  6291
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\other-engines\\pygame-core\\SKILL.md",
+                            "chars":  7175
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\other-engines\\roblox-characters\\SKILL.md",
+                            "chars":  8630
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\other-engines\\roblox-datastores\\SKILL.md",
+                            "chars":  7690
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\other-engines\\roblox-luau\\SKILL.md",
+                            "chars":  8801
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\other-engines\\roblox-networking\\SKILL.md",
+                            "chars":  9299
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\other-engines\\roblox-physics\\SKILL.md",
+                            "chars":  8036
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\other-engines\\roblox-studio-workflow\\SKILL.md",
+                            "chars":  10243
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\other-engines\\roblox-ui\\SKILL.md",
+                            "chars":  11619
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\unity\\unity-animation\\SKILL.md",
+                            "chars":  5616
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\unity\\unity-build-pipeline\\SKILL.md",
+                            "chars":  5846
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\unity\\unity-csharp-scripting\\SKILL.md",
+                            "chars":  6166
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\unity\\unity-input-system\\SKILL.md",
+                            "chars":  6114
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\unity\\unity-navmesh\\SKILL.md",
+                            "chars":  6999
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\unity\\unity-physics\\SKILL.md",
+                            "chars":  8561
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\unity\\unity-scriptableobjects\\SKILL.md",
+                            "chars":  5769
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\unity\\unity-tilemap-2d\\SKILL.md",
+                            "chars":  5917
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\unreal\\unreal-behavior-trees\\SKILL.md",
+                            "chars":  6104
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\unreal\\unreal-blueprints\\SKILL.md",
+                            "chars":  5775
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\unreal\\unreal-cpp-gameplay\\SKILL.md",
+                            "chars":  5913
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\unreal\\unreal-enhanced-input\\SKILL.md",
+                            "chars":  5973
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\unreal\\unreal-niagara\\SKILL.md",
+                            "chars":  5824
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\unreal\\unreal-packaging\\SKILL.md",
+                            "chars":  5059
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\web-engines\\phaser-arcade-physics\\SKILL.md",
+                            "chars":  6984
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\web-engines\\phaser-core\\SKILL.md",
+                            "chars":  7247
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\web-engines\\pixijs-rendering\\SKILL.md",
+                            "chars":  9241
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\web-engines\\threejs-gltf-loading\\SKILL.md",
+                            "chars":  7103
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\web-engines\\threejs-materials-lighting\\SKILL.md",
+                            "chars":  7249
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\web-engines\\threejs-scene-setup\\SKILL.md",
+                            "chars":  6830
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\workflows\\game-jam\\SKILL.md",
+                            "chars":  6484
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\workflows\\itch-publish\\SKILL.md",
+                            "chars":  6882
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\workflows\\prototype-fast\\SKILL.md",
+                            "chars":  6000
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\workflows\\steam-publish\\SKILL.md",
+                            "chars":  9331
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\.system\\imagegen\\SKILL.md",
+                            "chars":  23963
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\.system\\openai-docs\\SKILL.md",
+                            "chars":  6868
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\.system\\plugin-creator\\SKILL.md",
+                            "chars":  6378
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\.system\\skill-creator\\SKILL.md",
+                            "chars":  21897
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\.system\\skill-installer\\SKILL.md",
+                            "chars":  3366
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\accessibility\\SKILL.md",
+                            "chars":  2960
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\ai-game-art-generation\\SKILL.md",
+                            "chars":  1757
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\animation-systems\\SKILL.md",
+                            "chars":  3182
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\art-consistency\\SKILL.md",
+                            "chars":  2687
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\brainstorming\\SKILL.md",
+                            "chars":  9467
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\browser-automation\\SKILL.md",
+                            "chars":  2868
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\card-game-design\\SKILL.md",
+                            "chars":  3235
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\character-design\\SKILL.md",
+                            "chars":  3146
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\code-review\\SKILL.md",
+                            "chars":  2177
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\color-theory\\SKILL.md",
+                            "chars":  2940
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\combat-design\\SKILL.md",
+                            "chars":  4552
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\concept-art\\SKILL.md",
+                            "chars":  2824
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\consistency-checker\\SKILL.md",
+                            "chars":  3263
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\debugging-master\\SKILL.md",
+                            "chars":  2667
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\deckbuilder-roguelike\\SKILL.md",
+                            "chars":  4578
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\design-systems\\SKILL.md",
+                            "chars":  3206
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\environment-art\\SKILL.md",
+                            "chars":  3004
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\frontend\\SKILL.md",
+                            "chars":  1983
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\game-ai-behavior\\SKILL.md",
+                            "chars":  2664
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\game-ai-behavior-trees\\SKILL.md",
+                            "chars":  2231
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\game-audio\\SKILL.md",
+                            "chars":  2825
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\game-design\\SKILL.md",
+                            "chars":  4340
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\game-design-core\\SKILL.md",
+                            "chars":  2889
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\game-development\\SKILL.md",
+                            "chars":  2283
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\game-planner\\SKILL.md",
+                            "chars":  9715
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\game-ui-design\\SKILL.md",
+                            "chars":  3616
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\level-design\\SKILL.md",
+                            "chars":  2884
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\lighting-design\\SKILL.md",
+                            "chars":  3630
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\llm-game-development\\SKILL.md",
+                            "chars":  2425
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\lore-building\\SKILL.md",
+                            "chars":  1724
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\mobile-game-dev\\SKILL.md",
+                            "chars":  3567
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\motion-design\\SKILL.md",
+                            "chars":  2839
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\narrative-design\\SKILL.md",
+                            "chars":  4636
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\pdf\\SKILL.md",
+                            "chars":  2517
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\performance-optimization\\SKILL.md",
+                            "chars":  2640
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\pixel-art\\SKILL.md",
+                            "chars":  3524
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\pixel-art-sprites\\SKILL.md",
+                            "chars":  3133
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\planning-with-files\\SKILL.md",
+                            "chars":  7663
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\player-onboarding\\SKILL.md",
+                            "chars":  2951
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\playwright\\SKILL.md",
+                            "chars":  3771
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\procedural-generation\\SKILL.md",
+                            "chars":  3923
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\progression-systems\\SKILL.md",
+                            "chars":  2901
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\refactoring-guide\\SKILL.md",
+                            "chars":  3146
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\rigging-animation\\SKILL.md",
+                            "chars":  3135
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\scope-creep-defense\\SKILL.md",
+                            "chars":  1687
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\state-management\\SKILL.md",
+                            "chars":  1912
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\storytelling\\SKILL.md",
+                            "chars":  7404
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\system-designer\\SKILL.md",
+                            "chars":  3057
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\technical-writer\\SKILL.md",
+                            "chars":  3364
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\tech-spec-gen\\SKILL.md",
+                            "chars":  4369
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\test-architect\\SKILL.md",
+                            "chars":  2442
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\testing-automation\\SKILL.md",
+                            "chars":  2220
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\testing-strategies\\SKILL.md",
+                            "chars":  2668
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\test-strategist\\SKILL.md",
+                            "chars":  2855
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\texture-art\\SKILL.md",
+                            "chars":  3657
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\typescript-strict\\SKILL.md",
+                            "chars":  1611
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\typography\\SKILL.md",
+                            "chars":  3635
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\ui-design\\SKILL.md",
+                            "chars":  2614
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\ui-ux-design\\SKILL.md",
+                            "chars":  4279
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\ux-design\\SKILL.md",
+                            "chars":  2630
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\vfx-realtime\\SKILL.md",
+                            "chars":  3838
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\visual-media\\SKILL.md",
+                            "chars":  8466
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\weapon-design\\SKILL.md",
+                            "chars":  3732
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\codex-skills-main\\worldbuilding\\SKILL.md",
+                            "chars":  4623
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\game-feel-skill-main\\skills\\game-feel\\SKILL.md",
+                            "chars":  11684
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\godot-game-studio-agent-main\\SKILL.md",
+                            "chars":  3931
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\pixel-art-studio-main\\SKILL.md",
+                            "chars":  9226
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\SKILL.md",
+                            "chars":  8665
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\engineering\\android-compose\\SKILL.md",
+                            "chars":  9589
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\engineering\\audit-actions\\SKILL.md",
+                            "chars":  4375
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\engineering\\codegen-api\\SKILL.md",
+                            "chars":  5962
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\engineering\\comment-stinky\\SKILL.md",
+                            "chars":  10671
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\engineering\\godot\\SKILL.md",
+                            "chars":  9370
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\engineering\\javascript-ecosystem\\SKILL.md",
+                            "chars":  22278
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\engineering\\mcp-server\\SKILL.md",
+                            "chars":  9652
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\engineering\\odsf\\SKILL.md",
+                            "chars":  15954
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\engineering\\okf\\SKILL.md",
+                            "chars":  19495
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\engineering\\proof\\SKILL.md",
+                            "chars":  5684
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\engineering\\react-compiler\\SKILL.md",
+                            "chars":  4582
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\engineering\\react-stinky\\SKILL.md",
+                            "chars":  11473
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\engineering\\storybook-pentest\\SKILL.md",
+                            "chars":  10727
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\engineering\\tauri-stinky\\SKILL.md",
+                            "chars":  10021
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\engineering\\test-stinky\\SKILL.md",
+                            "chars":  10618
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\engineering\\theme-colors\\SKILL.md",
+                            "chars":  5604
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\engineering\\trust-card\\SKILL.md",
+                            "chars":  7012
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\engineering\\visual-consistency\\SKILL.md",
+                            "chars":  11740
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\productivity\\ask-ux\\SKILL.md",
+                            "chars":  5147
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\productivity\\autopilot\\SKILL.md",
+                            "chars":  11324
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\productivity\\breadcrumbs\\SKILL.md",
+                            "chars":  5595
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\productivity\\fable-mode\\SKILL.md",
+                            "chars":  5391
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\productivity\\game-design\\SKILL.md",
+                            "chars":  17794
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\productivity\\no-slop\\SKILL.md",
+                            "chars":  12547
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\productivity\\to-story\\SKILL.md",
+                            "chars":  5124
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\api-design\\SKILL.md",
+                            "chars":  7137
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\application-architecture\\SKILL.md",
+                            "chars":  14509
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\brainstorm\\SKILL.md",
+                            "chars":  5367
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\code-reviewer\\SKILL.md",
+                            "chars":  20594
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\concurrency-design\\SKILL.md",
+                            "chars":  13235
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\docker\\SKILL.md",
+                            "chars":  19685
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\game-audio\\SKILL.md",
+                            "chars":  10342
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\game-design\\SKILL.md",
+                            "chars":  26933
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\game-narrative\\SKILL.md",
+                            "chars":  17886
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\game-patterns\\SKILL.md",
+                            "chars":  17347
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\game-performance\\SKILL.md",
+                            "chars":  15791
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\game-rendering\\SKILL.md",
+                            "chars":  17641
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\game-visuals\\SKILL.md",
+                            "chars":  15852
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\git-commit\\SKILL.md",
+                            "chars":  8344
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\git-pr\\SKILL.md",
+                            "chars":  9923
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\godot\\SKILL.md",
+                            "chars":  12373
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\godot-shader\\SKILL.md",
+                            "chars":  13090
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\gpu-rendering-architecture\\SKILL.md",
+                            "chars":  21630
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\grafana\\SKILL.md",
+                            "chars":  11945
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\helm\\SKILL.md",
+                            "chars":  12436
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\homelab-monitoring\\SKILL.md",
+                            "chars":  9460
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\k3s\\SKILL.md",
+                            "chars":  12514
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\k8s-networking\\SKILL.md",
+                            "chars":  10303
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\k8s-operations\\SKILL.md",
+                            "chars":  9354
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\k8s-storage\\SKILL.md",
+                            "chars":  13872
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\k8s-workloads\\SKILL.md",
+                            "chars":  11419
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\knowledge-base\\SKILL.md",
+                            "chars":  14911
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\level-design\\SKILL.md",
+                            "chars":  13118
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\logging\\SKILL.md",
+                            "chars":  7912
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\logql\\SKILL.md",
+                            "chars":  8629
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\love2d\\SKILL.md",
+                            "chars":  8661
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\love2d-fennel\\SKILL.md",
+                            "chars":  8016
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\nix\\SKILL.md",
+                            "chars":  9125
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\nix-dendritic\\SKILL.md",
+                            "chars":  13350
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\nix-packaging\\SKILL.md",
+                            "chars":  19765
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\odin-design\\SKILL.md",
+                            "chars":  14671
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\odin-gamedev\\SKILL.md",
+                            "chars":  11869
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\prd-to-stories\\SKILL.md",
+                            "chars":  9133
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\prd-writing\\SKILL.md",
+                            "chars":  6879
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\promql\\SKILL.md",
+                            "chars":  8472
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\pr-reviewer\\SKILL.md",
+                            "chars":  6262
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\python-design\\SKILL.md",
+                            "chars":  13597
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\skill-creator\\SKILL.md",
+                            "chars":  33547
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\software-design\\SKILL.md",
+                            "chars":  16573
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\test-design\\SKILL.md",
+                            "chars":  13676
+                        },
+                        {
+                            "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\test-driven-development\\SKILL.md",
+                            "chars":  6257
+                        }
+                    ],
+    "last_16":  [
+                    {
+                        "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\love2d\\SKILL.md",
+                        "chars":  8661
+                    },
+                    {
+                        "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\love2d-fennel\\SKILL.md",
+                        "chars":  8016
+                    },
+                    {
+                        "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\nix\\SKILL.md",
+                        "chars":  9125
+                    },
+                    {
+                        "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\nix-dendritic\\SKILL.md",
+                        "chars":  13350
+                    },
+                    {
+                        "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\nix-packaging\\SKILL.md",
+                        "chars":  19765
+                    },
+                    {
+                        "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\odin-design\\SKILL.md",
+                        "chars":  14671
+                    },
+                    {
+                        "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\odin-gamedev\\SKILL.md",
+                        "chars":  11869
+                    },
+                    {
+                        "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\prd-to-stories\\SKILL.md",
+                        "chars":  9133
+                    },
+                    {
+                        "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\prd-writing\\SKILL.md",
+                        "chars":  6879
+                    },
+                    {
+                        "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\promql\\SKILL.md",
+                        "chars":  8472
+                    },
+                    {
+                        "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\pr-reviewer\\SKILL.md",
+                        "chars":  6262
+                    },
+                    {
+                        "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\python-design\\SKILL.md",
+                        "chars":  13597
+                    },
+                    {
+                        "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\skill-creator\\SKILL.md",
+                        "chars":  33547
+                    },
+                    {
+                        "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\software-design\\SKILL.md",
+                        "chars":  16573
+                    },
+                    {
+                        "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\test-design\\SKILL.md",
+                        "chars":  13676
+                    },
+                    {
+                        "path":  "E:\\neverlookback\\agentskill\\skills-open-source-main\\test-driven-development\\SKILL.md",
+                        "chars":  6257
+                    }
+                ],
+    "support_read_complete":  true
+}

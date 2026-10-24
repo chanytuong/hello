@@ -1,0 +1,140 @@
+extends SceneTree
+## Phase 2 scenarios A-G for the launch investigation.
+## Usage: godot --headless --path E:\neverlookback --script res://tests/dbg_scenarios.gd -- <MODE>
+## MODE in A B C D E F G. NLBDebug event log + vy anomaly detection.
+
+var _mode: String = "A"
+var _frames: int = 0
+var _last_jump_fire: int = -100000
+var _last_damage: int = -100000
+var _launch: int = 0
+var _prev_vy: float = 0.0
+var _did: Dictionary = {}
+
+func _init() -> void:
+	var args := OS.get_cmdline_user_args()
+	if args.size() > 0:
+		_mode = args[0]
+	NLBPlayer.trace = true
+	var main = load("res://scenes/main.tscn").instantiate()
+	get_root().add_child(main)
+	current_scene = main
+
+func _p() -> NLBPlayer:
+	return get_first_node_in_group("player") as NLBPlayer
+
+func _m() -> NLBMeleeChaser:
+	for e in get_nodes_in_group("enemies"):
+		if e is NLBMeleeChaser:
+			return e
+	return null
+
+func _press(a: String) -> void:
+	if not _did.get(a, false):
+		_did[a] = true
+		Input.action_press(a)
+
+func _release(a: String) -> void:
+	if _did.get(a, false):
+		_did[a] = false
+		Input.action_release(a)
+
+func _physics_process(_delta: float) -> bool:
+	_frames += 1
+	var p := _p()
+	var m := _m()
+	if _frames == 1:
+		p.jumped.connect(func() -> void: _last_jump_fire = _frames)
+		p.health.max_hp = 99
+		p.health.reset()
+		m.global_position = Vector2(700, 599)
+		m.velocity = Vector2.ZERO
+	match _mode:
+		"A":  # walk into touch range, stand still, no jump/dash/blink
+			if _frames < 120:
+				Input.action_press("move_right")
+			else:
+				Input.action_release("move_right")
+		"B":  # jump shortly BEFORE contact
+			if _frames < 200:
+				Input.action_press("move_right")
+			if _frames == 60:
+				Input.action_press("jump")
+			if _frames == 90:
+				Input.action_release("jump")
+				Input.action_release("move_right")
+		"C":  # jump shortly AFTER contact (2 frames after first damage)
+			if _frames < 120:
+				Input.action_press("move_right")
+			else:
+				Input.action_release("move_right")
+			if _last_damage == _frames - 2:
+				Input.action_press("jump")
+			if _last_damage >= 0 and _frames >= _last_damage + 12:
+				Input.action_release("jump")
+		"D":  # airborne buffer + damage before landing
+			if _frames == 10:
+				p.global_position = Vector2(640, 599)
+				Input.action_press("jump")
+			if _frames == 16:
+				Input.action_release("jump")  # short hop toward melee
+			if _frames > 16 and _frames < 60:
+				Input.action_press("jump")  # buffer while airborne over melee
+			if _frames == 60:
+				Input.action_release("jump")
+		"E":  # jump right after a touch hit (coyote-from-pop window)
+			if _frames < 120:
+				Input.action_press("move_right")
+			else:
+				Input.action_release("move_right")
+			if _last_damage == _frames - 1:
+				Input.action_press("jump")
+			if _last_damage >= 0 and _frames >= _last_damage + 8:
+				Input.action_release("jump")
+		"F":  # dash repeatedly through the melee
+			if _frames % 50 == 0:
+				p.global_position = Vector2(600, 599)
+				p.velocity = Vector2.ZERO
+				Input.action_press("move_right")
+				Input.action_press("dash")
+			if _frames % 50 == 5:
+				Input.action_release("dash")
+			if _frames % 50 == 40:
+				Input.action_release("move_right")
+		"G":  # blink the moment windup starts
+			if _frames < 120:
+				Input.action_press("move_right")
+			else:
+				Input.action_release("move_right")
+			if m != null and m.ai_state == NLBMeleeChaser.AIState.WINDUP and _frames % 5 == 0:
+				Input.action_press("blink")
+			else:
+				Input.action_release("blink")
+		"H":  # blink on the exact damage frame
+			if _frames < 120:
+				Input.action_press("move_right")
+			else:
+				Input.action_release("move_right")
+			if _last_damage >= 0 and _frames == _last_damage + 1:
+				Input.action_press("blink")
+			if _last_damage >= 0 and _frames >= _last_damage + 6:
+				Input.action_release("blink")
+	if p.health.hp < 99 and _last_damage < _frames - 1:
+		_last_damage = _frames
+	var vy: float = p.velocity.y
+	if vy < -650.0 and _launch < 5:
+		_launch += 1
+		print("LAUNCH f=%d vy=%.0f grounded=%s jumpFire=%d ago dmg=%d ago blink=%s" % [
+			_frames, vy, str(p.is_on_floor()), _frames - _last_jump_fire,
+			_frames - _last_damage, str(_main_blink())])
+	_prev_vy = vy
+	if _frames >= 600:
+		print("SCENARIO %s: done launches=%d hp=%d" % [_mode, _launch, p.health.hp])
+		Engine.time_scale = 1.0
+		quit(0)
+		return true
+	return false
+
+func _main_blink() -> bool:
+	var b := current_scene.get_node_or_null("BlinkManager") as NLBBlinkManager
+	return b != null and b.is_transitioning()

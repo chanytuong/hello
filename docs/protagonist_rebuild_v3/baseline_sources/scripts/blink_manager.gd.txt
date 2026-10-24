@@ -1,0 +1,60 @@
+extends Node
+class_name NLBBlinkManager
+## Central Blink flow: READY -> TRANSITION (fighters frozen, shots cleared)
+## -> COOLDOWN -> READY. Timer-driven (_process countdown, never await on
+## scene-tree signals) so a mid-transition restart cannot strand callbacks.
+## Applies the swap through ONE group call: "blinkables".apply_blink(is_b).
+
+signal blink_started(to_b: bool)
+signal blink_finished(is_b: bool)
+
+enum BlinkState { READY, TRANSITION, COOLDOWN }
+
+@export var cooldown: float = 4.0
+@export var transition_duration: float = 0.28
+
+var blink_state: int = BlinkState.READY
+var is_b: bool = false
+
+var _timer: float = 0.0
+var _pending_to_b: bool = false
+
+func can_blink() -> bool:
+	return blink_state == BlinkState.READY
+
+func cooldown_frac() -> float:
+	if blink_state == BlinkState.COOLDOWN and cooldown > 0.0:
+		return clampf(_timer / cooldown, 0.0, 1.0)
+	return 0.0
+
+func is_transitioning() -> bool:
+	return blink_state == BlinkState.TRANSITION
+
+func try_blink() -> bool:
+	if blink_state != BlinkState.READY:
+		return false
+	_pending_to_b = not is_b
+	blink_state = BlinkState.TRANSITION
+	_timer = transition_duration
+	blink_started.emit(_pending_to_b)
+	return true
+
+func _process(delta: float) -> void:
+	if blink_state == BlinkState.READY:
+		return
+	_timer -= delta
+	if _timer > 0.0:
+		return
+	if blink_state == BlinkState.TRANSITION:
+		is_b = _pending_to_b
+		_apply_to_tagged()
+		blink_state = BlinkState.COOLDOWN
+		_timer = cooldown
+		blink_finished.emit(is_b)
+	elif blink_state == BlinkState.COOLDOWN:
+		blink_state = BlinkState.READY
+		_timer = 0.0
+
+func _apply_to_tagged() -> void:
+	if is_inside_tree():
+		get_tree().call_group("blinkables", "apply_blink", is_b)

@@ -1,0 +1,437 @@
+extends Node2D
+class_name NLBProp
+## ONE ordinary environmental object for the perception-weapon experiment.
+## Reality: a dull pipe lying in the hazard strip. Protagonist perception: a
+## hero blade. This is a prototype, not a weapon system: one slot, one
+## transformation, one held pose, one break.
+##
+## Full spec: design/PERCEPTION_WEAPON_EXPERIMENT.md
+##  - pickup is a WALK-OVER (no key, no menu, no inventory)
+##  - the 0.465s perception break is pure decoration; gameplay NEVER locks
+##  - it is a PERCEPTION FRACTURE, not a power-up: no glow, no colour flash,
+##    no size-that-stays-bigger. Only misregistration + silhouette break +
+##    one hard snap. "Reality did not upgrade. Perception changed."
+##  - Blink and the prop are separate mechanics: Blink only changes whether
+##    the hazard strip under the pipe is live (access, not transformation)
+
+signal picked_up(prop: NLBProp)
+signal broke(prop: NLBProp)
+
+enum State { FREE, HELD, BROKEN }
+
+const TRANSFORM_TIME := 0.465
+const PICKUP_X := 26.0     # player origin passes within this x of the slot
+const PICKUP_Y := 44.0
+const MAX_USES := 5
+const RESPAWN_TIME := 4.0
+const HOLD_OFFSET := Vector2(16, -30)   # hand anchor, facing right
+const HOLD_ROT := -0.66                 # resting held angle (~ -38 deg)
+
+## The perception break, as ONE table. These constants are the only
+## place the timeline lives - prop.gd renders them and player.gd reads
+## `holder.perception_pose`, so nothing can drift out of phase.
+##   A  0.000 - 0.070  identity instability: lift + squash wobble (reality alone)
+##   B  0.070 - 0.170  REALITY / HERO OVERLAP: one controlled double image
+##   C  0.170 - 0.240  SILHOUETTE FRACTURE: the three bands break apart
+##   *  0.240 - 0.285  PEAK HELD: the disagreement stops moving and just
+##                     SITS there for ~3 frames. This is what separates an
+##                     authored snap from a rendering bug - the eye needs one
+##                     held "before" frame to compare the "after" against.
+##                     Costs zero time: it comes out of beat C's ramp.
+##   D  0.285          HARD PERCEPTUAL SNAP: reality out, hero registered
+##   E  0.285 - 0.465  short overshoot + settle
+const BEAT_OVERLAP := 0.070
+const BEAT_FRACTURE := 0.170
+const BEAT_PEAK := 0.240      # fracture reaches full here, then HOLDS
+const BEAT_SNAP := 0.285
+const POSE_SNAP_END := 0.345   # perception_pose 1 (recoil) ends here
+
+const REALITY_COL := Color(0.60, 0.62, 0.66)
+const BLADE_COL := Color(0.98, 0.99, 1.0)
+const GUARD_COL := Color(0.26, 0.23, 0.21)
+const GRIP_COL := Color(0.20, 0.18, 0.16)
+
+var state: int = State.FREE
+var uses_left: int = MAX_USES
+var holder: NLBPlayer = null
+
+var _slot: Vector2
+var _tf_t: float = 0.0
+var _tf_rot: float = HOLD_ROT
+var _tf_scale: Vector2 = Vector2.ONE
+var _lift: Vector2 = Vector2.ZERO
+var _respawn_t: float = 0.0
+var _break_t: float = 0.0
+var _hint_done: bool = false
+var _hint_t: float = 0.0
+
+@onready var reality: Node2D = $Reality
+@onready var seg1: ColorRect = $Reality/Seg1
+@onready var seg2: ColorRect = $Reality/Seg2
+@onready var seg3: ColorRect = $Reality/Seg3
+@onready var hero: Node2D = $Hero
+@onready var blade: ColorRect = $Hero/Blade
+@onready var guard: ColorRect = $Hero/Guard
+@onready var grip: ColorRect = $Hero/Grip
+
+func _ready() -> void:
+	add_to_group("props")
+	_slot = global_position
+	_reset_free()
+
+func _reset_free() -> void:
+	state = State.FREE
+	holder = null
+	scale = Vector2.ONE
+	modulate = Color(1, 1, 1, 1)
+	_tf_t = TRANSFORM_TIME
+	_tf_rot = HOLD_ROT
+	_tf_scale = Vector2.ONE
+	_lift = Vector2.ZERO
+	_break_t = 0.0
+	uses_left = MAX_USES
+	global_position = _slot
+	_reset_reality()
+	hero.visible = false
+	hero.position = Vector2.ZERO
+	hero.rotation = HOLD_ROT
+	hero.scale = Vector2.ONE
+	hero.modulate = Color(1, 1, 1, 1)
+	blade.position = Vector2.ZERO
+	guard.position = Vector2.ZERO
+	grip.position = Vector2.ZERO
+	_apply_colours()
+	var p := _player()
+	if p != null:
+		p.perception_pose = -1
+
+## Reality starts every life perfectly registered: the three bands overlap by
+## 2px so the pipe reads as ONE dull bar with no seam, and only separate
+## during the fracture beat.
+func _reset_reality() -> void:
+	reality.visible = true
+	reality.position = Vector2.ZERO
+	reality.rotation = 0.0
+	reality.scale = Vector2.ONE
+	reality.modulate = Color(1, 1, 1, 1)
+	seg1.position = Vector2.ZERO
+	seg1.rotation = 0.0
+	seg1.color = REALITY_COL
+	seg2.position = Vector2.ZERO
+	seg2.rotation = 0.0
+	seg2.color = REALITY_COL
+	seg3.position = Vector2.ZERO
+	seg3.rotation = 0.0
+	seg3.color = REALITY_COL
+
+func _apply_colours() -> void:
+	blade.color = BLADE_COL
+	guard.color = GUARD_COL
+	grip.color = GRIP_COL
+
+func _process(delta: float) -> void:
+	match state:
+		State.FREE:
+			_process_free(delta)
+		State.HELD:
+			_process_held(delta)
+		State.BROKEN:
+			_process_broken(delta)
+
+# ---------------------------------------------------------------- free
+
+func _process_free(delta: float) -> void:
+	# One-shot Blink/access hint, only before the first pickup.
+	if not _hint_done:
+		_hint_t += delta
+		if _hint_t > 0.6:
+			var p := _player()
+			if p != null and absf(p.global_position.x - global_position.x) < 150.0:
+				_hint_done = true
+				# ONE Blink relation, stated where it matters: the pipe is
+				# free only while the strip under it is dead.
+				var hz := get_tree().get_first_node_in_group("hazards") as NLBHazard
+				if hz != null and hz.active:
+					_say("THE PIPE SITS IN THE HAZARD - BLINK TO TAKE IT CLEAN.")
+				else:
+					_say("WALK OVER THE PIPE TO TAKE IT.")
+			elif _hint_t > 4.0:
+				_hint_done = true
+	var p2 := _player()
+	if p2 == null or p2.fight_frozen or p2.health.hp <= 0:
+		return
+	var d: Vector2 = p2.global_position - global_position
+	if absf(d.x) > PICKUP_X or absf(d.y) > PICKUP_Y:
+		return
+	_pick_up(p2)
+
+func _pick_up(p: NLBPlayer) -> void:
+	state = State.HELD
+	holder = p
+	uses_left = MAX_USES
+	_tf_t = 0.0
+	_tf_rot = HOLD_ROT
+	_tf_scale = Vector2.ONE
+	_lift = Vector2(0.0, 26.0)
+	_break_t = 0.0
+	hero.visible = false
+	_reset_reality()
+	p.perception_pose = 0   # the BODY starts reaching on the same frame
+	p.set_armed(1.0, false)
+	p.landed_hit.connect(on_use)
+	_say("PIPE - longer reach, harder shove. It breaks after 5 hits.")
+	NLBAudio.play(&"pickup")   # audio placeholder (stub today)
+	picked_up.emit(self)
+
+# ------------------------------------------------------------- transform
+
+func _process_held(delta: float) -> void:
+	var p := holder
+	if p == null or not is_instance_valid(p):
+		_release_to_floor()
+		return
+	scale.x = float(p.facing)
+	global_position = p.global_position + Vector2(HOLD_OFFSET.x * float(p.facing), HOLD_OFFSET.y) + _lift
+
+	var swinging := p._atk_t >= 0.0
+	# Committing to violence resolves the fracture. The break is something
+	# that happens TO you; the swing is you deciding. It also stops the blade
+	# rendering as a misregistered double while an arc plays through it.
+	if swinging and _tf_t < BEAT_SNAP:
+		_tf_t = BEAT_SNAP
+	if _tf_t < TRANSFORM_TIME:
+		_advance_transform(delta)
+	# Pre-snap the hero IS the double image - `_advance_transform` owns it.
+	if _tf_t < BEAT_SNAP:
+		return
+	hero.position = Vector2.ZERO
+	hero.modulate.a = 1.0   # alpha only: the wear tint in `hero.modulate` survives
+	hero.scale = _tf_scale
+	hero.rotation = _swing_rot(p) if swinging else _tf_rot
+
+func _advance_transform(delta: float) -> void:
+	var prev := _tf_t
+	_tf_t += delta
+	var t := _tf_t
+
+	# A (0.000 - 0.070) identity instability. The object resists the hand:
+	# compress hard, then rebound long. Reality alone, no second image yet.
+	_lift.y = 26.0 * (1.0 - clampf(t / BEAT_OVERLAP, 0.0, 1.0))
+
+	# The hero silhouette's pre-snap state: partial, offset, rotated against
+	# reality. Owned entirely by this function; never touched elsewhere.
+	var h_alpha := 0.0
+	var h_off := Vector2.ZERO
+	var h_rot := HOLD_ROT
+	var h_sc := 1.0
+
+	if t < BEAT_OVERLAP:
+		var k := clampf(t / BEAT_OVERLAP, 0.0, 1.0)
+		reality.scale = Vector2(lerpf(0.84, 1.10, k), lerpf(1.22, 0.94, k))
+		hero.visible = false
+	elif t < BEAT_FRACTURE:
+		# B (0.070 - 0.170) THE DOUBLE IMAGE. Both interpretations are drawn
+		# at once - not a cross-fade, not a ghost of the same shape. The
+		# mundane pipe and the hero blade disagree about where the object is
+		# and which way it points. Misregistration, never glow.
+		var k := clampf((t - BEAT_OVERLAP) / (BEAT_FRACTURE - BEAT_OVERLAP), 0.0, 1.0)
+		reality.scale = Vector2(1.16, 0.90)
+		reality.rotation = 0.14
+		reality.position = Vector2(-9.0, 4.0) + Vector2(3.0, -2.0) * k
+		hero.visible = true
+		h_alpha = 0.42
+		h_off = Vector2(15.0, -9.0)
+		h_rot = HOLD_ROT - 0.26
+		h_sc = 1.14
+	elif t < BEAT_SNAP:
+		# C (0.170 - 0.285) SILHOUETTE FRACTURE, ramping to full at BEAT_PEAK
+		# and then HOLDING. The pipe stops reading as a pipe: three bands break
+		# apart at three different angles while the whole body stretches long
+		# and thin - and the blade does NOT quietly resolve, it stays tilted
+		# and offset too. Both identities stay wrong, in incompatible ways, up
+		# to the very frame the snap picks one. A half-resolved second image
+		# would read as an aura; two held wrong answers read as a disagreement.
+		var k := clampf((t - BEAT_FRACTURE) / (BEAT_PEAK - BEAT_FRACTURE), 0.0, 1.0)
+		reality.scale = Vector2(lerpf(1.16, 1.80, k), lerpf(0.90, 0.48, k))
+		reality.rotation = lerpf(0.14, 0.40, k)
+		reality.position = Vector2(lerpf(-9.0, -17.0, k), lerpf(4.0, 9.0, k))
+		_bands_break(k)
+		hero.visible = true
+		h_alpha = lerpf(0.42, 0.95, k)
+		h_off = Vector2(lerpf(15.0, 6.0, k), lerpf(-9.0, -3.0, k))
+		h_rot = lerpf(HOLD_ROT - 0.26, HOLD_ROT - 0.16, k)
+		h_sc = lerpf(1.14, 1.08, k)
+	elif prev < BEAT_SNAP:
+		# D (0.285) THE HARD SNAP. ONE frame, ONE decision - landing after a
+		# ~3-frame hold at peak disagreement, so it reads as a resolution
+		# rather than as a glitch. Deliberately NO colour flash - a flash says
+		# "the item lit up". The snap is purely structural: reality is simply
+		# gone, the hero is already there and now owns the object.
+		_reset_reality()
+		reality.visible = false
+		hero.visible = true
+		h_alpha = 1.0
+		h_off = Vector2.ZERO
+		_tf_rot = HOLD_ROT - 0.34
+		_tf_scale = Vector2(1.40, 1.40)
+		NLBAudio.play(&"transform")   # the SNAP beat; audio placeholder
+
+	if t < BEAT_SNAP:
+		hero.modulate.a = h_alpha
+		hero.position = h_off
+		hero.rotation = h_rot
+		hero.scale = Vector2(h_sc, h_sc)
+
+	# E (0.285 - 0.465) short overshoot and settle. Cubic ease-out puts the
+	# visual settle inside ~0.09s; residual distortion is exactly zero from
+	# TRANSFORM_TIME onward.
+	if t >= BEAT_SNAP:
+		var k := clampf((t - BEAT_SNAP) / (TRANSFORM_TIME - BEAT_SNAP), 0.0, 1.0)
+		var e := 1.0 - pow(1.0 - k, 3.0)
+		_tf_scale = Vector2(lerpf(1.40, 1.0, e), lerpf(1.40, 1.0, e))
+		_tf_rot = lerpf(HOLD_ROT - 0.34, HOLD_ROT, e)
+	if t >= TRANSFORM_TIME:
+		# Rest state: residual distortion is exactly zero from here.
+		_lift = Vector2.ZERO
+		_tf_scale = Vector2.ONE
+		_tf_rot = HOLD_ROT
+	# The BODY's pose is driven from this same table, so player.gd cannot
+	# drift out of phase with the timeline it is reacting to.
+	if holder != null and is_instance_valid(holder):
+		if t < BEAT_SNAP:
+			holder.perception_pose = 0      # reach / coil toward the floor
+		elif t < POSE_SNAP_END:
+			holder.perception_pose = 1      # recoil at the hard snap
+		elif t < TRANSFORM_TIME:
+			holder.perception_pose = 2      # settle back to neutral
+		else:
+			holder.perception_pose = -1
+
+## The three reality bands tear apart - an ANGULAR break, never a colour
+## change. Each band gets its own offset and its own angle so no two read alike.
+func _bands_break(k: float) -> void:
+	seg1.position = Vector2(-3.0, -12.0) * k
+	seg1.rotation = -0.60 * k
+	seg2.position = Vector2(-8.0, 11.0) * k
+	seg2.rotation = 0.40 * k
+	seg3.position = Vector2(11.0, -8.0) * k
+	seg3.rotation = -0.30 * k
+
+## The weapon arc: anticipation -> strike -> contact -> follow-through.
+## A2 HORIZONTAL IMPOSSIBLE LINE (identity lock): the strike is NOT a wheel.
+## The blade eases up from the carry, then SNAPS to level inside the first
+## 30% of the active window and HOLDS there - so while the contact frame is
+## on screen the torso -> arm -> blade chain reads as ONE horizontal line.
+## Presentation only: same timings, same hitbox, same recovery structure.
+## The ease-in still lands AFTER the body's fast coil, which keeps the
+## drag/overlap that stops the weapon reading as a prop spinning on its own.
+func _raise(p: NLBPlayer) -> float:
+	return _tf_rot - (0.25 if p._struck_from_dash else 0.60)
+
+## End-of-active angle: just past level, so the follow-through dips a few
+## degrees instead of wheeling over. A dash-strike never lifts as far in the
+## first place - it continues the diagonal the dash was already drawing.
+func _over(p: NLBPlayer) -> float:
+	return 0.06 if p._struck_from_dash else 0.10
+
+func _swing_rot(p: NLBPlayer) -> float:
+	# Both idle and recovery settle onto `_tf_rot`, which is HOLD_ROT except
+	# while the perception break is still settling - that is what stops the
+	# prop popping when an attack ends mid-transformation.
+	if p._atk_t < 0.0:
+		return _tf_rot
+	var startup := p.attack_startup
+	var active_end := startup + p.attack_active
+	var t: float = p._atk_t
+	var raise := _raise(p)
+	var over := _over(p)
+	if t <= startup:
+		var k := t / maxf(startup, 0.001)
+		return lerpf(_tf_rot, raise, k * k)          # DRAG: the blade arrives late
+	if t <= active_end:
+		var k := (t - startup) / maxf(p.attack_active, 0.001)
+		if k < 0.30:
+			# SNAP: eased rise from the coil to LEVEL
+			var s := k / 0.30
+			return lerpf(raise, 0.0, s * s)
+		# THE LINE: held at level through the contact, easing into a slight dip
+		return lerpf(0.0, over, (k - 0.30) / 0.70)
+	var k2 := clampf((t - active_end) / maxf(p.attack_recovery, 0.001), 0.0, 1.0)
+	if p._bite_done:
+		# HIT: braced - straight back to guard. No wheel, no flourish, and no
+		# extra camera or arc: the bite itself is the event.
+		return lerpf(over, _tf_rot, k2)
+	# WHIFF: free follow-through. The blade is allowed to swing WIDE past the
+	# target before settling - the half of the hit/whiff split that costs the
+	# player nothing and reads as overcommitment.
+	var wide := over + 0.20
+	if k2 < 0.35:
+		return lerpf(over, wide, k2 / 0.35)
+	return lerpf(wide, _tf_rot, (k2 - 0.35) / 0.65)
+
+# ------------------------------------------------------------ hit / break
+
+## Called from the player's `landed_hit` once per confirmed swing.
+func on_use() -> void:
+	if state != State.HELD or holder == null or not is_instance_valid(holder):
+		return
+	uses_left -= 1
+	if uses_left <= 0:
+		_do_break()
+		return
+	# Wear is visible BEFORE the payoff, so the last swing reads as chosen.
+	holder.set_armed(1.0, uses_left == 1)
+	var k := 1.0 - float(uses_left) / float(MAX_USES)
+	hero.modulate = Color(1.0, 1.0, 1.0, 1.0).lerp(Color(0.72, 0.66, 0.58, 1.0), k * 0.8)
+
+func _do_break() -> void:
+	var p := holder
+	if p != null and is_instance_valid(p) and p.landed_hit.is_connected(on_use):
+		p.landed_hit.disconnect(on_use)
+		p.set_armed(0.0, false)
+		p.perception_pose = -1
+	holder = null
+	state = State.BROKEN
+	_break_t = 0.0
+	scale = Vector2.ONE
+	# Deterministic split - no physics, no RNG. The break is the reward.
+	broke.emit(self)
+	NLBAudio.play(&"break")   # audio placeholder
+	_say("The pipe comes apart. Blink for another angle.")
+
+func _process_broken(delta: float) -> void:
+	_break_t += delta
+	var k := clampf(_break_t / 0.24, 0.0, 1.0)
+	hero.visible = true
+	hero.position = Vector2.ZERO
+	hero.rotation = HOLD_ROT + 0.9 * k
+	hero.scale = Vector2(lerpf(1.0, 1.25, k), lerpf(1.0, 0.7, k))
+	blade.position = Vector2(34.0, 16.0) * k
+	guard.position = Vector2(2.0, 30.0) * k
+	grip.position = Vector2(-26.0, 10.0) * k
+	hero.modulate.a = 1.0 - k
+	if k >= 1.0:
+		hero.visible = false
+	_respawn_t = maxf(RESPAWN_TIME - _break_t, 0.0)
+	if _break_t >= RESPAWN_TIME:
+		_reset_free()
+
+func _release_to_floor() -> void:
+	# Safety: if the holder vanishes (death/restart), the prop returns to slot.
+	if holder != null and is_instance_valid(holder) and holder.landed_hit.is_connected(on_use):
+		holder.landed_hit.disconnect(on_use)
+		holder.set_armed(0.0, false)
+	_reset_free()
+
+# ------------------------------------------------------------------ util
+
+func _player() -> NLBPlayer:
+	return get_tree().get_first_node_in_group("player") as NLBPlayer
+
+func _say(t: String) -> void:
+	var h := get_tree().get_first_node_in_group("hud") as NLBHUD
+	if h != null:
+		h.set_message(t)
+
+func armed() -> bool:
+	return state == State.HELD

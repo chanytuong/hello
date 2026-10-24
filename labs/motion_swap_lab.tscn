@@ -15,8 +15,7 @@ script = ExtResource("1")
 [node name="Player" parent="." instance=ExtResource("2")]
 position = Vector2(650, 599)
 movement_preview = true
-m1_combo_enabled = true
-m1_rebuild_enabled = true
+m1_crowbar_enabled = true
 
 [node name="Controller" type="Node2D" parent="."]
 script = ExtResource("3")

@@ -1,0 +1,767 @@
+﻿[
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\00_source_lock_east.png",
+        "sha256":  "62640620F7A429F9FAA2153E60AFB2E9BA0F9EB4C31E037464811ED37FEFE909",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\00_source_lock_east.png.import",
+        "sha256":  "C5EFF7C7D489BE65F821E6F3C5A4C0BFD57D2AB48FF0A94965E14009B2E31538",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\01_master_idle.png",
+        "sha256":  "8604851F1FC99041D27B6A988F65775AB04F3C8CE686CC9C6EE7FDFD059AAE92",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\01_master_idle.png.import",
+        "sha256":  "4984489353D02C6284723DD0DBA35985F866F95C30FA709D444D323CC56EF266",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\01_master_idle_8x.png",
+        "sha256":  "BF2DB9BAE8CFF4A1C76541E965F1B0BC3AFB960FD179CFB376882572CA622954",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\01_master_idle_8x.png.import",
+        "sha256":  "16829A0019C2A842FCB9CF6977592FCC4912521994CAD17EC9E0068E7E731E13",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\before_after_comparison_4x.png",
+        "sha256":  "AF694135132ACF4FE8C074277B45AE2ED63446539929560DB5422E9F76E3DA0F",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\before_after_comparison_4x.png.import",
+        "sha256":  "9D6D8118CC0BF676F9F705F21437FFD4FCC02523CDB3CE58A9B1A69C78C4B804",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\frame0_source_lock_check.png",
+        "sha256":  "62640620F7A429F9FAA2153E60AFB2E9BA0F9EB4C31E037464811ED37FEFE909",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\frame0_source_lock_check.png.import",
+        "sha256":  "26FD163F230E10CEA80A697E6F526DC1AA9BAFA4FEFA76FDBD2C99D7CD9F2AB3",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\nlb_protag_v4_pixellab.pxo",
+        "sha256":  "A052BA3DDC5DB8D4846E95C9B83D39C290D85A2B3CE028332966DA28BA5A3FBC",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\nlb_protag_v4_run_only.pxo",
+        "sha256":  "03AEE31B710C95CEE143962BAE447136F151934CEC2A66340474E36D8D9015B4",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\NOTES.md",
+        "sha256":  "5FA23502F2FB14150FB397A054420AC38824A814B6B1DDACFF71B0101466F2A5",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\run_on_dark_bg_1x.png",
+        "sha256":  "EA25A7ED82DBBEC697A897B4308B76A9F4982D85C23AED7EB3D1ED68940E2D6C",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\run_on_dark_bg_1x.png.import",
+        "sha256":  "47971ED498EB9C0D39ABD137E7D6200019690AD23D168068AB16757C78AD22A5",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\run_preview_10fps.gif",
+        "sha256":  "FB1968A437BEFF17CC8E4FC0F298A8F176A319DAC4A0170FEF3BB5D4D6794110",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\run_preview_10fps_4x.gif",
+        "sha256":  "D67BDBD41C7328F3BAEF7EE6596E46AF0D2F7D59463542C385C32E59D347C798",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\run_preview_6fps.gif",
+        "sha256":  "869AF3B6A4A4E4804689FBAEB7D40DA8F00F91CA636730F5A98A7B7E588B37ED",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\run_preview_8fps.gif",
+        "sha256":  "FB5C13B7DF0138E754C9EEE0C2A2EC68EB82DC35BF4AE2242F41F63A37C9214F",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\run_spritesheet_8x1.png",
+        "sha256":  "FCF6DC59A6DB89E337C35A820D93DA55E9192C95FF8403BF39E96E6177C2652D",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\run_spritesheet_8x1.png.import",
+        "sha256":  "45EEB5ED1B9C741D2889316A1EEA9B8506221EFBF9DB50608EA8DE9370C565B3",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip_pass0_f1.png",
+        "sha256":  "8604851F1FC99041D27B6A988F65775AB04F3C8CE686CC9C6EE7FDFD059AAE92",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip_pass0_f1.png.import",
+        "sha256":  "909BB05FB92B1B30A3530DC9BE14D3BE3A2BA8A7BED65DEC8A6706C4C4D9BC2F",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip_pass0_f2.png",
+        "sha256":  "505DBC2A2A92BA6951B8C40404DA19D6D06A0D9B5237BA461DA024DA9693234A",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip_pass0_f2.png.import",
+        "sha256":  "BA36B193660A573572C4E7E914E7B53E03598FCCA876277BA1732B4EEC738DEA",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip_pass0_f3.png",
+        "sha256":  "2C331F460E4D3838BC7A2A316A099E4484F6888ADCE955133AFC409426D86103",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip_pass0_f3.png.import",
+        "sha256":  "F1ED3021C67995B1137E8C4AAC4F747E46997BEA2A2B040D7D883B1A8C7074D2",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip_pass0_f4.png",
+        "sha256":  "C748561551550B66A371643ECD24B81B1F1E83A0E6A43F2B1593921FC65BF195",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip_pass0_f4.png.import",
+        "sha256":  "D844A0B228A45C639C64C3FB3A2547BD224A296169CD4CFA71EF68DBA4C473CF",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip_pass0_f5.png",
+        "sha256":  "6A2BD4E434DE49D5DCAC357942CB33793B9F6A50AB9B93236FB9854378915229",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip_pass0_f5.png.import",
+        "sha256":  "293E7781F15DF4AAC6CD2B1859BBAAA507A62B8CFED884BE5B7B8241496922C1",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip_pass0_f6.png",
+        "sha256":  "B073AF8EBD3B35EB9950F36B056AF9E71E2544525EB2EA290E1817CD3C06522C",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip_pass0_f6.png.import",
+        "sha256":  "B3E9281681C8FC3AB558E511692CE865E4A7ABB03121C6205A6AD368E89F1059",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip_pass0_f7.png",
+        "sha256":  "7F1CDF4FC317D93B1DC3BB20C9FF81436FE3FF142DDB7D5C6FC93135BB780E57",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip_pass0_f7.png.import",
+        "sha256":  "9F0444F0F9DD90495D5FD22F1E797989070ED9BD438135DBC977CAF634141162",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\run_frames\\run_0002.png",
+        "sha256":  "60C28479E48D3CC66C7713C0221872A5DA6CB575FFF23F516157F1C7763A7963",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\run_frames\\run_0002.png.import",
+        "sha256":  "0551A071C65D7BA8E4B6A33188144F31CA3E9F915685168978E270956095A40A",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\run_frames\\run_0003.png",
+        "sha256":  "597FF94BE0CD8E548D2A3710A60C6350B626039EB5BA4457CB70326C5C8F51BF",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\run_frames\\run_0003.png.import",
+        "sha256":  "E2CB47B77BDF07A971FBE7075CF8FAC75231AA995BC13D886A761A732FBD09D2",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\run_frames\\run_0004.png",
+        "sha256":  "8958552AFA071D9303198FBA0969C786E0CEE33E6447F61B58AE179F31333671",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\run_frames\\run_0004.png.import",
+        "sha256":  "9B3F8DB5EA98621C30837CE6C1EA9A59574310A7074887FBB8971504AF2BCA7F",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\run_frames\\run_0005.png",
+        "sha256":  "E6CD0167619100EF8E28C498B8718E5AC334C653B0674CCC5CCB5E80A60846C5",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\run_frames\\run_0005.png.import",
+        "sha256":  "B9094B72BA60FB9AAFCF5687046DF84DD89E47872C48A3E3945EBB7C77339430",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\run_frames\\run_0006.png",
+        "sha256":  "BDCEF4FE0215CF2B9737AA18C21355ADBE68316402E911FC7BA58CFEF9DD03D0",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\run_frames\\run_0006.png.import",
+        "sha256":  "8C7540157382AC9B911AC8E2B3E695C7739B9A4CD88CCF1A4684C863D0566BFB",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\run_frames\\run_0007.png",
+        "sha256":  "C045B416999236B8AC2E999E45B9E29368710B322B8F5C39BDBAAEE9BAE2B5B6",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\run_frames\\run_0007.png.import",
+        "sha256":  "01547CA303637D7AD62F66C7A8A70CADA610AFD60A49783CFDDE4F51A62B827D",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\run_frames\\run_0008.png",
+        "sha256":  "390493BD1127A75C1ED61BCB44D2C84B1CDF6A5E20F90B6AC94A17E966C2A413",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\run_frames\\run_0008.png.import",
+        "sha256":  "FC4AD9C74EEC8C894D5D7FFFFCE5D43BF0E202F491108FD31CBC66D5B158B6C7",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\run_frames\\run_0009.png",
+        "sha256":  "9C6EC6FC0BF8778E57154729B4CDC597619AD168CAF739562FB59EFA02DD1266",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\run_frames\\run_0009.png.import",
+        "sha256":  "055B733400E95101638009CDEBBE925A2E5BB62314393B61CCC36DDAF97B450D",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p0_f1.png",
+        "sha256":  "8604851F1FC99041D27B6A988F65775AB04F3C8CE686CC9C6EE7FDFD059AAE92",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p0_f1.png.import",
+        "sha256":  "5200BE340FC06A911AA3CEFE056F6A2AB5E287E9FC5D35A913D6EAE75EB90340",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p0_f2.png",
+        "sha256":  "3FB13F567C6C62FB6E7CB39E11111925EECA36552B42FCB63ABB2A82D50B2FA0",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p0_f2.png.import",
+        "sha256":  "C9D4BD46C73FFB27826F9B46E83E6478C9399B5DD1E76ADD40846A8E12FC8A66",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p0_f3.png",
+        "sha256":  "AFC8665AA9D0A18E393606A2FC3500AC5C55139DF3EDF5AC6F822E9F64D364B3",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p0_f3.png.import",
+        "sha256":  "63CC67511944502AB8907665C3BEA48920FECB9DEE9A46DA29203AC40C791727",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p0_f4.png",
+        "sha256":  "E15334AB80B6BD8FB4A61944FEFDF85112E69509038D193F9BC0006F2A809AE4",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p0_f4.png.import",
+        "sha256":  "DD7928E4BA2B6D668532EF66AA52856796B49FB75DBCDDF8DD746A061279A420",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p0_f5.png",
+        "sha256":  "C2163A14E59C9C237AEA027266388F819561E75786C5256D34D6FCBBA56D0190",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p0_f5.png.import",
+        "sha256":  "2FC12E773616059A3B2A11B4996BA50C4342E85C08B7834BA7A1E9BC8FFB762F",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p0_f6.png",
+        "sha256":  "17C1FFA5C3311E1901EDD5C22D94A94491E25CFBB1409AD548D171CB407B68B4",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p0_f6.png.import",
+        "sha256":  "697B59C180337CC7264A37CCA19CA7FA979D0B837C7BC7282243CF404AECD448",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p0_f7.png",
+        "sha256":  "C90A263C66388C2C1C2245094BF102102EF768EA2DF84695085FEE13442883D3",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p0_f7.png.import",
+        "sha256":  "30FEF6C4C34BA7AB6E409D80441197B088673487C9E5DD18888C57727018B7A0",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p0_f8.png",
+        "sha256":  "D0B75EA61B9E094E9E2A0067F7FE5DF4DA9C83F0EAD1EE4CE29EA910DA5155CF",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p0_f8.png.import",
+        "sha256":  "249F35AD29A1A1AD54AEB277D5A07211477486D87475722044A5CC162A860592",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p0_f9.png",
+        "sha256":  "3228465FA2427678632C3396249C625C6E7C2C9D947E1B4C8390407A2ABBB264",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p0_f9.png.import",
+        "sha256":  "97410ED638682CAD33684E9E17A88E1B3B6C04D3F94227C488884C6EA3498471",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p1_f2.png",
+        "sha256":  "60C28479E48D3CC66C7713C0221872A5DA6CB575FFF23F516157F1C7763A7963",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p1_f2.png.import",
+        "sha256":  "D26B48C8E0F0748868E7930DD7EEBF954A99861753182CFE0164A39E540E53C4",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p1_f3.png",
+        "sha256":  "56678414798BB5AA1C4866D2C0BE0140C2B5C27F411208630BC4951A196994A2",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p1_f3.png.import",
+        "sha256":  "D1A669F39AA8F7A0A51CCE2DCFB224A0DE098D4BB4283EA9CEF65F359305887A",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p1_f4.png",
+        "sha256":  "8958552AFA071D9303198FBA0969C786E0CEE33E6447F61B58AE179F31333671",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p1_f4.png.import",
+        "sha256":  "C0EF7B8BDB1700906D46FABC610940D0D9E64E910031E0FFDCEE67528616056C",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p1_f5.png",
+        "sha256":  "88606B9965DA13393D78D03525B835E7A5142EC51EF65D260B583D2401D4FAE4",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p1_f5.png.import",
+        "sha256":  "1266D85CE2CFA2E65A05A58DCD2451A2EE20AB1DDB6A68807173EE45155AC1D3",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p1_f6.png",
+        "sha256":  "BDCEF4FE0215CF2B9737AA18C21355ADBE68316402E911FC7BA58CFEF9DD03D0",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p1_f6.png.import",
+        "sha256":  "455B0C77143E1181135108E3369E31BF52BB0921A0EA8F7B31D225BE543C001A",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p1_f7.png",
+        "sha256":  "53EF3B15381D17BA48BF9358C896E88842756E122557747340FD763560552F7C",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p1_f7.png.import",
+        "sha256":  "EDAB3D7F822B4B26D8BC67D4F91A8A610AD1E9D5D8F589287161AA9701E41C45",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p1_f8.png",
+        "sha256":  "390493BD1127A75C1ED61BCB44D2C84B1CDF6A5E20F90B6AC94A17E966C2A413",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p1_f8.png.import",
+        "sha256":  "EC4FC7D5776198FCD273B73442D81BBE337B5540188CF1BC3A1BA8342D9736BD",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p1_f9.png",
+        "sha256":  "2D25E988DE2A48D802BC63AC676149EBE51CC3A209E30DCF48593A78261CDD80",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p1_f9.png.import",
+        "sha256":  "2946978A16F0ED5C6487B0DFAB04FBEC57FFF5432849AA8006707C0FEC98E1AB",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p2_f2.png",
+        "sha256":  "60C28479E48D3CC66C7713C0221872A5DA6CB575FFF23F516157F1C7763A7963",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p2_f2.png.import",
+        "sha256":  "D85592908C23B468164D009587C7746AEB7CC988F82C7C113AE33AE53877098D",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p2_f3.png",
+        "sha256":  "597FF94BE0CD8E548D2A3710A60C6350B626039EB5BA4457CB70326C5C8F51BF",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p2_f3.png.import",
+        "sha256":  "BC880C7586A93372B1D7BA8FED9C39F4E7E6AF39ECDF4A52268BE2BFF31CCCBD",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p2_f4.png",
+        "sha256":  "8958552AFA071D9303198FBA0969C786E0CEE33E6447F61B58AE179F31333671",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p2_f4.png.import",
+        "sha256":  "74D5C533718F55E423013F4DBB98AC3BA77182CDE88B88BA0A7D9D8E9FBAD6DE",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p2_f5.png",
+        "sha256":  "E6CD0167619100EF8E28C498B8718E5AC334C653B0674CCC5CCB5E80A60846C5",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p2_f5.png.import",
+        "sha256":  "7E5E736C9662FDB2B849C3D92C522028B0D273C19872AF93AF871EBC25B22468",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p2_f6.png",
+        "sha256":  "BDCEF4FE0215CF2B9737AA18C21355ADBE68316402E911FC7BA58CFEF9DD03D0",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p2_f6.png.import",
+        "sha256":  "2AEBA3BD14C6D3E960F2E47878A4D40D0EBD571C7B5FDB6CBF86B64D0CC00EFA",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p2_f7.png",
+        "sha256":  "C045B416999236B8AC2E999E45B9E29368710B322B8F5C39BDBAAEE9BAE2B5B6",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p2_f7.png.import",
+        "sha256":  "36004BFF9427DB502C636925EC80C7E963155739CAD2F8924784BADEF3C1C293",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p2_f8.png",
+        "sha256":  "390493BD1127A75C1ED61BCB44D2C84B1CDF6A5E20F90B6AC94A17E966C2A413",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p2_f8.png.import",
+        "sha256":  "A001B828426B513C5FEB2BC362BBC9035E8C51BAC4A0AF199DC71FFF5EE724D8",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p2_f9.png",
+        "sha256":  "9C6EC6FC0BF8778E57154729B4CDC597619AD168CAF739562FB59EFA02DD1266",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\pixellab_run\\wip\\p2_f9.png.import",
+        "sha256":  "386DDB7DD43CF23FE1D09832903E926DCE940FCEBAB8AD87B0C4C54DC118D7BF",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\source_zip\\metadata.json",
+        "sha256":  "E7D829A3EF1F82937E5542F38DF12A3C9FD89D49AA5BFD9743160B62493AAE52",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\source_zip\\Idle\\rotations\\east.png",
+        "sha256":  "23582776B21A3EF9EC1A0BA56394521031E31FCFC6EC8033A5A97DF04CF53D0F",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\source_zip\\Idle\\rotations\\east.png.import",
+        "sha256":  "434A39C08AF0668AAC718E07DE748503DDC782BCFF62156B150517B0B76020F4",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\source_zip\\Idle\\rotations\\north-east.png",
+        "sha256":  "DB54F968066BA226D741C0B476ED417A4997BBD25FB9F4F13AC0B5BE3951F077",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\source_zip\\Idle\\rotations\\north-east.png.import",
+        "sha256":  "65926483BFC79AF7D1264F168D04E190150E9B1DF67F588B633AAC7954A9FC2C",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\source_zip\\Idle\\rotations\\north-west.png",
+        "sha256":  "789DD7F65DA88A97BF618120DB2020B36A799AFF6F82DF926F16BB230A6A4480",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\source_zip\\Idle\\rotations\\north-west.png.import",
+        "sha256":  "606BD8B51B351BA27C320EE9D24FFE7BFD527116D947086E37DB612BD7BF0C9F",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\source_zip\\Idle\\rotations\\north.png",
+        "sha256":  "1569EAE1C5F6A0694F30983B31DF283CDD28F001D69C6F59605FEDFD607C88DD",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\source_zip\\Idle\\rotations\\north.png.import",
+        "sha256":  "C51A8DF32ED3D3FEBDA5805DCFDD56EDD683F70E8A9DB8CD6776ACDE42F31EC8",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\source_zip\\Idle\\rotations\\south-east.png",
+        "sha256":  "367CDC45C395654CA8C2874E977454ACF6305F8662B09DADF62059239AB0987E",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\source_zip\\Idle\\rotations\\south-east.png.import",
+        "sha256":  "79693ECB2E4305AE3AD1C43704A77BD0E2DF971F579C6C3E81CAD6A569744067",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\source_zip\\Idle\\rotations\\south-west.png",
+        "sha256":  "F99B3EB09ACBF1462B524A03C715E81CD3DCEEB23F96C8F7C2A52322CEC0DDF5",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\source_zip\\Idle\\rotations\\south-west.png.import",
+        "sha256":  "5A1684E5AAF87451CF6A0FDABA3115CB9C961BF782A111B1EAFF8610EC0400CD",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\source_zip\\Idle\\rotations\\south.png",
+        "sha256":  "A2EB310610B0864FF31F29090307CAD137D9AA295009E3E6537F4E31EDC87EC6",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\source_zip\\Idle\\rotations\\south.png.import",
+        "sha256":  "6BF363735FD3B70A0054EBC80C2F51D559FA8648C5E4B0433530516B174703AE",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\source_zip\\Idle\\rotations\\west.png",
+        "sha256":  "47DC351BCB4413049C678B7B5EDCB09C33F5A3A21C0579E16E7EA35C79805AE4",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\source_zip\\Idle\\rotations\\west.png.import",
+        "sha256":  "88B4D20F90FEB6ABCD51F13C391EEDB9200D824E2B9DF18988D32E2BA443AC27",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\_rejected\\REJECTED_REDRAW_idle_8x.png",
+        "sha256":  "1C4BC2D35371C2A94A23C797D2A6DB47A3A94D101FF3DAB568A24131BBB8F3B7",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\_rejected\\REJECTED_REDRAW_idle_8x.png.import",
+        "sha256":  "8C661E77769F9296CB1A904E7EB7A37A25F4048692AEE0F4CC04477C4E1DC9C4",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\_rejected\\REJECTED_REDRAW_v4.pxo",
+        "sha256":  "6275DD71D8496A868C8324E2BB45F1895884091D3A1D94DD81960455F151A366",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\_rejected\\wip_redraw\\idle_pass0_8x.png",
+        "sha256":  "3DE2CE8253D3183238F38855CEDD2533B13C7D36A9B50541D434978054E68C4C",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\_rejected\\wip_redraw\\idle_pass0_8x.png.import",
+        "sha256":  "FDD9739DAC05B9131EEF52A418C33C213441D1C006A3549BF8DA91CC2EEBA289",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\_rejected\\wip_redraw\\idle_pass1_8x.png",
+        "sha256":  "D54500B144DAF222201FCCDBD8EB5534AF7EBC1E93EDACC0D54AD652BA8DBB48",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\_rejected\\wip_redraw\\idle_pass1_8x.png.import",
+        "sha256":  "ED39CF8940DF611312302B69464B21249F6155E566F6F21FE25C63511752AC9D",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\_rejected\\wip_redraw\\ref_registered_8x.png",
+        "sha256":  "45657D5EE11CF7A23D5A770F4CFCDC092F5A25B91E350333FC06BF94D7F04B71",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\protagonist_rebuild_v4\\_rejected\\wip_redraw\\ref_registered_8x.png.import",
+        "sha256":  "72663B399B86B27C0A6BB35AE1ED548047875584DBE70571B33D008BB1B97F83",
+        "reason":  "Rejected/superseded: v4 redraw, East-facing run test, duplicate ZIP extraction. Zero references in code, scenes, resources or docs. Superseded by approved South-East run."
+    },
+    {
+        "path":  "art\\prototype\\character\\capture\\02_run_r_run_00.png.png",
+        "sha256":  "F8D8E878AC9D334FDE29CE59006BFC7550EBB3AF9A9954463470A4CB81BD7142",
+        "reason":  "Temporary gameplay screenshot of the superseded 6-frame prototype run (capture test output). Zero references."
+    },
+    {
+        "path":  "art\\prototype\\character\\capture\\02_run_r_run_00.png.png.import",
+        "sha256":  "967B97305F71107138708C283A75E220CB11BC716369DA28B4FB3B0EF1A54F78",
+        "reason":  "Temporary gameplay screenshot of the superseded 6-frame prototype run (capture test output). Zero references."
+    },
+    {
+        "path":  "art\\prototype\\character\\capture\\02_run_r_run_01.png.png",
+        "sha256":  "47C5C6566ED0B2BBA4302B3E730CC4884AF28606C26118E5BD881BAB37473B60",
+        "reason":  "Temporary gameplay screenshot of the superseded 6-frame prototype run (capture test output). Zero references."
+    },
+    {
+        "path":  "art\\prototype\\character\\capture\\02_run_r_run_01.png.png.import",
+        "sha256":  "8D5C752DD2C91ECED19AEDAFF2073D120D8ADCA52CF6E19E39B6BB2249B8DA15",
+        "reason":  "Temporary gameplay screenshot of the superseded 6-frame prototype run (capture test output). Zero references."
+    },
+    {
+        "path":  "art\\prototype\\character\\capture\\02_run_r_run_02.png.png",
+        "sha256":  "E8CF0BF923187850E6A483E1CE69BFC61FC08FAF802FB4CF72F9AF4B007506FD",
+        "reason":  "Temporary gameplay screenshot of the superseded 6-frame prototype run (capture test output). Zero references."
+    },
+    {
+        "path":  "art\\prototype\\character\\capture\\02_run_r_run_02.png.png.import",
+        "sha256":  "0AC668DD42ECD6DD186075AD7610B37F4C8EA83AEEF3EEA03EDFCC7DB435C8D0",
+        "reason":  "Temporary gameplay screenshot of the superseded 6-frame prototype run (capture test output). Zero references."
+    },
+    {
+        "path":  "art\\prototype\\character\\capture\\02_run_r_run_03.png.png",
+        "sha256":  "B300B2CCD1441968D1B60478999D42F6CBC3C5A810BCD9D288AC531649B7E037",
+        "reason":  "Temporary gameplay screenshot of the superseded 6-frame prototype run (capture test output). Zero references."
+    },
+    {
+        "path":  "art\\prototype\\character\\capture\\02_run_r_run_03.png.png.import",
+        "sha256":  "22248D8BF1EECC5C5EFF37559D526E8670E53C3A4A1DD1C0C47A4D70EF75CF43",
+        "reason":  "Temporary gameplay screenshot of the superseded 6-frame prototype run (capture test output). Zero references."
+    },
+    {
+        "path":  "art\\prototype\\character\\capture\\03_run_l_run_03.png.png",
+        "sha256":  "213E2B7A8B75365C1F22C665472C6D63ADA4679DD89E74DEF736AE2A10525A2F",
+        "reason":  "Temporary gameplay screenshot of the superseded 6-frame prototype run (capture test output). Zero references."
+    },
+    {
+        "path":  "art\\prototype\\character\\capture\\03_run_l_run_03.png.png.import",
+        "sha256":  "D206BBEC0627D26A18D076C9835CE6076863424AB6BD1EBFCEEB27C813530870",
+        "reason":  "Temporary gameplay screenshot of the superseded 6-frame prototype run (capture test output). Zero references."
+    },
+    {
+        "path":  "art\\prototype\\character\\capture\\03_run_l_run_04.png.png",
+        "sha256":  "E920B3C4A4808590DD87BEC1B4D2CE6E127B72E4C97EAA0B955A68619F1EB7CF",
+        "reason":  "Temporary gameplay screenshot of the superseded 6-frame prototype run (capture test output). Zero references."
+    },
+    {
+        "path":  "art\\prototype\\character\\capture\\03_run_l_run_04.png.png.import",
+        "sha256":  "FD37D83BD4B28735A61CA1259872FA115D4500A0CCFFFEF4278E117E556E9E9B",
+        "reason":  "Temporary gameplay screenshot of the superseded 6-frame prototype run (capture test output). Zero references."
+    },
+    {
+        "path":  "art\\prototype\\character_a2\\capture\\02_run_a2_run_00.png",
+        "sha256":  "35F858CC5DE695764BD0DBCDDB20D48BAEAA31D9C97BF5593A1154AAAE866D7F",
+        "reason":  "Temporary gameplay screenshot of the superseded 6-frame prototype run (capture test output). Zero references."
+    },
+    {
+        "path":  "art\\prototype\\character_a2\\capture\\02_run_a2_run_00.png.import",
+        "sha256":  "920B7CC34FB2DE85B781573426E254CA9584A3E5F98E89CAE681B690CA9873A3",
+        "reason":  "Temporary gameplay screenshot of the superseded 6-frame prototype run (capture test output). Zero references."
+    },
+    {
+        "path":  "art\\prototype\\character_a2\\capture\\02_run_a2_run_00_zoom.png",
+        "sha256":  "E0D4845299A380744BC41A14544C52DF1E18BCF6F3EA47BC81141331021FE1E1",
+        "reason":  "Temporary gameplay screenshot of the superseded 6-frame prototype run (capture test output). Zero references."
+    },
+    {
+        "path":  "art\\prototype\\character_a2\\capture\\02_run_a2_run_00_zoom.png.import",
+        "sha256":  "F526596191878095C73F858A712456FC73F3EAA4559EA6237F20F380BBF7C14C",
+        "reason":  "Temporary gameplay screenshot of the superseded 6-frame prototype run (capture test output). Zero references."
+    },
+    {
+        "path":  "art\\prototype\\character_a2\\capture\\02_run_a2_run_05.png",
+        "sha256":  "35F858CC5DE695764BD0DBCDDB20D48BAEAA31D9C97BF5593A1154AAAE866D7F",
+        "reason":  "Temporary gameplay screenshot of the superseded 6-frame prototype run (capture test output). Zero references."
+    },
+    {
+        "path":  "art\\prototype\\character_a2\\capture\\02_run_a2_run_05.png.import",
+        "sha256":  "7A7AC866C60D10C282767E0D6611CB0B655989991BE902BB850E6D9BFFC9CE70",
+        "reason":  "Temporary gameplay screenshot of the superseded 6-frame prototype run (capture test output). Zero references."
+    },
+    {
+        "path":  "art\\prototype\\character_a2\\capture\\02_run_a2_run_05_zoom.png",
+        "sha256":  "E0D4845299A380744BC41A14544C52DF1E18BCF6F3EA47BC81141331021FE1E1",
+        "reason":  "Temporary gameplay screenshot of the superseded 6-frame prototype run (capture test output). Zero references."
+    },
+    {
+        "path":  "art\\prototype\\character_a2\\capture\\02_run_a2_run_05_zoom.png.import",
+        "sha256":  "F3943EEE7E783AC9507509BB2D7D6887CA352F8039DFE79D7F9443CFC160BBF1",
+        "reason":  "Temporary gameplay screenshot of the superseded 6-frame prototype run (capture test output). Zero references."
+    },
+    {
+        "path":  "art\\prototype\\character_a2\\capture\\04_run_base_run_00.png",
+        "sha256":  "35780FECC197E4207193296313247BF62AD98777341E2CBA533FFC97E1DF0CD3",
+        "reason":  "Temporary gameplay screenshot of the superseded 6-frame prototype run (capture test output). Zero references."
+    },
+    {
+        "path":  "art\\prototype\\character_a2\\capture\\04_run_base_run_00.png.import",
+        "sha256":  "09D99EEB5962E1DB55D0CCEA51916528337385C10968B022704C090599CDF8B6",
+        "reason":  "Temporary gameplay screenshot of the superseded 6-frame prototype run (capture test output). Zero references."
+    },
+    {
+        "path":  "art\\prototype\\character_a2\\capture\\04_run_base_run_00_zoom.png",
+        "sha256":  "959D19F412DD1A31E4684D2A3A4DC017158CF8B78945CD38FD99EC30CF5EDA18",
+        "reason":  "Temporary gameplay screenshot of the superseded 6-frame prototype run (capture test output). Zero references."
+    },
+    {
+        "path":  "art\\prototype\\character_a2\\capture\\04_run_base_run_00_zoom.png.import",
+        "sha256":  "5BF2BCFAC11E5C05E7D89EFFB896D773D08DE7F1CA74C66C34B894534809F155",
+        "reason":  "Temporary gameplay screenshot of the superseded 6-frame prototype run (capture test output). Zero references."
+    },
+    {
+        "path":  "art\\prototype\\character\\qa_zoom_run.png",
+        "sha256":  "B69B3FDE07858344C4422DED908455371E407B2C425C1A656041031BFD797ED9",
+        "reason":  "QA zoom export of the superseded prototype run (gen_character_art.py output). Zero references."
+    },
+    {
+        "path":  "art\\prototype\\character\\qa_zoom_run.png.import",
+        "sha256":  "A58703B46676DDF6600ACAB241CEE5885820A84537050F2B8942F25A0B688322",
+        "reason":  "QA zoom export of the superseded prototype run (gen_character_art.py output). Zero references."
+    }
+]

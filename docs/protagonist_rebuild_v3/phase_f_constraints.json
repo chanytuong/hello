@@ -1,0 +1,266 @@
+{
+  "phase": "E",
+  "for_phase": "F",
+  "selected_law": "Brace, then drive",
+  "frame_size": [
+    64,
+    64
+  ],
+  "scale": [
+    1,
+    1
+  ],
+  "rotation": 0,
+  "texture_filter": "nearest",
+  "anchor_texture": [
+    32,
+    62
+  ],
+  "offset": [
+    -32,
+    -62
+  ],
+  "ground_row": 62,
+  "transparent_rows": [
+    0,
+    1,
+    63
+  ],
+  "safe_ink_columns": [
+    2,
+    61
+  ],
+  "neutral_full_actor_height_px": {
+    "target": 56,
+    "tolerance": 1,
+    "includes_flame_head": true
+  },
+  "neutral_physical_body_height_px": {
+    "target": 45,
+    "tolerance": 1,
+    "from": "neck/collar to occupied sole; FLAME excluded"
+  },
+  "live_body_width_max_px": 46,
+  "collapsed_body_width_max_px": 58,
+  "composite_width_max_px": 60,
+  "canonical_facing": "right",
+  "grip_hand": "anatomical_right",
+  "geometry_is_analysis_only": true,
+  "landmarks_rest": {
+    "pelvis": [
+      31,
+      42
+    ],
+    "rib_center": [
+      33,
+      30
+    ],
+    "neck_root": [
+      34,
+      20
+    ],
+    "void_center": [
+      34,
+      14
+    ],
+    "shoulder_left": [
+      28,
+      24
+    ],
+    "shoulder_right": [
+      38,
+      22
+    ],
+    "wrist_left": [
+      26,
+      40
+    ],
+    "grip_right": [
+      48,
+      32
+    ],
+    "ankle_left": [
+      25,
+      60
+    ],
+    "ankle_right": [
+      36,
+      60
+    ]
+  },
+  "limb_budgets_px": {
+    "upper_arm": 10,
+    "forearm": 8,
+    "thigh": 10.5,
+    "shin": 9
+  },
+  "material_volumes_px": {
+    "ribcage": [
+      13,
+      15
+    ],
+    "pelvis": [
+      12,
+      8
+    ],
+    "arm_cloth_thickness": [
+      4,
+      5
+    ],
+    "leg_cloth_thickness": [
+      5,
+      7
+    ],
+    "palm": [
+      3,
+      4
+    ],
+    "shoe_length": [
+      7,
+      9
+    ],
+    "shoe_height": [
+      3,
+      4
+    ]
+  },
+  "detail_budget": {
+    "body_colors_max": 10,
+    "flame_colors_max": 5,
+    "weapon_colors_max": 4,
+    "weapon_reuses_body_colors": [
+      "B0",
+      "B2",
+      "B6",
+      "B9"
+    ],
+    "combined_export_colors_max": 15,
+    "fold_accent_clusters_max": 3,
+    "fold_accent_pixels_max": 12,
+    "color_singletons_max": 2,
+    "disconnected_anatomical_alpha_components_allowed": 0,
+    "major_cloth_quiet_interior_target_percent": 80
+  },
+  "palette": [
+    {
+      "id": "B0",
+      "hex": "#24252B",
+      "role": "Deep charcoal: trouser/shoe structural shadow; never the flame void."
+    },
+    {
+      "id": "B1",
+      "hex": "#363840",
+      "role": "Charcoal cloth shadow and subdued shoe mass."
+    },
+    {
+      "id": "B2",
+      "hex": "#4B4E53",
+      "role": "Dirty gray jacket/body material base or plane shadow."
+    },
+    {
+      "id": "B3",
+      "hex": "#686A66",
+      "role": "Dusty gray large jacket lit plane, with quiet interiors."
+    },
+    {
+      "id": "B4",
+      "hex": "#5A5B4F",
+      "role": "Faded olive secondary cloth material; small deliberate allocation, no pattern."
+    },
+    {
+      "id": "B5",
+      "hex": "#82796B",
+      "role": "Worn brown-gray shirt/collar material."
+    },
+    {
+      "id": "B6",
+      "hex": "#A69B84",
+      "role": "Worn beige selective cuff/sole/shirt accents; highest broad body value."
+    },
+    {
+      "id": "B7",
+      "hex": "#77665A",
+      "role": "Dull skin shadow in connected hand/wrist shapes."
+    },
+    {
+      "id": "B8",
+      "hex": "#A18A74",
+      "role": "Dull skin light in hand/palm; no facial or eye dots."
+    },
+    {
+      "id": "B9",
+      "hex": "#747F87",
+      "role": "Restrained blue-gray small material/metal plane; not all-over cool edging."
+    },
+    {
+      "id": "F0",
+      "hex": "#09080C",
+      "role": "Opaque faceless void, FLAME only; not a universal BODY outline."
+    },
+    {
+      "id": "F1",
+      "hex": "#8C2425",
+      "role": "Blood-red attached outer flame mass."
+    },
+    {
+      "id": "F2",
+      "hex": "#D0442A",
+      "role": "Vermilion principal hot shape."
+    },
+    {
+      "id": "F3",
+      "hex": "#EE873F",
+      "role": "Orange secondary hot plane/tip."
+    },
+    {
+      "id": "F4",
+      "hex": "#F6C394",
+      "role": "Pale hot peach concentrated inner accents, never eye pairs."
+    }
+  ],
+  "alpha_values": [
+    0,
+    255
+  ],
+  "layers": [
+    "BODY",
+    "FLAME",
+    "WEAPON",
+    "FX_optional_if_event_rooted",
+    "GUIDES_non_exporting"
+  ],
+  "left_elbow_negative_space_px": {
+    "width": [
+      2,
+      3
+    ],
+    "height": [
+      5,
+      8
+    ]
+  },
+  "export_anchor_fields": [
+    "pose_id",
+    "facing_authored",
+    "pivot",
+    "ground_row",
+    "grip_hand",
+    "shoulder_right",
+    "elbow_right",
+    "wrist_right",
+    "grip_texture",
+    "grip_local",
+    "weapon_hilt_offset",
+    "weapon_tip_texture",
+    "weapon_angle_hint",
+    "neck_root_texture",
+    "void_center_texture",
+    "flame_tip_landmarks",
+    "support_leg",
+    "support_points",
+    "occluded_limbs",
+    "clock_semantics",
+    "layer_visibility"
+  ],
+  "raster_started": false
+}

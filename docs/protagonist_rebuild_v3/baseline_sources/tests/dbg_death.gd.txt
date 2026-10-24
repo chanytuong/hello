@@ -1,0 +1,76 @@
+extends SceneTree
+## Death/restart gauntlet: park inside melee range, NO attacks (melee must
+## survive), blink spam on. Verifies 10 full death -> auto-restart cycles and
+## that the post-restart player is a live instance. Also proves the
+## hitstop-strand fix: swing-kill a hitstop, restart inside its window.
+
+var _frames: int = 0
+var _deaths: int = 0
+var _was_dead: bool = false
+var _last_id: int = 0
+var _restarts_seen: int = 0
+var _strand_armed: bool = false
+
+func _init() -> void:
+	var main = load("res://scenes/main.tscn").instantiate()
+	get_root().add_child(main)
+	current_scene = main
+
+func _p() -> NLBPlayer:
+	return get_first_node_in_group("player") as NLBPlayer
+
+func _m() -> NLBMeleeChaser:
+	for e in get_nodes_in_group("enemies"):
+		if e is NLBMeleeChaser:
+			return e
+	return null
+
+func _physics_process(_delta: float) -> bool:
+	_frames += 1
+	var p := _p()
+	if p == null:
+		print("GAUNTLET: player instance gone at f=%d (mid-reload?)" % _frames)
+		return false
+	if p.get_instance_id() != _last_id:
+		_last_id = p.get_instance_id()
+		_restarts_seen += 1
+		print("RESTART #%d f=%d timescale=%.2f" % [_restarts_seen, _frames, Engine.time_scale])
+		if Engine.time_scale != 1.0:
+			printerr("FAIL: time_scale stranded after restart (%.2f)" % Engine.time_scale)
+			quit(1)
+			return true
+	var m := _m()
+	# Park in slam range, never swing (keep the killer alive).
+	if m != null and p.health.hp > 0:
+		var target: float = m.global_position.x - 30.0
+		if p.global_position.x < target - 4.0:
+			Input.action_press("move_right")
+			Input.action_release("move_left")
+		elif p.global_position.x > target + 4.0:
+			Input.action_press("move_left")
+			Input.action_release("move_right")
+		else:
+			Input.action_release("move_left")
+			Input.action_release("move_right")
+	# Blink spam (covers windup/shot/transition timing).
+	if _frames % 37 == 0:
+		Input.action_press("blink")
+	if _frames % 37 == 3:
+		Input.action_release("blink")
+	if p.health.hp <= 0 and not _was_dead:
+		_was_dead = true
+		_deaths += 1
+		print("DEATH #%d f=%d" % [_deaths, _frames])
+	if p.health.hp > 0:
+		_was_dead = false
+	if _deaths >= 10:
+		print("GAUNTLET: 10 deaths survived, restarts=%d" % _restarts_seen)
+		Engine.time_scale = 1.0
+		quit(0)
+		return true
+	if _frames >= 12000:
+		printerr("GAUNTLET FAIL: only %d deaths in 12000 frames" % _deaths)
+		Engine.time_scale = 1.0
+		quit(1)
+		return true
+	return false

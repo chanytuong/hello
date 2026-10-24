@@ -1,5 +1,7 @@
 # Dodge roll V2 — prototype for human review
 
+> Current input contract (2026-10-24): an accepted roll plays its full 18-drawing clip. Direction changes, direction release and extra roll presses are ignored until it ends instead of cancelling it. Jump-cancel and Motion Swap interruption remain, and the 0.35 s cooldown still starts on completion or interruption.
+
 2026-10-19 · Asia/Saigon · `E:\neverlookback` · Godot 4.7.2 / Blender 3.6.23.
 
 The compact native `IVEN_DODGE_ROLL_V2` replaces the prototype's roll presentation, with **0.35 s cooldown after completion or cancellation**. Gameplay retains **0.29 s configured / 99.9978 px measured**, immediate ready activation and immediate movement/jump cancellation. **642 regression checks plus 22 rendered assertions pass. Human visual and gameplay approval remains pending.**

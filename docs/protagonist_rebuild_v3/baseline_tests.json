@@ -1,0 +1,65 @@
+[
+  {
+    "name": "runtime",
+    "exit_code": 0,
+    "signal": null,
+    "pass_count": 8,
+    "all_pass": true,
+    "stdout": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org\r\n\r\nPASS: runtime player runs right (x=233)\r\nPASS: runtime player landed on floor\r\nPASS: runtime jump rises\r\nPASS: runtime blink triggers mid-game\r\nPASS: runtime blink completes to State B\r\nPASS: runtime platform hidden in B\r\nPASS: runtime enemies present (2)\r\nPASS: runtime player alive (hp=5)\r\nRUNTIME_TESTS: ALL PASS\r\n",
+    "stderr": ""
+  },
+  {
+    "name": "identity",
+    "exit_code": 0,
+    "signal": null,
+    "pass_count": 21,
+    "all_pass": true,
+    "stdout": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org\r\n\r\nPASS: identity reversal snaps (5 frames)\r\nPASS: identity dash-strike starts in late dash\r\nPASS: identity dash-strike keeps momentum (vx=537)\r\nPASS: identity dash cancels recovery\r\nPASS: identity swing ended by cancel\r\nPASS: identity dash refused mid-swing\r\nPASS: identity swing continues through dash press\r\nPASS: identity frozen attack fires on unfreeze\r\nPASS: identity hard landing signaled (1467)\r\nPASS: identity whiff setup is really out of reach (gap=204)\r\nPASS: identity whiff does not confirm\r\nPASS: identity whiff keeps sliding (vx=173)\r\nPASS: visual body upright at idle (rot=0.000)\r\nPASS: visual body leans into active swing (rot=0.155)\r\nPASS: visual body elongates on active (sx=1.11)\r\nPASS: visual pose phase is an unconfirmed swing\r\nPASS: visual body returns upright after recovery (rot=0.000)\r\nPASS: visual swing finished before pose check\r\nPASS: visual bodies separated (gap=30)\r\nPASS: visual separation is horizontal-only\r\nPASS: visual contact never launches (min vy=0)\r\nIDENTITY_TESTS: ALL PASS\r\n",
+    "stderr": ""
+  },
+  {
+    "name": "weapon",
+    "exit_code": 0,
+    "signal": null,
+    "pass_count": 52,
+    "all_pass": true,
+    "stdout": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org\r\n\r\nPASS: pipe rests on the floor (y=594)\r\nPASS: pipe authored INSIDE the hazard strip (575 in [500, 650])\r\nPASS: hazard live in State A => access costs a hit point\r\nPASS: prop starts FREE, player unarmed\r\nPASS: bare hands before pickup (power=0.0)\r\nPASS: bare-hand swing confirms\r\nPASS: picked up by WALKING over it (no key pressed)\r\nPASS: prop state HELD\r\nPASS: prop bound to the player\r\nPASS: player armed on the same pickup (power=1.0)\r\nPASS: first swings are not the finisher\r\nPASS: transform still running at pickup (t=0.028s)\r\nPASS: attack accepted DURING the perception break (no gameplay lock)\r\nPASS: transformation finishes under 0.5s (0.471s)\r\nPASS: reality bar swapped OUT (one hard swap)\r\nPASS: hero silhouette swapped IN\r\nPASS: overshoot settled back to 1.0 (scale=1.000)\r\nPASS: silhouette SHAPE changed, not just colour (100px vs 46px)\r\nPASS: reality AND hero shown together (one double image)\r\nPASS: reality silhouette tore apart BEFORE the swap\r\nPASS: player body pose driven by the perception break\r\nPASS: perception pose released at rest (pose=-1)\r\nPASS: still armed for stats\r\nPASS: reach grows 104 > 82\r\nPASS: knockback grows 460 > 260\r\nPASS: hitstop grows 0.075 > 0.045\r\nPASS: bite drops 0.35 < 0.55 (harder stop)\r\nPASS: hitbox radius 64 => reach 104 (radius=64.0)\r\nPASS: armed swing is running\r\nPASS: armed knockback is horizontal only (kb=(460.0, 0.0))\r\nPASS: knockback carries the armed value (460)\r\nPASS: armed swing confirms\r\nWEAPON_DX bare=17.7 armed=49.4 reach=104 kb=460 hitstop=0.075\r\nPASS: weapon separates far harder than bare hands (49.4 > 17.7 + 10)\r\nPASS: one confirm spent one use (uses=4)\r\nPASS: still held before the payoff\r\nPASS: three more uses spent (uses=1)\r\nPASS: LAST swing telegraphs as the finisher (finish=true)\r\nPASS: finisher swing snapshots heavy impact (0.100s)\r\nPASS: pipe BREAKS on the payoff confirm\r\nPASS: player returned to bare hands (power=0.0)\r\nPASS: finisher flag cleared\r\nPASS: impact snapshot SURVIVES the break (0.100s) => the payoff keeps its hitstop\r\nPASS: live weapon_hitstop already back to bare hands (0.045s)\r\nPASS: reach reset to 82 (radius=42.0)\r\nPASS: pipe respawns at its authored slot (575, 594)\r\nPASS: uses reset to 5\r\nPASS: silhouette back to the mundane reality form\r\nPASS: State A: strip live, pipe access costs HP\r\nPASS: blink accepted\r\nPASS: Blink landed in State B\r\nPASS: Blink did NOT transform, move or consume the prop (separate mechanics)\r\nPASS: prop still resting on its slot through the Blink\r\nWEAPON_TESTS: ALL PASS\r\n",
+    "stderr": ""
+  },
+  {
+    "name": "feel",
+    "exit_code": 0,
+    "signal": null,
+    "pass_count": 10,
+    "all_pass": true,
+    "stdout": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org\r\n\r\nPASS: feel reversal crosses zero fast (6 frames)\r\nPASS: feel full hop high (apex y=477)\r\nPASS: feel tap hop short (y=553 vs 477)\r\nPASS: feel platform reachable (min y=477, top=480)\r\nPASS: feel lands ON platform (y=480)\r\nPASS: feel swing connects (melee hp 4->3)\r\nPASS: feel knockback shoves (peak x=1042)\r\nPASS: feel hitstop restored (scale=1.00)\r\nPASS: feel ranged fired (2 shots)\r\nPASS: feel locked shot does not track dodge (2.04 rad)\r\nFEEL_TESTS: ALL PASS\r\n",
+    "stderr": ""
+  },
+  {
+    "name": "arena",
+    "exit_code": 0,
+    "signal": null,
+    "pass_count": 26,
+    "all_pass": true,
+    "stdout": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org\r\n\r\nPASS: health applies damage\r\nPASS: health hp=4 after 1 dmg\r\nPASS: health iframes block repeat hit\r\nPASS: health hp unchanged during iframes\r\nPASS: health reset restores hp\r\nPASS: hitbox one hit per epoch (hp=9)\r\nPASS: hitbox new epoch hits again (hp=8)\r\nPASS: blink ready at start\r\nPASS: blink triggers\r\nPASS: blink no retrigger during transition\r\nPASS: blink lands in B after transition\r\nPASS: blink cooldown blocks immediate re-blink\r\nPASS: blink ready after cooldown\r\nPASS: melee starts in CHASE\r\nPASS: melee windup timed\r\nPASS: melee strike timed\r\nPASS: platform eject probe catches overlap\r\nPASS: safe spawn not an overlap\r\nPASS: hazard strip clear of blocker eject zone\r\nPASS: landing rule triggers when camping\r\nPASS: landing offset clears player\r\nPASS: damage clears jump buffer\r\nPASS: damage preserves coyote grace\r\nPASS: fixture hit applies (hp=4)\r\nPASS: fixture hit took exactly 1 hp (hp=4)\r\nPASS: take_hit path clears jump buffer\r\nARENA_TESTS: ALL PASS\r\n",
+    "stderr": ""
+  },
+  {
+    "name": "killblink",
+    "exit_code": 0,
+    "signal": null,
+    "pass_count": 2,
+    "all_pass": true,
+    "stdout": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org\r\n\r\nPASS: blink completes with both enemies killed mid-transition\r\nPASS: no phantom kills counted\r\nKILLBLINK_TESTS: ALL PASS\r\n",
+    "stderr": ""
+  },
+  {
+    "name": "strand",
+    "exit_code": 0,
+    "signal": null,
+    "pass_count": 3,
+    "all_pass": true,
+    "stdout": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org\r\n\r\nPASS: strand hitstop engaged (slow-mo seen)\r\nPASS: strand no stranded time_scale (1.00)\r\nPASS: strand continuous re-arms (hp=0)\r\nSTRAND_TESTS: ALL PASS\r\n",
+    "stderr": ""
+  }
+]

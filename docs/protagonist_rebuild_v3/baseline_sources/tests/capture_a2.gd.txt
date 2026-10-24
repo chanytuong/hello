@@ -1,0 +1,291 @@
+extends SceneTree
+## A2 HORIZONTAL IMPOSSIBLE LINE - runtime review capture.
+## Drives real input, screenshots the real renderer, and toggles the A2
+## production set against the baseline set THROUGH THE REAL V-key handler
+## (Input.parse_input_event), so every shot is exactly what a player sees.
+## Run NON-headless (drop --headless) or there are no pixels.
+## Output: art/prototype/character_a2/capture/*.png + one log line per shot.
+##
+## The log prints use_a2 + texture file for every shot: the proof that the
+## A2 set and the baseline set were both captured under identical state.
+
+const SHOT_DIR := "res://art/prototype/character_a2/capture/"
+const MAX_F := 4000   # hard stop so a missed trigger never hangs the run
+
+var _f: int = 0
+var _t: int = 0
+var _shot_n: int = 0
+var _vx_peak: float = 0.0
+var _phase: String = "boot"
+var _seen: Dictionary = {}
+var _main: Node = null
+var _p: Node = null
+
+func _init() -> void:
+	DirAccess.make_dir_recursive_absolute(SHOT_DIR)
+	_main = load("res://scenes/main.tscn").instantiate()
+	get_root().add_child(_main)
+
+func _player() -> Node:
+	if _p == null:
+		_p = _main.get_node("Player")
+	return _p
+
+func _first(key: String) -> bool:
+	if _seen.has(key):
+		return false
+	_seen[key] = true
+	return true
+
+func _shot(tag: String) -> void:
+	_shot_n += 1
+	var p := _player()
+	var tex_path := "none"
+	var shown := "?"
+	if p.sprite != null and p.sprite.texture != null:
+		tex_path = str(p.sprite.texture.resource_path).get_file()
+	shown = p._frame_shown
+	get_root().get_texture().get_image().save_png(SHOT_DIR + tag + ".png")
+	print("SHOT %02d %-24s set=%-4s tex=%-14s shown=%-14s | face=%d vx=%6.1f x=%6.1f | move=%d atk_t=%.3f bite=%-5s frozen=%-5s" % [
+		_shot_n, tag, ("A2" if p.use_a2 else "BASE"), tex_path, shown,
+		p.facing, p.velocity.x, p.global_position.x,
+		p.move_state, p._atk_t, str(p._bite_done), str(p.fight_frozen)])
+
+func _next(phase: String) -> void:
+	_phase = phase
+	_t = 0
+	_seen = {}
+
+## Real V-key press through the input pipeline -> player._unhandled_input.
+func _press_v() -> void:
+	var down := InputEventKey.new()
+	down.keycode = KEY_V
+	down.pressed = true
+	Input.parse_input_event(down)
+	var up := InputEventKey.new()
+	up.keycode = KEY_V
+	up.pressed = false
+	Input.parse_input_event(up)
+
+## front_dist > 0 = in FRONT of the player (where the swing goes), < 0 =
+## behind (whiff setup). Face-aware: the run/dash half of the capture can
+## leave the player facing either way, and a hit setup behind the player
+## silently whiffs (no contact frame, no bite).
+func _teleport_melee(p: Node, front_dist: float) -> void:
+	var m = _main.get_node_or_null("Melee")
+	if m != null:
+		var target: float = p.global_position.x + front_dist * float(p.facing)
+		m.global_position.x = clampf(target, 70.0, 1200.0)
+		m.global_position.y = 540.0
+	print("  melee_x=%.0f player_x=%.0f face=%d front_dist=%.0f" % [
+		m.global_position.x if m != null else -1.0, p.global_position.x,
+		int(p.facing), front_dist])
+
+func _physics_process(_delta: float) -> bool:
+	_f += 1
+	if _f >= MAX_F:
+		print("CAPTURE_TIMEOUT phase=%s shots=%d" % [_phase, _shot_n])
+		quit(1)
+		return true
+	if _f < 30:
+		return false
+	_t += 1
+	var p := _player()
+	match _phase:
+		"boot":
+			print("BOOT set=%s cache_base=%d cache_a2=%d sprite=%s body_hidden=%s" % [
+				"A2" if p.use_a2 else "BASE", p._frame_cache.size(),
+				p._frame_cache_a2.size(),
+				str(p.sprite != null and p.sprite.texture != null),
+				str(not p.body_vis.visible)])
+			if p._frame_cache_a2.size() != 15:
+				printerr("BOOT FAIL: A2 cache = %d files (expected 15)" % p._frame_cache_a2.size())
+			_next("pickup")
+		"pickup":
+			# The pipe sits in a slot at (575, 594). Every weapon shot in this
+			# capture needs the prop HELD - without it swings show an empty fist
+			# (the prop stays at the slot, exactly like the old capture did).
+			if _t <= 4:
+				Input.action_press("move_right")
+			var pr = _main.get_node_or_null("Prop")
+			if pr != null and pr.state == 1:   # State.HELD
+				Input.action_release("move_right")
+				if _first("held"):
+					print("  picked up at x=%.0f tf_t=%.2f" % [
+						p.global_position.x, pr._tf_t])
+					_next("settle_pickup")
+			elif _t > 400:
+				Input.action_release("move_right")
+				printerr("WARN: pipe never picked up (slot 575,594)")
+				_next("settle_pickup")
+		"settle_pickup":
+			# wait for the carried weapon to finish its transform beat so the
+			# idle/run/dash shots show the settled carry, not the lift
+			var pr2 = _main.get_node_or_null("Prop")
+			var tf_ok: bool = pr2 == null or pr2._tf_t >= pr2.TRANSFORM_TIME
+			if absf(p.velocity.x) < 5.0 and tf_ok and _t >= 16:
+				_next("idle_a2")
+			elif _t > 240:
+				_next("idle_a2")
+		"idle_a2":
+			if _t >= 15:
+				_shot("01_idle_a2")
+				Input.action_press("move_right")
+				_next("run_a2")
+		"run_a2":
+			_vx_peak = maxf(_vx_peak, absf(p.velocity.x))
+			if p._frame_shown.begins_with("run_") and _first(p._frame_shown) and _shot_n <= 3:
+				_shot("02_run_a2_" + p._frame_shown.get_basename())
+			if _shot_n >= 3:
+				Input.action_release("move_right")
+				print("RUN_A2 peak_vx=%.0f" % _vx_peak)
+				_next("settle_v1")
+			elif _t > 400:
+				Input.action_release("move_right")
+				_next("settle_v1")
+		"settle_v1":
+			if absf(p.velocity.x) < 5.0 and _t >= 10:
+				_press_v()          # A2 -> baseline through the real V handler
+				_next("toggle_check1")
+		"toggle_check1":
+			if _t == 4:
+				print("  V pressed -> use_a2=%s (expected false)" % str(p.use_a2))
+				if p.use_a2:
+					printerr("WARN: V toggle did not reach the player")
+				_shot("03_idle_baseline")
+				Input.action_press("move_left")
+				_next("run_base")
+		"run_base":
+			if p._frame_shown.begins_with("run_") and _first(p._frame_shown) and _shot_n <= 5:
+				_shot("04_run_base_" + p._frame_shown.get_basename())
+			if _shot_n >= 5:
+				Input.action_release("move_left")
+				_next("settle_v2")
+			elif _t > 400:
+				Input.action_release("move_left")
+				_next("settle_v2")
+		"settle_v2":
+			if absf(p.velocity.x) < 5.0 and _t >= 10:
+				_press_v()          # back to A2
+				_next("dash_a2")
+		"dash_a2":
+			if _t == 8:   # V-event flush latency under burst physics: check late
+				if not p.use_a2:
+					printerr("WARN: V toggle back to A2 failed")
+			if _t == 6:
+				Input.action_press("dash")
+			if p.move_state == 1:
+				if p._frame_shown == "d0_entry.png" and _first("e"):
+					_shot("05_dash_a2_entry")
+				elif p._frame_shown == "d1_hold.png" and _first("h"):
+					_shot("06_dash_a2_hold")
+				elif p._frame_shown == "d2_exit.png" and _first("x"):
+					_shot("07_dash_a2_exit")
+			if (_seen.has("e") and _seen.has("h") and _seen.has("x")) or _t > 200:
+				Input.action_release("dash")
+				_next("settle_v3")
+		"settle_v3":
+			if absf(p.velocity.x) < 5.0 and _t >= 10:
+				_next("turn_r")     # open room to the right for the baseline dash
+		"turn_r":
+			# face right (the A2 dash left landed us at the left wall)
+			if _t <= 8:
+				Input.action_press("move_right")
+			else:
+				Input.action_release("move_right")
+				if _t >= 14:
+					_press_v()      # baseline for the dash compare
+					_next("dash_base")
+		"dash_base":
+			# gate on the real 0.8 s dash cooldown instead of a tick guess
+			if p._dash_cd <= 0.0 and _first("dp"):
+				Input.action_press("dash")
+			if p.move_state == 1:
+				if p._frame_shown == "d1_hold.png" and _first("h"):
+					_shot("08_dash_base_hold")
+			if _seen.has("h") or _t > 200:
+				Input.action_release("dash")
+				_next("settle_v4")
+		"settle_v4":
+			if absf(p.velocity.x) < 5.0 and _t >= 10:
+				_press_v()          # back to A2 for the attack review
+				_next("whiff_a2")
+		"whiff_a2":
+			if _t == 8:   # V-event flush latency under burst physics: check late
+				if not p.use_a2:
+					printerr("WARN: V toggle back to A2 failed")
+				_teleport_melee(p, -420.0)   # WHIFF setup: scenario, not logic
+				Input.action_press("attack")
+			if p._frame_shown == "attack_a0.png" and _first("a0"):
+				_shot("09_whiff_a2_a0_coil")
+			elif p._frame_shown == "attack_a1.png" and _first("a1"):
+				_shot("10_whiff_a2_a1_commit")
+			elif p._atk_t >= 0.12 and p._atk_t <= 0.158 and _first("lvl"):
+				# mid-active: the arc has snapped LEVEL (the prop.gd change).
+				# NOTE the screenshot lags ~2-3 physics ticks behind the logged
+				# _atk_t (the viewport texture is the last PRESENTED frame), so
+				# the window sits late in the active phase on purpose.
+				_shot("10b_whiff_a2_level")
+			elif p._frame_shown == "attack_a3.png" and _first("a3"):
+				_shot("11_whiff_a2_a3_follow")
+			elif p._frame_shown == "attack_a4.png" and _first("a4"):
+				_shot("12_whiff_a2_a4_recovery")
+				Input.action_release("attack")
+				_next("wait_cd1")
+			elif _t > 200:
+				print("WARN whiff_a2 stuck shown=%s atk_t=%.3f" % [p._frame_shown, p._atk_t])
+				Input.action_release("attack")
+				_next("wait_cd1")
+		"wait_cd1":
+			if p._atk_t < 0.0 and p._atk_cd <= 0.0 and _t >= 30:
+				_teleport_melee(p, 56.0)     # HIT setup: within reach 82
+				Input.action_press("attack")
+				_next("hit_a2")
+		"hit_a2":
+			if p._frame_shown == "attack_a2.png" and _first("a2"):
+				_shot("13_hit_a2_contact")
+			elif p.fight_frozen and p._frame_shown == "attack_a2.png" and _first("fz"):
+				_shot("14_hit_a2_frozen")
+			elif p._atk_t >= 0.12 and p._atk_t <= 0.158 and _first("lvl"):
+				# mid-active over the enemy: blade at LEVEL on the contact body
+				# (window accounts for the ~2-3 tick screenshot lag)
+				_shot("14b_hit_a2_level")
+			elif p._frame_shown == "attack_a4.png" and _first("a4"):
+				_shot("15_hit_a2_a4_recovery")
+				Input.action_release("attack")
+				_next("wait_cd2")
+			elif _t > 200:
+				print("WARN hit_a2 stuck shown=%s bite=%s" % [p._frame_shown, str(p._bite_done)])
+				Input.action_release("attack")
+				_next("wait_cd2")
+		"wait_cd2":
+			if p._atk_t < 0.0 and p._atk_cd <= 0.0 and _t >= 30:
+				_press_v()          # baseline for the contact compare
+				_next("hit_base")
+		"hit_base":
+			if _t == 4:
+				print("  V pressed -> use_a2=%s (expected false)" % str(p.use_a2))
+				_teleport_melee(p, 56.0)
+				Input.action_press("attack")
+			if p._frame_shown == "attack_a2.png" and _first("a2"):
+				_shot("16_hit_base_contact")
+			elif p._frame_shown == "attack_a4.png" and _first("a4"):
+				_shot("17_hit_base_a4_recovery")
+				Input.action_release("attack")
+				_next("final_idle")
+			elif _t > 200:
+				print("WARN hit_base stuck shown=%s bite=%s" % [p._frame_shown, str(p._bite_done)])
+				Input.action_release("attack")
+				_next("final_idle")
+		"final_idle":
+			if p._atk_t < 0.0 and absf(p.velocity.x) < 5.0 and _t >= 20:
+				_press_v()          # leave the runtime on the A2 identity
+				_next("done")
+			elif _t > 300:
+				_next("done")
+		"done":
+			print("CAPTURE_DONE shots=%d final_set=%s" % [
+				_shot_n, "A2" if _player().use_a2 else "BASE"])
+			quit(0)
+			return true
+	return false

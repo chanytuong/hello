@@ -1,0 +1,18 @@
+{
+    "tag":  "after",
+    "capture_start_unix_ms":  1792721151474,
+    "capture_end_unix_ms":  1792721177648,
+    "raw":  "E:\\neverlookback\\scripts\\lab\\m1_fps_debug\\after_raw.mp4",
+    "json":  "E:\\neverlookback\\scripts\\lab\\m1_fps_debug\\record_after.json",
+    "sequence_start_unix_ms":  1792721151633,
+    "sequence_end_unix_ms":  1792721161644,
+    "trim_start_s":  0.159,
+    "trim_duration_s":  10.011,
+    "hits":  9,
+    "strikes":  {
+                    "1":  3,
+                    "2":  3,
+                    "3":  3
+                },
+    "final":  "E:\\neverlookback\\scripts\\lab\\m1_fps_debug\\M1_FPS_AFTER.mp4"
+}

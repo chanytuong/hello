@@ -1,0 +1,180 @@
+{
+  "phase": "D",
+  "verified_at": "2026-10-06T12:55:21.514Z",
+  "source_files_checked": 45,
+  "source_changes": [],
+  "legacy_runtime_pngs_checked": 30,
+  "legacy_runtime_png_changes": [],
+  "reference_unchanged": true,
+  "reference_sha256": "fe48d42836313d2ec7b8191e943d7b49d85fb00dbd5baee11eb7e1af8980db9d",
+  "research_sources_used": 24,
+  "audited_groups_mapped": 16,
+  "candidates": 3,
+  "retained_candidates": [
+    "A",
+    "B"
+  ],
+  "rejected_candidates": [
+    "C"
+  ],
+  "final_law_selected": false,
+  "gameplay_modified": false,
+  "production_raster_started": false,
+  "pixelorama_actions_in_phase_D": 0,
+  "godot_actions_in_phase_D": 0,
+  "tests_rerun": false,
+  "python_pillow_usage": "Decode existing external tutorial GIF frames into documentary PNG views only; no production drawing.",
+  "output_validation": {
+    "sources_24": true,
+    "unique_source_ids": true,
+    "unique_source_urls": true,
+    "all_sources_documented": true,
+    "all_16_audit_groups_mapped": true,
+    "mapping_sources_valid": true,
+    "rules_A_through_L": true,
+    "three_candidates": true,
+    "fields_14_each": true,
+    "ten_integer_scores_each": true,
+    "thresholds_enforced": true,
+    "totals_correct": true,
+    "law_not_selected": true,
+    "text_only": true,
+    "source_preservation": true,
+    "legacy_asset_preservation": true,
+    "reference_preservation": true,
+    "checkpoint_D_complete_E_pending": true,
+    "local_document_links_resolve": true
+  },
+  "output_files_written": [
+    "external_research.md",
+    "research_sources.json",
+    "research_synthesis.md",
+    "research_reference_mapping.json",
+    "movement_law_candidates.md",
+    "movement_law_candidates.json",
+    "checkpoint.json",
+    "checkpoint.md",
+    "research_source_views/AttackSheet.gif",
+    "research_source_views/AttackSheet_0.png",
+    "research_source_views/AttackSheet_18.png",
+    "research_source_views/AttackSheet_35.png",
+    "research_source_views/inspection_manifest.json",
+    "research_source_views/MotionBlur.gif",
+    "research_source_views/MotionBlur_0.png",
+    "research_source_views/MotionBlur_16.png",
+    "research_source_views/MotionBlur_31.png",
+    "research_source_views/RunCycleSimple.gif",
+    "research_source_views/RunCycleSimple_0.png",
+    "research_source_views/RunCycleSimple_16.png",
+    "research_source_views/RunCycleSimple_31.png",
+    "phase_d_preservation_receipt.json"
+  ],
+  "document_hashes": [
+    {
+      "path": "external_research.md",
+      "bytes": 15766,
+      "sha256": "100feb19d123e8ba17dc41a095e373dea90c0ec9dd23a0b560609daa36fe35b8"
+    },
+    {
+      "path": "research_sources.json",
+      "bytes": 14399,
+      "sha256": "0b1e64073174878822c270609c1032bb7fa8f0e83f964c0690c8ef160e094760"
+    },
+    {
+      "path": "research_synthesis.md",
+      "bytes": 28935,
+      "sha256": "6d28ebc0b7dcc8cd69d179a49dec498bf6e875499458fa6d17a896611e02b8dc"
+    },
+    {
+      "path": "research_reference_mapping.json",
+      "bytes": 9918,
+      "sha256": "dc69b19fda4271ad6239e11fc1ed0f79dcdda246631e4d6f3bba95ae58b8098c"
+    },
+    {
+      "path": "movement_law_candidates.md",
+      "bytes": 13293,
+      "sha256": "7e4a17b6377f8e9447b201b52cba5b8e29cd5e24b39bb4a885faa0b023cdc351"
+    },
+    {
+      "path": "movement_law_candidates.json",
+      "bytes": 9936,
+      "sha256": "199287b877fc913437ebb0e9e9c716ecded07f6346f4984901f96c67731e6974"
+    },
+    {
+      "path": "checkpoint.json",
+      "bytes": 8600,
+      "sha256": "643b503794b70e3d4775d1b14dce2498503dc00f1ecacbd549d63f0a7d21de40"
+    },
+    {
+      "path": "checkpoint.md",
+      "bytes": 8648,
+      "sha256": "e8c999311a41c7a9347b759f3a00954136657a9eb5d571bce2ed7e1b810ff584"
+    },
+    {
+      "path": "research_source_views/AttackSheet.gif",
+      "bytes": 477905,
+      "sha256": "c2e041f1a12cd498954da33e5ec037b99c47917b8e528a3b062ff034b28c615f"
+    },
+    {
+      "path": "research_source_views/AttackSheet_0.png",
+      "bytes": 8454,
+      "sha256": "facabe5278faf76024129ef54e01134a26e791c651a82d7e9b614a2ab67a941e"
+    },
+    {
+      "path": "research_source_views/AttackSheet_18.png",
+      "bytes": 8454,
+      "sha256": "facabe5278faf76024129ef54e01134a26e791c651a82d7e9b614a2ab67a941e"
+    },
+    {
+      "path": "research_source_views/AttackSheet_35.png",
+      "bytes": 8454,
+      "sha256": "facabe5278faf76024129ef54e01134a26e791c651a82d7e9b614a2ab67a941e"
+    },
+    {
+      "path": "research_source_views/inspection_manifest.json",
+      "bytes": 746,
+      "sha256": "411937ec77385803aa64d2fc590fbe9b6c5814b696e1385a739b3e43b77db45c"
+    },
+    {
+      "path": "research_source_views/MotionBlur.gif",
+      "bytes": 560790,
+      "sha256": "a94b0e13e62623b36fa8e01823fb52e8a731345762eac5b11d5d66b34cca597d"
+    },
+    {
+      "path": "research_source_views/MotionBlur_0.png",
+      "bytes": 11925,
+      "sha256": "663ee9b77a2a9bab8962f5b32b08712944b95c1e044a484988fdd78610c77722"
+    },
+    {
+      "path": "research_source_views/MotionBlur_16.png",
+      "bytes": 12077,
+      "sha256": "abd9a69cff9deb9e0a3d15db3f92c0b2fc7c03cff98d3e9fc89a6827ca024ced"
+    },
+    {
+      "path": "research_source_views/MotionBlur_31.png",
+      "bytes": 13122,
+      "sha256": "bd10924b9ba3b61eb5db500e4e962cfcbba199e6d1668a43b63781b99698d0a4"
+    },
+    {
+      "path": "research_source_views/RunCycleSimple.gif",
+      "bytes": 431509,
+      "sha256": "f7a1b449bb6880149620e8fe30cbb2ed21088091323b28195ae87c65b11f4909"
+    },
+    {
+      "path": "research_source_views/RunCycleSimple_0.png",
+      "bytes": 8997,
+      "sha256": "9dbc729c3caede2dc38bc9f0be22a415c462d1ebf906c5c9c2be307801e3f966"
+    },
+    {
+      "path": "research_source_views/RunCycleSimple_16.png",
+      "bytes": 8997,
+      "sha256": "9dbc729c3caede2dc38bc9f0be22a415c462d1ebf906c5c9c2be307801e3f966"
+    },
+    {
+      "path": "research_source_views/RunCycleSimple_31.png",
+      "bytes": 8919,
+      "sha256": "31d00f7feec18451034e3b3630fcc912771ebad161bbf5f20c5e2ff597d249f0"
+    }
+  ],
+  "phase_boundary": "D COMPLETE; E PENDING; STOP"
+}

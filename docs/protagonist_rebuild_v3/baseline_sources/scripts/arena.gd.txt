@@ -1,0 +1,59 @@
+extends Node2D
+class_name NLBArena
+## Owns room geometry + ALL authored State A/B differences:
+## platform present/gone, hazard on/off, B-blockers, enemy perches.
+## Safe-transition eject rules live here, next to the rects they protect.
+
+const PLATFORM_RECT := Rect2(800, 480, 300, 20)
+const RANGED_PERCH_A := Vector2(950, 440)
+const RANGED_GROUND_B := Vector2(950, 540)
+const LANDING_OFFSET := Vector2(60, 0)  # if player camps the B landing spot
+const LANDING_CLEARANCE := 48.0
+
+@onready var platform: StaticBody2D = $PlatformA
+@onready var hazard: NLBHazard = $Hazard
+@onready var blocker_1: StaticBody2D = $Blocker1
+@onready var blocker_2: StaticBody2D = $Blocker2
+@onready var player_spawn: Marker2D = $SpawnPlayer
+@onready var melee_spawn: Marker2D = $SpawnMelee
+
+func _ready() -> void:
+	add_to_group("blinkables")
+	apply_blink(false)  # author State A explicitly; never rely on tscn defaults
+
+func apply_blink(state_b: bool) -> void:
+	platform.visible = not state_b
+	(platform.get_child(0) as CollisionShape2D).set_deferred("disabled", state_b)
+	hazard.apply_blink(state_b)
+	for blocker in [blocker_1, blocker_2]:
+		blocker.visible = state_b
+		(blocker.get_child(0) as CollisionShape2D).set_deferred("disabled", not state_b)
+	_resolve_player_overlap(state_b)
+
+## Solids never spawn inside the player. Called AFTER the swap, one physics
+## frame later the shapes are live; ejection is immediate and visible.
+func _resolve_player_overlap(state_b: bool) -> void:
+	var player := get_tree().get_first_node_in_group("player") as CharacterBody2D
+	if player == null:
+		return
+	var probe: Vector2 = player.global_position + Vector2(0, -20)
+	if not state_b and PLATFORM_RECT.grow(24.0).has_point(probe):
+		player.global_position = Vector2(player.global_position.x, PLATFORM_RECT.position.y - 30.0)
+		player.velocity = Vector2.ZERO
+	if state_b:
+		for blocker in [blocker_1, blocker_2]:
+			var r := Rect2(blocker.position, Vector2(30, 80)).grow(20.0)
+			if r.has_point(probe):
+				# Eject away from the hazard side when tied.
+				var go_left: bool = player.global_position.x < 500.0
+				if blocker == blocker_2:
+					go_left = player.global_position.x < blocker.position.x + 15.0
+				player.global_position.x = blocker.position.x - 24.0 if go_left else blocker.position.x + 54.0
+				player.velocity.x = 0.0
+
+## Ranged landing spot for State B, offset if the player is camping it.
+func ranged_landing_spot() -> Vector2:
+	var player := get_tree().get_first_node_in_group("player") as Node2D
+	if player != null and player.global_position.distance_to(RANGED_GROUND_B) < LANDING_CLEARANCE:
+		return RANGED_GROUND_B + LANDING_OFFSET
+	return RANGED_GROUND_B

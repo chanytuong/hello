@@ -1,0 +1,281 @@
+{
+  "read_complete": true,
+  "count": 67,
+  "method": "Entire contents read in bounded contiguous chunks during Phase A; completed status retained from skills_read.json and prior support reading coverage.",
+  "support_files": [
+    {
+      "path": "E:\\neverlookback\\agentskill\\2dimg2motion-main\\references\\keypose-redraw.md",
+      "chars": 8715
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\2dimg2motion-main\\references\\motion-prompt-patterns.md",
+      "chars": 15913
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\agent-skill-pixel-art-4.3.0\\skills\\pixel-art\\references\\sprite_conventions.md",
+      "chars": 1933
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\agent-skill-pixel-art-4.3.0\\skills\\pixel-art\\references\\animation_principles.md",
+      "chars": 4329
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\agent-skill-pixel-art-4.3.0\\skills\\pixel-art\\references\\color_theory.md",
+      "chars": 2183
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\agent-skill-pixel-art-4.3.0\\skills\\pixel-art\\references\\particle_effects.md",
+      "chars": 3342
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\agent-sprites-main\\skills\\sprite-character\\references\\construction.md",
+      "chars": 8459
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\agent-sprites-main\\skills\\sprite-craft\\references\\scale-and-proportion.md",
+      "chars": 24470
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\agent-sprites-main\\skills\\sprite-craft\\references\\outlines-and-edges.md",
+      "chars": 4271
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\agent-sprites-main\\skills\\sprite-craft\\references\\small-sprite-motion.md",
+      "chars": 2122
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\disciplines\\create-game-assets\\references\\art-direction.md",
+      "chars": 3860
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\disciplines\\create-game-assets\\references\\raster-pipeline.md",
+      "chars": 3904
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\disciplines\\create-game-assets\\references\\provenance.md",
+      "chars": 2190
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\awesome-gamedev-agent-skills-main\\skills\\godot\\godot-animation\\references\\animation-tree-and-tween.md",
+      "chars": 4128
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\animation-systems\\references\\patterns.md",
+      "chars": 13589
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\animation-systems\\references\\sharp_edges.md",
+      "chars": 12786
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\animation-systems\\references\\validations.md",
+      "chars": 11023
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\art-consistency\\references\\patterns.md",
+      "chars": 10396
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\art-consistency\\references\\sharp_edges.md",
+      "chars": 15179
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\art-consistency\\references\\validations.md",
+      "chars": 7464
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\character-design\\references\\patterns.md",
+      "chars": 23254
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\character-design\\references\\sharp_edges.md",
+      "chars": 23686
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\character-design\\references\\validations.md",
+      "chars": 15239
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\color-theory\\references\\patterns.md",
+      "chars": 18821
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\color-theory\\references\\sharp_edges.md",
+      "chars": 16991
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\color-theory\\references\\validations.md",
+      "chars": 8388
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\combat-design\\references\\patterns.md",
+      "chars": 37264
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\combat-design\\references\\sharp_edges.md",
+      "chars": 32829
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\combat-design\\references\\validations.md",
+      "chars": 12989
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\concept-art\\references\\patterns.md",
+      "chars": 8609
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\concept-art\\references\\sharp_edges.md",
+      "chars": 12182
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\concept-art\\references\\validations.md",
+      "chars": 13934
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\pixel-art\\references\\patterns.md",
+      "chars": 21223
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\pixel-art\\references\\sharp_edges.md",
+      "chars": 18543
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\pixel-art\\references\\validations.md",
+      "chars": 7587
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\pixel-art-sprites\\references\\patterns.md",
+      "chars": 15957
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\pixel-art-sprites\\references\\sharp_edges.md",
+      "chars": 15041
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\pixel-art-sprites\\references\\validations.md",
+      "chars": 3067
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\vfx-realtime\\references\\patterns.md",
+      "chars": 21900
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\vfx-realtime\\references\\sharp_edges.md",
+      "chars": 17883
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\vfx-realtime\\references\\validations.md",
+      "chars": 11897
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\weapon-design\\references\\patterns.md",
+      "chars": 19267
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\weapon-design\\references\\sharp_edges.md",
+      "chars": 17203
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\codex-skills-main\\weapon-design\\references\\validations.md",
+      "chars": 9364
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\game-feel-skill-main\\skills\\game-feel\\references\\measurement.md",
+      "chars": 5447
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\game-feel-skill-main\\skills\\game-feel\\references\\context-polish-metaphor-rules.md",
+      "chars": 8696
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\godot-game-studio-agent-main\\references\\production-loop.md",
+      "chars": 2747
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\godot-game-studio-agent-main\\references\\godot-implementation.md",
+      "chars": 2773
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\godot-game-studio-agent-main\\references\\quality-gates.md",
+      "chars": 2891
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\godot-game-studio-agent-main\\references\\asset-pipeline.md",
+      "chars": 1865
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\pixel-art-studio-main\\references\\patterns.md",
+      "chars": 3652
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\pixel-art-studio-main\\references\\techniques.md",
+      "chars": 4579
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\pixel-art-studio-main\\references\\animation.md",
+      "chars": 5316
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\pixel-art-studio-main\\references\\palettes.md",
+      "chars": 2394
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\pixel-art-studio-main\\references\\export.md",
+      "chars": 2230
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\pixel-art-studio-main\\references\\sharp_edges.md",
+      "chars": 3008
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\pixel-art-studio-main\\references\\validations.md",
+      "chars": 2313
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\pixel-art-studio-main\\references\\cleanup.md",
+      "chars": 5837
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\engineering\\godot\\references\\animation.md",
+      "chars": 5379
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\engineering\\godot\\references\\file-formats.md",
+      "chars": 5425
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\engineering\\godot\\references\\scene-tree.md",
+      "chars": 4808
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\engineering\\godot\\references\\testing.md",
+      "chars": 3663
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\skills-main\\skills-main\\skills\\engineering\\godot\\references\\pitfalls.md",
+      "chars": 11309
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\skills-open-source-main\\game-visuals\\references\\art-direction.md",
+      "chars": 7891
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\skills-open-source-main\\game-visuals\\references\\constrained-palette.md",
+      "chars": 7561
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\skills-open-source-main\\game-visuals\\references\\visual-problems.md",
+      "chars": 12314
+    },
+    {
+      "path": "E:\\neverlookback\\agentskill\\skills-open-source-main\\godot\\references\\scene-architecture.md",
+      "chars": 7466
+    }
+  ],
+  "missing_optional_rig_references": [
+    "rig-architecture.md",
+    "anatomy.md",
+    "poses.md",
+    "techniques.md"
+  ]
+}

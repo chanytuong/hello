@@ -49,8 +49,8 @@ func _run() -> void:
 	await observe(6)
 	Input.action_release("move_right")
 	await observe(1)
-	mark("cancel")
-	await observe(10)
+	mark("ignored")
+	await observe(18)
 	await begin_case("ROLL > REVERSE")
 	Input.action_press("move_right")
 	await observe(10)
@@ -59,8 +59,8 @@ func _run() -> void:
 	Input.action_release("move_right")
 	Input.action_press("move_left")
 	await observe(1)
-	mark("cancel")
-	await observe(10)
+	mark("ignored")
+	await observe(18)
 	await begin_case("ROLL > JUMP from tuck")
 	await roll()
 	await observe(9)
@@ -78,9 +78,9 @@ func _run() -> void:
 	await observe(8)
 	Input.action_press("move_left")
 	await observe(1)
-	mark("cancel")
+	mark("ignored")
 	Input.action_release("jump")
-	await observe(14)
+	await observe(18)
 	await begin_case("REPEATED ROLL / no pose rewinds")
 	await roll()
 	await observe(5)
@@ -91,12 +91,12 @@ func _run() -> void:
 	mark("repeat")
 	await observe(23)
 	for age in [2, 7, 11, 16]:
-		await begin_case("CANCEL at tick %d" % age)
+		await begin_case("IGNORED DIRECTION at tick %d" % age)
 		await roll()
 		await observe(age - 1)
 		Input.action_press("move_right")
 		await observe(1)
-		mark("cancel")
+		mark("ignored")
 		await observe(9)
 	await begin_case("ROLL into solid wall", Vector2(3430, 599))
 	await roll()
@@ -173,6 +173,10 @@ func verify_results() -> void:
 			check(row.roll == 0.0 and row.state != "DODGE_ROLL", event.case + ": gameplay and logical visual state cancel immediately")
 			var settled: Dictionary = rows[event.index + 3]
 			check(str(settled.clip).begins_with(row.state + "_"), event.case + ": target drawing reached within three visual updates")
+		elif event.kind == "ignored":
+			check(row.roll > 0.0 and row.state == "DODGE_ROLL" and str(row.clip).begins_with("DODGE_ROLL_"),
+				event.case + ": direction input cannot cancel the clip")
+			check(rows[event.index + 1].drawing >= row.drawing, event.case + ": clip keeps advancing while input is held")
 		elif event.kind == "repeat":
 			var previous: Dictionary = rows[event.index - 1]
 			check(row.roll < previous.roll and row.clip == "DODGE_ROLL_right" and row.drawing > previous.drawing,

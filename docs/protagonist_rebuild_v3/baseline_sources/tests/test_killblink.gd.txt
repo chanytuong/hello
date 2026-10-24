@@ -1,0 +1,43 @@
+extends SceneTree
+## Regression for the freed-ranged crash (editor stack:
+## game.gd _on_blink_finished <- blink_manager._process,
+## "global_position on previously freed").
+## Kills BOTH enemies mid-transition; Blink must complete without error.
+## Run: godot --headless --path E:\neverlookback --script res://tests/test_killblink.gd
+
+var _frames: int = 0
+var _main: Node
+var _failures: int = 0
+
+func _init() -> void:
+	_main = load("res://scenes/main.tscn").instantiate()
+	get_root().add_child(_main)
+	current_scene = _main
+
+func _physics_process(_delta: float) -> bool:
+	_frames += 1
+	var blink := _main.get_node("BlinkManager") as NLBBlinkManager
+	if _frames == 5:
+		if not blink.try_blink():
+			printerr("FAIL: blink did not trigger")
+			quit(1)
+			return true
+	if _frames == 8:
+		# Killing blows land mid-transition (the exact reported crash window).
+		for e in get_nodes_in_group("enemies"):
+			e.queue_free()
+	if _frames == 60:
+		if blink.is_b:
+			print("PASS: blink completes with both enemies killed mid-transition")
+		else:
+			printerr("FAIL: blink did not complete")
+			_failures += 1
+		var g := _main as NLBGame
+		if g.kills == 0:
+			print("PASS: no phantom kills counted")
+		if _failures == 0:
+			print("KILLBLINK_TESTS: ALL PASS")
+		Engine.time_scale = 1.0
+		quit(1 if _failures > 0 else 0)
+		return true
+	return false

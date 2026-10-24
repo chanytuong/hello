@@ -1,0 +1,128 @@
+extends SceneTree
+## V2 logic tests: Health iframes, HitBox one-hit-per-epoch, BlinkManager
+## central flow, melee AI timings, arena eject math.
+## Run: godot --headless --path E:\neverlookback --script res://tests/test_arena.gd
+
+var _failures: int = 0
+
+func _init() -> void:
+	_test_health()
+	_test_hitbox_epoch()
+	_test_blink_flow()
+	_test_melee_timings()
+	_test_eject_math()
+	_test_damage_clears_jump_buffer()
+	if _failures == 0:
+		print("ARENA_TESTS: ALL PASS")
+	else:
+		printerr("ARENA_TESTS: %d FAILURES" % _failures)
+	quit(1 if _failures > 0 else 0)
+
+func _check(cond: bool, name: String) -> void:
+	if cond:
+		print("PASS: " + name)
+	else:
+		printerr("FAIL: " + name)
+		_failures += 1
+
+func _test_health() -> void:
+	var h := NLBHealth.new()
+	h.max_hp = 5
+	h.iframes = 1.0
+	get_root().add_child(h)
+	_check(h.damage(1), "health applies damage")
+	_check(h.hp == 4, "health hp=4 after 1 dmg")
+	_check(not h.damage(1), "health iframes block repeat hit")
+	_check(h.hp == 4, "health hp unchanged during iframes")
+	h.reset()
+	_check(h.hp == 5, "health reset restores hp")
+	h.queue_free()
+
+func _test_hitbox_epoch() -> void:
+	var holder := Node.new()
+	get_root().add_child(holder)
+	var health := NLBHealth.new()
+	health.name = "Health"
+	health.max_hp = 10
+	health.iframes = 0.0  # no time gate: epoch marking is what we test
+	holder.add_child(health)
+	var hurt := NLBHurtBox.new()
+	holder.add_child(hurt)
+	var hit := NLBHitBox.new()
+	hit.damage = 1
+	holder.add_child(hit)
+	hit.begin()
+	hit._try_hit(hurt)
+	hit._try_hit(hurt)  # same epoch: must not double-hit
+	_check(health.hp == 9, "hitbox one hit per epoch (hp=%d)" % health.hp)
+	hit.begin()  # new swing: hits again
+	hit._try_hit(hurt)
+	_check(health.hp == 8, "hitbox new epoch hits again (hp=%d)" % health.hp)
+	holder.queue_free()
+
+func _test_blink_flow() -> void:
+	var b := NLBBlinkManager.new()
+	b.cooldown = 1.0
+	get_root().add_child(b)
+	_check(b.can_blink(), "blink ready at start")
+	_check(b.try_blink(), "blink triggers")
+	_check(not b.try_blink(), "blink no retrigger during transition")
+	var t := 0.0
+	while t < 0.5:
+		b._process(0.05)
+		t += 0.05
+	_check(b.is_b, "blink lands in B after transition")
+	_check(not b.can_blink(), "blink cooldown blocks immediate re-blink")
+	t = 0.0
+	while t < 1.5:
+		b._process(0.1)
+		t += 0.1
+	_check(b.can_blink(), "blink ready after cooldown")
+	b.queue_free()
+
+func _test_melee_timings() -> void:
+	var scene: PackedScene = load("res://scenes/melee_chaser.tscn")
+	var m := scene.instantiate() as NLBMeleeChaser
+	get_root().add_child(m)
+	_check(m.ai_state == NLBMeleeChaser.AIState.CHASE, "melee starts in CHASE")
+	m._enter(NLBMeleeChaser.AIState.WINDUP)
+	_check(m._state_t == m.windup_time, "melee windup timed")
+	m._enter(NLBMeleeChaser.AIState.STRIKE)
+	_check(m._state_t == m.strike_time, "melee strike timed")
+	m.queue_free()
+
+func _test_eject_math() -> void:
+	# Mirrors NLBArena constants (platform top y=480, RANGED_GROUND_B=(950,540)).
+	var plat := Rect2(800, 480, 300, 20)
+	_check(plat.grow(24.0).has_point(Vector2(900, 470)), "platform eject probe catches overlap")
+	_check(not plat.grow(24.0).has_point(Vector2(140, 500)), "safe spawn not an overlap")
+	var b1 := Rect2(350, 520, 30, 80).grow(20.0)
+	_check(not b1.has_point(Vector2(500, 580)), "hazard strip clear of blocker eject zone")
+	var landing := Vector2(950, 540)
+	_check(landing.distance_to(Vector2(950, 540)) < 48.0, "landing rule triggers when camping")
+	_check((landing + Vector2(60, 0)).distance_to(Vector2(950, 540)) >= 48.0, "landing offset clears player")
+
+func _test_damage_clears_jump_buffer() -> void:
+	# Rule: damage drops pending jump INTENT (no stale-buffer launch),
+	# while coyote grace (physics state) is preserved.
+	var scene: PackedScene = load("res://scenes/player.tscn")
+	var p := scene.instantiate() as NLBPlayer
+	get_root().add_child(p)
+	p._jump_buf = 0.12
+	p._coyote = 0.1
+	p.clear_jump_intent()
+	_check(p._jump_buf == 0.0, "damage clears jump buffer")
+	_check(p._coyote == 0.1, "damage preserves coyote grace")
+	# Full path: buffer set -> HurtBox.take_hit -> buffer gone.
+	p._jump_buf = 0.12
+	var hb := p.get_node("HurtBox") as NLBHurtBox
+	var applied: bool = hb.take_hit(1, Vector2.ZERO)
+	# NOTE: read HP through health_node(), not p.health. This test runs inside
+	# SceneTree._init(), so the player's _ready() has not fired yet and the
+	# @onready `health` is still Nil - reading p.health here threw a script
+	# error that silently skipped every assertion below it while the suite
+	# still printed ALL PASS.
+	_check(applied, "fixture hit applies (hp=%d)" % hb.health_node().hp)
+	_check(hb.health_node().hp == 4, "fixture hit took exactly 1 hp (hp=%d)" % hb.health_node().hp)
+	_check(p._jump_buf == 0.0, "take_hit path clears jump buffer")
+	p.queue_free()
