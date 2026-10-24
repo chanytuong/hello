@@ -24,8 +24,8 @@ enum MoveState { NORMAL, DASH }
 @export var m1_rebuild_enabled: bool = false
 @export var m1_natural_enabled: bool = false
 @export var m1_crowbar_enabled: bool = false
-@export var roll_duration: float = 0.29
-@export var roll_speed: float = 333.3333333 # 100 px across 18 active ticks at 60 Hz
+@export var roll_duration: float = 0.50
+@export var roll_speed: float = 200.0 # 100 px across 0.50s duration
 @export var roll_cooldown: float = 0.35 # starts on completion or cancellation
 var roll_remaining: float = 0.0
 var roll_cooldown_remaining: float = 0.0
@@ -276,6 +276,28 @@ var _prev_floor: bool = true
 ## Presentation only: the parametric pose math below keeps running untouched
 ## (tests/test_identity.gd asserts body_vis.rotation/scale); its ColorRect is
 ## hidden so the real frames carry the read.
+const JUMP_SHEET_RIGHT = preload("res://art/iven/movement/jump_v02/IVEN_JUMP_V02_SHEET.png")
+const JUMP_SHEET_LEFT = preload("res://art/iven/movement/jump_v02/IVEN_JUMP_V02_SHEET_LEFT.png")
+const ROLL_SHEET_RIGHT = preload("res://art/iven/movement/roll_v03/IVEN_ROLL_SHEET_V03.png")
+const ROLL_SHEET_LEFT = preload("res://art/iven/movement/roll_v03/IVEN_ROLL_SHEET_LEFT.png")
+const AIR_ROLL_SHEET_RIGHT = preload("res://art/iven/movement/roll_v03/IVEN_AIR_ROLL_SHEET_V03.png")
+const AIR_ROLL_SHEET_LEFT = preload("res://art/iven/movement/roll_v03/IVEN_AIR_ROLL_SHEET_LEFT.png")
+
+const CELL_SIZE := 82
+const IVEN_PIVOT := Vector2(40.499926203, 75.579576591)
+const FOOT_GROUND_OFFSET := 75.0
+const FOOT_JUMP_OFFSET := 77.0
+const ROLL_MODULATE := Color(0.84, 0.765, 0.739, 1.0)
+
+var _jump_frames_r: Array[Texture2D] = []
+var _jump_frames_l: Array[Texture2D] = []
+var _roll_frames_r: Array[Texture2D] = []
+var _roll_frames_l: Array[Texture2D] = []
+var _air_roll_frames_r: Array[Texture2D] = []
+var _air_roll_frames_l: Array[Texture2D] = []
+var _air_time: float = 0.0
+var _jump_land_t: float = 0.0
+
 const ART_DIR := "res://art/prototype/character/"
 ## A2 HORIZONTAL IMPOSSIBLE LINE production set (identity locked by review).
 ## Presentation layer only: identical frame names, identical 64x64 / ground
@@ -418,6 +440,14 @@ func _physics_process(delta: float) -> void:
 	_update_attack(delta)
 	_update_visuals(delta)
 	move_and_slide()
+	if not _prev_floor and is_on_floor():
+		_jump_land_t = 5.0 / 30.0
+		_air_time = 0.0
+	elif not is_on_floor():
+		_air_time += delta
+		_jump_land_t = 0.0
+	else:
+		_jump_land_t = maxf(0.0, _jump_land_t - delta)
 	_update_sprite(delta)
 	if not _prev_floor and is_on_floor() and _fall_peak > hard_landing_speed:
 		landed_hard.emit(_fall_peak)
@@ -563,6 +593,7 @@ func _update_jump(delta: float, dir: float) -> void:
 		_dash_t -= delta
 		if _dash_t <= 0.0:
 			move_state = MoveState.NORMAL
+			_dash_cd = dash_cooldown
 			return
 		velocity.x = float(_dash_dir) * dash_speed
 		return
@@ -606,7 +637,7 @@ func _update_dash(_delta: float, dir: float) -> void:
 	if is_on_floor() or _air_dashes > 0:
 		if not is_on_floor():
 			_air_dashes -= 1
-		_dash_cd = dash_cooldown
+		_dash_cd = dash_cooldown + dash_duration
 		_dash_buf = 0.0
 		_dash_t = dash_duration
 		_dash_dir = facing if dir == 0.0 else (1 if dir > 0.0 else -1)
@@ -684,6 +715,43 @@ func _setup_sprite() -> void:
 			_run_cache[rn] = load(RUN_SE_DIR + rn)
 		else:
 			push_error("[NLB] missing approved run frame: " + RUN_SE_DIR + rn)
+
+	_jump_frames_r.clear()
+	_jump_frames_l.clear()
+	for i in 30:
+		var ar := AtlasTexture.new()
+		ar.atlas = JUMP_SHEET_RIGHT
+		ar.region = Rect2(i * CELL_SIZE, 0, CELL_SIZE, CELL_SIZE)
+		_jump_frames_r.append(ar)
+		var al := AtlasTexture.new()
+		al.atlas = JUMP_SHEET_LEFT
+		al.region = Rect2(i * CELL_SIZE, 0, CELL_SIZE, CELL_SIZE)
+		_jump_frames_l.append(al)
+
+	_roll_frames_r.clear()
+	_roll_frames_l.clear()
+	for i in 15:
+		var ar := AtlasTexture.new()
+		ar.atlas = ROLL_SHEET_RIGHT
+		ar.region = Rect2(i * CELL_SIZE, 0, CELL_SIZE, CELL_SIZE)
+		_roll_frames_r.append(ar)
+		var al := AtlasTexture.new()
+		al.atlas = ROLL_SHEET_LEFT
+		al.region = Rect2(i * CELL_SIZE, 0, CELL_SIZE, CELL_SIZE)
+		_roll_frames_l.append(al)
+
+	_air_roll_frames_r.clear()
+	_air_roll_frames_l.clear()
+	for i in 7:
+		var ar := AtlasTexture.new()
+		ar.atlas = AIR_ROLL_SHEET_RIGHT
+		ar.region = Rect2(i * CELL_SIZE, 0, CELL_SIZE, CELL_SIZE)
+		_air_roll_frames_r.append(ar)
+		var al := AtlasTexture.new()
+		al.atlas = AIR_ROLL_SHEET_LEFT
+		al.region = Rect2(i * CELL_SIZE, 0, CELL_SIZE, CELL_SIZE)
+		_air_roll_frames_l.append(al)
+
 	_show_frame("neutral.png")
 	if body_vis != null:
 		body_vis.visible = false   # hidden, NOT skipped: the pose math still runs
@@ -869,11 +937,59 @@ func _update_visuals(delta: float) -> void:
 func _update_sprite(delta: float) -> void:
 	if sprite == null:
 		return
+
+	# ROLL / DASH (15 frames grounded, 7 frames air, 0.50s duration)
+	if move_state == MoveState.DASH:
+		var e: float = clampf(dash_duration - _dash_t, 0.0, dash_duration)
+		sprite.modulate = ROLL_MODULATE
+		sprite.offset = -IVEN_PIVOT
+		if is_on_floor():
+			var f_idx := clampi(int(e / dash_duration * 15.0), 0, 14)
+			sprite.texture = _roll_frames_r[f_idx] if facing > 0 else _roll_frames_l[f_idx]
+		else:
+			var f_idx := clampi(int(e / dash_duration * 7.0), 0, 6)
+			sprite.texture = _air_roll_frames_r[f_idx] if facing > 0 else _air_roll_frames_l[f_idx]
+		sprite.scale.x = 1.0
+		_frame_shown = "roll"
+		return
+
+	sprite.modulate = Color.WHITE
+
+	# JUMP (30 frames, 4-phase: Takeoff f1-4, Apex f5-17, Fall f18-24)
+	if not is_on_floor():
+		sprite.offset = Vector2(-IVEN_PIVOT.x, -FOOT_JUMP_OFFSET)
+		var j_idx := 0
+		if velocity.y < -120.0:
+			# Phase 1: Takeoff / Stretch (f1-4, idx 0..3)
+			j_idx = clampi(int(_air_time * 30.0), 0, 3)
+		elif velocity.y <= 120.0:
+			# Phase 2: Apex (f5-17, idx 4..16)
+			var apex_progress := (velocity.y + 120.0) / 240.0
+			j_idx = clampi(4 + int(apex_progress * 13.0), 4, 16)
+		else:
+			# Phase 3: Fall / Reach (f18-24, idx 17..23)
+			var fall_progress := clampf((velocity.y - 120.0) / 400.0, 0.0, 1.0)
+			j_idx = clampi(17 + int(fall_progress * 7.0), 17, 23)
+		sprite.texture = _jump_frames_r[j_idx] if facing > 0 else _jump_frames_l[j_idx]
+		sprite.scale.x = 1.0
+		_frame_shown = "jump"
+		return
+
+	# Phase 4: Landing squash / recovery (f25-30, idx 24..29)
+	if _jump_land_t > 0.0 and absf(get_real_velocity().x) < RUN_MIN_SPEED:
+		sprite.offset = Vector2(-IVEN_PIVOT.x, -FOOT_JUMP_OFFSET)
+		var land_progress := 1.0 - clampf(_jump_land_t / (5.0 / 30.0), 0.0, 1.0)
+		var j_idx := clampi(24 + int(land_progress * 6.0), 24, 29)
+		sprite.texture = _jump_frames_r[j_idx] if facing > 0 else _jump_frames_l[j_idx]
+		sprite.scale.x = 1.0
+		_frame_shown = "land"
+		return
+
+	# Ground movement / attack / idle
+	sprite.offset = -Vector2(IVEN_PIVOT.x, FOOT_GROUND_OFFSET)  # reset from jump offset
 	if _is_running_visual():
 		_run_dist += absf(get_real_velocity().x) * delta
 	var want := _pick_frame()
 	if want != _frame_shown:
 		_show_frame(want)
-	# Frames are authored facing right; mirroring around the origin keeps
-	# the feet centre (the frame's pivot) pinned to the player origin.
 	sprite.scale.x = -1.0 if facing < 0 else 1.0

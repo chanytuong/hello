@@ -6,7 +6,7 @@ const PIVOT := Vector2(40.499926203, 75.579576591)
 const BRIDGE_TIME := 2.0 / 60.0
 const RUN_RETURN_FRAME := 13 # existing source preview's matched RUN_14
 var state: String = "IDLE"
-var roll_duration: float = 0.29
+var roll_duration: float = 0.50
 var roll_cooldown: float = 0.35
 var _roll_duration_frames: float = 15.0 / 30.0
 var _roll_cooldown_s: float = 0.35
@@ -147,6 +147,7 @@ func _apply_frame(index: int, pose: String = "", angle: float = INF) -> void:
 		body.play(clip)
 		body.speed_scale = 0.0
 	body.set_frame_and_progress(index, 0.0)
+	body.modulate = Color(0.84, 0.765, 0.739, 1.0) if state == "DODGE_ROLL" else Color.WHITE
 	var data: Dictionary = anchors[String(clip)][index]
 	neck_local = Vector2(data.neck[0], data.neck[1]) - PIVOT
 	flame.position = neck_local.round()

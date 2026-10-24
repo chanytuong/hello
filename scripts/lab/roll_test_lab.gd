@@ -16,21 +16,25 @@ extends Node2D
 ##   SHIFT       roll / air roll
 ##   R           restart
 
-const SHEET_R := preload("res://art/iven/roll_redesign/IVEN_ROLL_SHEET.png")
-const SHEET_L := preload("res://art/iven/roll_redesign/IVEN_ROLL_SHEET_LEFT.png")
-const AIR_SHEET_R := preload("res://art/iven/roll_redesign/IVEN_AIR_ROLL_SHEET.png")
-const AIR_SHEET_L := preload("res://art/iven/roll_redesign/IVEN_AIR_ROLL_SHEET_LEFT.png")
+const SHEET_R := preload("res://art/iven/movement/roll_v03/IVEN_ROLL_SHEET_V03.png")
+const SHEET_L := preload("res://art/iven/movement/roll_v03/IVEN_ROLL_SHEET_LEFT.png")
+const AIR_SHEET_R := preload("res://art/iven/movement/roll_v03/IVEN_AIR_ROLL_SHEET_V03.png")
+const AIR_SHEET_L := preload("res://art/iven/movement/roll_v03/IVEN_AIR_ROLL_SHEET_LEFT.png")
+const JUMP_SHEET_R := preload("res://art/iven/movement/jump_v02/IVEN_JUMP_V02_SHEET.png")
+const JUMP_SHEET_L := preload("res://art/iven/movement/jump_v02/IVEN_JUMP_V02_SHEET_LEFT.png")
 const BODY_FRAMES := preload("res://art/iven/movement/body_frames.tres")
-const UI_FONT := preload("res://art/iven/jump_v02/Roboto-Regular.ttf")
+const UI_FONT := preload("res://art/iven/movement/jump_v02/Roboto-Regular.ttf")
 
 const CELL := 82
 const PIVOT := Vector2(40.499926203, 75.579576591)
 const FOOT_GROUND := 75.0
+const FOOT_JUMP := 77.0
 const ART_FPS := 30.0
+const JUMP_CLIP_FRAMES := 30
 const ROLL_FRAMES := 15
-const AIR_FRAMES := 6
+const AIR_FRAMES := 7
 const ROLL_DURATION := 0.50 # locked production duration (player.gd roll_duration)
-const AIR_DURATION := 6.0 / ART_FPS
+const AIR_DURATION := 7.0 / ART_FPS
 const ROLL_COOLDOWN := 0.35
 const ROLL_TRAVEL := 100.0
 const ROLL_SPEED := ROLL_TRAVEL / ROLL_DURATION
@@ -66,8 +70,15 @@ const RED := Color("#e2777f")
 const PANEL := Color(0.047, 0.063, 0.090, 0.92)
 const LINE := Color("#2a3648")
 
-const GROUND_PHASES := ["INITIATION", "PLANT", "TUCK", "APEX", "EXTENSION", "COMPRESSION", "RECOVERY", "RUN_READY"]
-const AIR_PHASES := ["AIR_LAUNCH", "AIR_TUCK", "AIR_APEX", "AIR_EXIT", "AIR_EXTEND", "AIR_READY"]
+const GROUND_PHASES := [
+	"INITIATION", "PLANT",
+	"TUCK_IN", "TUCK_ROTATION", "APEX", "TUCK_HOLD", "TUCK_EXIT",
+	"EXTENSION_1", "EXTENSION_2", "EXTENSION_3", "EXTENSION_4",
+	"LANDING", "RECOVERY", "UNFOLD", "RUN_READY"
+]
+const AIR_PHASES := [
+	"AIR_LAUNCH", "AIR_TUCK", "AIR_APEX", "AIR_HOLD", "AIR_EXIT", "AIR_EXTEND", "AIR_READY"
+]
 
 const PASSES := [
 	{
@@ -86,7 +97,7 @@ const PASSES := [
 	},
 	{
 		"title": "PASS 03  /  AIR ROLL",
-		"sub": "6 frames · 0.200 s · full 360° somersault · no ground contact",
+		"sub": "7 frames · 0.233 s · full 360° somersault · no ground contact",
 		"start_x": 260.0,
 		"face": 1,
 		"events": [[0.30, "run"], [0.75, "jump"], [1.10, "roll"], [1.95, "stop"]],
@@ -128,6 +139,11 @@ var roll_cd := 0.0
 var air_roll_t := 0.0
 var air_frame := 0
 var air_roll_done := false
+var jump_frame := 0
+var air_t := 0.0
+var recovery_t := 0.0
+var jump_r: Array[Texture2D] = []
+var jump_l: Array[Texture2D] = []
 
 var attempts := 0
 var accepted := 0
@@ -301,7 +317,8 @@ class FrameStrip extends Control:
 			var bg := Rect2(rx, oy, cell, cell)
 			draw_rect(bg, Color(0.02, 0.03, 0.045, 0.86))
 			var tint := Color(1, 1, 1, 1) if (not active or i == current) else Color(0.62, 0.68, 0.76, 0.54)
-			draw_texture_rect_region(sheet, bg, Rect2(i * 82.0, 0, 82, 82), tint)
+			var mod_tint := tint * Color(0.84, 0.765, 0.739, 1.0)
+			draw_texture_rect_region(sheet, bg, Rect2(i * 82.0, 0, 82, 82), mod_tint)
 			var gy := oy + (75.579576591 / 82.0) * cell
 			draw_line(Vector2(rx, gy), Vector2(rx + cell, gy), Color(0.85, 0.30, 0.34, 0.32), 1.0)
 			if active and i == current:
@@ -335,6 +352,18 @@ func _build_assets() -> void:
 		air_frames.remove_animation("default")
 	_add_anim(air_frames, "air_roll_right", AIR_SHEET_R, AIR_FRAMES)
 	_add_anim(air_frames, "air_roll_left", AIR_SHEET_L, AIR_FRAMES)
+
+	jump_r.clear()
+	jump_l.clear()
+	for i in JUMP_CLIP_FRAMES:
+		var ar := AtlasTexture.new()
+		ar.atlas = JUMP_SHEET_R
+		ar.region = Rect2(i * CELL, 0, CELL, CELL)
+		jump_r.append(ar)
+		var al := AtlasTexture.new()
+		al.atlas = JUMP_SHEET_L
+		al.region = Rect2(i * CELL, 0, CELL, CELL)
+		jump_l.append(al)
 
 
 func _add_anim(sf: SpriteFrames, anim: String, sheet: Texture2D, count: int) -> void:
@@ -385,6 +414,7 @@ func _build_world() -> void:
 	ground_roll.centered = false
 	ground_roll.offset = Vector2(-PIVOT.x, -PIVOT.y)
 	ground_roll.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	ground_roll.modulate = Color(0.84, 0.765, 0.739, 1.0)
 	ground_roll.visible = false
 	player.add_child(ground_roll)
 
@@ -394,6 +424,7 @@ func _build_world() -> void:
 	air_roll.centered = false
 	air_roll.offset = Vector2(-PIVOT.x, -PIVOT.y)
 	air_roll.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	air_roll.modulate = Color(0.84, 0.765, 0.739, 1.0)
 	air_roll.visible = false
 	player.add_child(air_roll)
 
@@ -443,7 +474,7 @@ func _build_hud() -> void:
 	_bar(root, Rect2(600, 68, 3, 94), CYAN)
 	_label(root, "CURRENT STATE", Vector2(616, 78), 9, MUTED)
 	mode_label = _label(root, "IDLE", Vector2(616, 95), 20, INK)
-	state_hint =	_label(root, "0.290 s ROLL  ·  0.350 s COOLDOWN", Vector2(616, 127), 9, CYAN)
+	state_hint = _label(root, "0.500 s ROLL  ·  0.350 s COOLDOWN", Vector2(616, 127), 9, CYAN)
 
 	_bar(root, Rect2(902, 68, 344, 94), PANEL)
 	_bar(root, Rect2(902, 68, 3, 94), GREEN)
@@ -516,7 +547,7 @@ func _build_hud() -> void:
 	_label(outro_panel, "Full-body ground somersault  ·  air variant  ·  committed 0.500 s clip", Vector2(36, 110), 13, INK)
 	outro_metrics = _label(outro_panel, "", Vector2(36, 142), 11, INK)
 	_bar(outro_panel, Rect2(36, 196, 758, 1), LINE)
-	_label(outro_panel, "GROUND  15F / 0.500 s / 100 px     AIR  6F / 0.200 s / 360°", Vector2(36, 214), 10, MUTED)
+	_label(outro_panel, "GROUND  15F / 0.500 s / 100 px     AIR  7F / 0.233 s / 360°", Vector2(36, 214), 10, MUTED)
 	_label(outro_panel, "Cooldown 0.350 s from roll end     Palette B / 21 opaque colours", Vector2(36, 238), 10, MUTED)
 	_label(outro_panel, "source: IVEN_JUMP_V02.blend copy  ·  camera RESEARCH_Y75_P00", Vector2(36, 276), 9, DIM)
 	_label(outro_panel, "evidence: ROLL_LAB_TRACE.json  ·  ROLL_V01_QA_REPORT.md  ·  native sheets 82×82", Vector2(36, 296), 9, DIM)
@@ -571,6 +602,9 @@ func _start_pass(index: int) -> void:
 	air_roll_t = 0.0
 	air_frame = 0
 	air_roll_done = false
+	jump_frame = 0
+	air_t = 0.0
+	recovery_t = 0.0
 	gate_flash_t = 0.0
 	gate_text = ""
 	outro_t = 0.0
@@ -613,6 +647,9 @@ func _start_manual() -> void:
 	air_roll_t = 0.0
 	air_frame = 0
 	air_roll_done = false
+	jump_frame = 0
+	air_t = 0.0
+	recovery_t = 0.0
 	gate_flash_t = 0.0
 	gate_text = ""
 	title_root.modulate.a = 1.0
@@ -734,6 +771,8 @@ func _try_jump() -> void:
 	y = 0.0
 	vy = JUMP_VELOCITY
 	mode = "JUMP"
+	air_t = 0.0
+	jump_frame = 3
 	air_roll_done = false
 	air_roll.visible = false
 	body.visible = true
@@ -785,12 +824,15 @@ func _start_air_roll(source: String) -> void:
 	air_roll_t = 0.0
 	air_frame = 0
 	air_roll_done = false
+	jump_frame = 0
+	air_t = 0.0
+	recovery_t = 0.0
 	mode = "AIR_ROLL"
 	air_roll.visible = true
 	ground_roll.visible = false
 	body.visible = false
 	gate_flash_t = 0.55
-	gate_text = "AIR ROLL ACCEPTED  ·  COMMITTED 0.200 s"
+	gate_text = "AIR ROLL ACCEPTED  ·  COMMITTED 0.233 s"
 	gate_color = GREEN
 	trace.append({
 		"t": demo_t, "pass": pass_i + 1, "event": "roll_accept", "kind": "air",
@@ -885,6 +927,9 @@ func _update_motion(dt: float) -> void:
 			facing = 1 if input_dir > 0.0 else -1
 		x += vx * dt
 		if not on_floor:
+			if mode == "JUMP" and not air_roll_done:
+				air_t += dt
+				jump_frame = clampi(3 + int(air_t * ART_FPS), 3, 24)
 			var g2 := FALL_GRAVITY if vy > 0.0 else RISE_GRAVITY
 			vy += g2 * dt
 			y += vy * dt
@@ -893,10 +938,18 @@ func _update_motion(dt: float) -> void:
 		else:
 			y = 0.0
 			vy = 0.0
-			if mode == "JUMP":
+			if mode == "LAND":
+				recovery_t += dt
+				jump_frame = mini(29, 25 + int(recovery_t * ART_FPS))
+				if recovery_t >= 5.0 / ART_FPS or absf(input_dir) > 0.1:
+					mode = "RUN" if absf(vx) > 20.0 or absf(input_dir) > 0.1 else "IDLE"
+					if mode == "RUN":
+						run_time = 0.0
+					jump_frame = 0
+			elif mode == "JUMP":
 				mode = "RUN" if absf(vx) > 20.0 else "IDLE"
 			elif mode != "GROUND_ROLL":
-				mode = "RUN" if absf(vx) > 20.0 else "IDLE"
+				mode = "RUN" if absf(vx) > 20.0 else "IDLE" 
 	x = clampf(x, 22.0, WORLD_W - 22.0)
 	if x <= 22.0 or x >= WORLD_W - 22.0:
 		vx = 0.0
@@ -915,6 +968,11 @@ func _land() -> void:
 		# starts here, exactly like a completed air roll.
 		roll_cd = maxf(roll_cd, ROLL_COOLDOWN)
 		air_roll.visible = false
+		mode = "RUN" if absf(vx) > 20.0 else "IDLE"
+	elif mode == "JUMP":
+		mode = "LAND"
+		recovery_t = 0.0
+		jump_frame = 25
 	air_roll.visible = false
 	ground_roll.visible = false
 	body.visible = true
@@ -948,10 +1006,18 @@ func _apply_visual() -> void:
 		ground_roll.visible = false
 		body.visible = false
 		_set_anim(air_roll, "air_roll_" + side, AIR_FRAMES - 1)
+	elif mode == "JUMP" or mode == "LAND":
+		ground_roll.visible = false
+		air_roll.visible = false
+		body.visible = true
+		var idx := clampi(jump_frame, 0, JUMP_CLIP_FRAMES - 1)
+		body.texture = jump_r[idx] if facing > 0 else jump_l[idx]
+		body.offset = Vector2(-PIVOT.x, -FOOT_JUMP)
 	else:
 		ground_roll.visible = false
 		air_roll.visible = false
 		body.visible = true
+		body.offset = Vector2(-PIVOT.x, -FOOT_GROUND)
 		var cname := ("RUN_" if mode == "RUN" else "IDLE_") + side
 		var count := BODY_FRAMES.get_frame_count(cname)
 		var idx := int(run_time * ART_FPS) % count if mode == "RUN" else int(demo_t * ART_FPS) % count
@@ -981,7 +1047,17 @@ func _update_hud() -> void:
 		hint = "f%02d / %02d  ·  %s" % [air_frame + 1, AIR_FRAMES, AIR_PHASES[air_frame]]
 	elif mode == "JUMP":
 		now = "AIRBORNE"
-		hint = "AIR READY" if air_roll_done else "JUMP  ·  1 AIR ROLL"
+		var jphase := "LAUNCH"
+		if jump_frame <= 8:
+			jphase = "STRETCH / RISE"
+		elif jump_frame <= 17:
+			jphase = "APEX"
+		else:
+			jphase = "FALL / REACH"
+		hint = ("AIR READY" if air_roll_done else "JUMP f%02d · %s" % [jump_frame + 1, jphase])
+	elif mode == "LAND":
+		now = "LANDING"
+		hint = "f%02d · RECOVERY / RUN ENTRY" % [jump_frame + 1]
 	elif mode == "RUN":
 		now = "RUN"
 		hint = "COOLDOWN" if roll_cd > 0.0 else "ROLL READY"
