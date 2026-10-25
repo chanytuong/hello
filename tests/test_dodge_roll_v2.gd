@@ -14,7 +14,7 @@ func _run() -> void:
 		await step(1)
 		ticks += 1
 	measurements = {"configured_duration_s":player.roll_duration,"speed_px_s":player.roll_speed,"distance_px":player.position.x-x,"active_ticks":ticks-1,"time_including_exit_s":ticks/60.0,"cooldown_on_exit_s":player.roll_cooldown_remaining}
-	check(player.position.x-x >= 90 and player.position.x-x <= 105, "roll travel within90-105px", measurements)
+	check(player.position.x-x >= 195 and player.position.x-x <= 205, "roll travel within195-205px", measurements)
 	check(player.roll_cooldown_remaining > .349 and not player.can_movement_roll(), "natural end starts full0.35s cooldown")
 	Input.action_press("move_right")
 	await step(1)
@@ -74,8 +74,10 @@ func _run() -> void:
 	Input.action_release("move_right")
 	await roll_press()
 	# Keep rejected button held through expiry: there is no deferred roll.
+	# 60 ticks outlasts the 0.50s clip + 0.35s cooldown with margin so the
+	# check observes post-expiry behavior rather than the last cooldown tick.
 	Input.action_press("dash")
-	await step(45)
+	await step(60)
 	check(player.can_movement_roll() and player.roll_remaining==0, "rejected held input is discarded, no queued charge")
 	Input.action_release("dash")
 	await step(1)

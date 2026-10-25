@@ -50,7 +50,7 @@ func test_roll_foundation() -> void:
 		await step(1)
 	var travel := player.global_position.x - x
 	var duration := float(Engine.get_physics_frames() - frames) / 60.0
-	check(is_equal_approx(player.roll_duration, 0.29) and travel >= 95 and travel <= 105 and duration >= 0.29 and duration <= 0.33,
+	check(is_equal_approx(player.roll_duration, 0.50) and travel >= 195 and travel <= 205 and duration >= 0.49 and duration <= 0.55,
 		"roll duration and displacement meet final-roll budget", {"px": travel, "seconds_including_exit": duration})
 	check(player.movement_visual.state == "IDLE" and player.velocity.x == 0.0, "roll has no forced recovery or extra root-motion travel")
 	await prepare()
@@ -94,7 +94,7 @@ func test_roll_foundation() -> void:
 	var vy := player.velocity.y
 	var jump_budget := player._air_dashes
 	await roll_press()
-	check(player.roll_remaining > 0.0 and player.movement_visual.state == "DODGE_ROLL", "air roll activates and displays existing roll clip")
+	check(player.roll_remaining > 0.0 and player.movement_visual.state == "AIR_ROLL", "air roll activates and displays the V03 air-roll clip")
 	check(player.velocity.y >= vy and player._air_dashes == jump_budget and player._coyote <= 0.0, "air roll adds no vertical boost or extra jump budget")
 	Input.action_press("move_left")
 	await step(1)

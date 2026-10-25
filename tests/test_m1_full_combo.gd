@@ -192,8 +192,11 @@ func run() -> void:
 	Input.action_press("move_right")
 	await observe(1)
 	Input.action_release("move_right")
-	await observe(1)
-	check(player.roll_cooldown_remaining>0,"cancelled roll arms existing cooldown")
+	# The accepted roll plays its full clip; direction input no longer cancels it.
+	# Wait for the authored end, then verify the normal cooldown contract.
+	while player.roll_remaining>0:
+		await observe(1)
+	check(player.roll_cooldown_remaining>0,"completed roll arms existing cooldown")
 	await click()
 	var old_id:=combo.attack_instance_id
 	Input.action_press("dash")

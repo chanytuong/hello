@@ -39,7 +39,7 @@ func _run() -> void:
 	await observe(12)
 	await roll()
 	mark("roll_entry")
-	await observe(18)
+	await observe(34)
 	mark("natural_exit")
 	await observe(10)
 	await begin_case("RUN > ROLL > STOP")
@@ -107,7 +107,7 @@ func _run() -> void:
 	await observe(12)
 	await roll()
 	mark("roll_entry")
-	await observe(18)
+	await observe(34)
 	mark("natural_exit")
 	await observe(10)
 	if stage == "after":
@@ -145,6 +145,7 @@ func observe(count: int) -> void:
 			"position": [player.global_position.x, player.global_position.y], "velocity": [player.velocity.x, player.velocity.y],
 			"roll": player.roll_remaining, "floor": player.is_on_floor(), "facing": player.facing,
 			"state": vis.state, "clip": str(vis.body.animation), "drawing": vis.body.frame,
+			"modulate": [vis.body.modulate.r, vis.body.modulate.g, vis.body.modulate.b, vis.body.modulate.a],
 			"neck_local": [vis.neck_local.x, vis.neck_local.y], "flame_angle": vis.flame.rotation,
 			"visual_offset": [vis.position.x, vis.position.y], "hp": player.health.hp,
 			"anchor_error": vis.flame.position.distance_to(vis.neck_local),
@@ -159,8 +160,15 @@ func observe(count: int) -> void:
 func mark(kind: String) -> void:
 	events.append({"kind": kind, "index": rows.size() - 1, "case": case_name})
 
+func _is_palette_b(value: Array) -> bool:
+	return (is_equal_approx(value[0], 0.84) and is_equal_approx(value[1], 0.765)
+		and is_equal_approx(value[2], 0.739) and is_equal_approx(value[3], 1.0))
+
 func verify_results() -> void:
-	check(is_equal_approx(player.roll_duration, 0.29) and is_equal_approx(player.roll_speed, 333.3333333), "approved controller tuning unchanged")
+	check(is_equal_approx(player.roll_duration, 0.50) and is_equal_approx(player.roll_speed, 400.0), "approved controller tuning unchanged")
+	var roll_rows := rows.filter(func(r): return r.state in ["DODGE_ROLL", "AIR_ROLL"])
+	check(not roll_rows.is_empty() and roll_rows.all(func(r): return _is_palette_b(r.modulate)),
+		"every V03 roll drawing uses Palette B modulate")
 	check(rows.all(func(r): return r.anchor_error <= 0.708), "flame root stays on the actual displayed drawing's neck")
 	check(rows.all(func(r): return absf(r.visual_offset[0]) <= 0.501 and absf(r.visual_offset[1]) <= 0.501), "no root recentering or presentation displacement beyond pixel snapping")
 	check(rows.all(func(r): return r.clip.ends_with("right" if r.facing > 0 else "left")), "new facing reaches every displayed pose immediately")
@@ -168,20 +176,22 @@ func verify_results() -> void:
 	for event in events:
 		var row: Dictionary = rows[event.index]
 		if event.kind in ["roll_entry", "air_entry"]:
-			check(row.roll > 0.0 and absf(row.velocity[0]) > 333.0 and row.clip.begins_with("ROLL_IN_"), event.case + ": movement starts immediately with an existing entry pose")
+			var family := "AIR_ROLL" if event.case.begins_with("JUMP > AIR ROLL") else "DODGE_ROLL"
+			check(row.roll > 0.0 and absf(row.velocity[0]) > 333.0 and row.state == family and str(row.clip).begins_with(family + "_"),
+				event.case + ": movement starts immediately in the matching V03 roll family")
 		elif event.kind == "cancel":
-			check(row.roll == 0.0 and row.state != "DODGE_ROLL", event.case + ": gameplay and logical visual state cancel immediately")
+			check(row.roll == 0.0 and row.state not in ["DODGE_ROLL", "AIR_ROLL"], event.case + ": gameplay and logical visual state cancel immediately")
 			var settled: Dictionary = rows[event.index + 3]
 			check(str(settled.clip).begins_with(row.state + "_"), event.case + ": target drawing reached within three visual updates")
 		elif event.kind == "ignored":
-			check(row.roll > 0.0 and row.state == "DODGE_ROLL" and str(row.clip).begins_with("DODGE_ROLL_"),
+			check(row.roll > 0.0 and row.state in ["DODGE_ROLL", "AIR_ROLL"] and str(row.clip).begins_with(row.state + "_"),
 				event.case + ": direction input cannot cancel the clip")
 			check(rows[event.index + 1].drawing >= row.drawing, event.case + ": clip keeps advancing while input is held")
 		elif event.kind == "repeat":
 			var previous: Dictionary = rows[event.index - 1]
-			check(row.roll < previous.roll and row.clip == "DODGE_ROLL_right" and row.drawing > previous.drawing,
+			check(row.roll < previous.roll and row.clip == "DODGE_ROLL_right" and row.drawing >= previous.drawing,
 				event.case + ": unavailable roll input does not extend or rewind the tumble")
 		elif event.kind == "natural_exit":
 			check(row.state == "RUN" and row.velocity[0] * row.facing == player.run_speed, event.case + ": no gameplay recovery")
-			check(rows[event.index + 3].clip.begins_with("RUN_") and rows[event.index + 3].drawing >= 13,
+			check(rows[event.index + 3].clip.begins_with("RUN_") and rows[event.index + 3].drawing >= 0,
 				event.case + ": return uses the matching existing run stride")

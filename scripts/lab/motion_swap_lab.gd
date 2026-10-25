@@ -65,8 +65,16 @@ var motion_feedback: LabMotionFeedback
 @export var hitstop_real_seconds: float = 0.028
 @export var camera_shake_pixels: float = 1.8
 @export var trace_impacts: bool = false
+@export_group("Combo impact feedback")
+## A directional camera kick on every accepted crowbar contact. The combo owns
+## its local hitstop; this is the readable screen-space counterpart.
+@export var combo_shake_pixels: float = 4.2
+@export var combo_shake_seconds: float = 0.13
 var _hitstop_deadline: int = 0
 var _shake_left: float = 0.0
+var _combo_shake_left: float = 0.0
+var _combo_shake_dir: float = 1.0
+var _combo_shake_strength: float = 1.0
 var _last_real_tick: int = 0
 const ZONE_SPAWNS: Array[Vector2] = [Vector2(650, 599), Vector2(1800, 599), Vector2(3000, 599), Vector2(4200, 599), Vector2(5500, 599), Vector2(7080, 599)]
 
@@ -108,6 +116,9 @@ func _setup_player() -> void:
 	player.enable_motion_swap()
 	if player.health != null:
 		player.health.died.connect(_on_player_died)
+	var combo := player.get_node_or_null("M1Combo")
+	if combo != null and combo.has_signal("contact_feedback"):
+		combo.contact_feedback.connect(_on_combo_contact_feedback)
 
 func _setup_camera() -> void:
 	# The lab is WORLD_WIDTH wide, so most of it would render off-screen without
@@ -132,6 +143,20 @@ func _setup_controller() -> void:
 func _on_swap_executed(_a: NLBMotionSwapTarget, _b: NLBMotionSwapTarget) -> void:
 	_hitstop_deadline = 0
 	_shake_left = 0.06
+
+## The strike direction comes from the actual contact point, not the input
+## direction: a late-turn contact still kicks the camera away from the hit.
+func _on_combo_contact_feedback(event: Dictionary, _victim: Node) -> void:
+	if player == null:
+		return
+	var contact: Vector2 = event.get("position", player.global_position)
+	var dir := signf(contact.x - player.global_position.x)
+	if is_zero_approx(dir):
+		dir = float(player.facing)
+	var strike := clampi(int(event.get("strike", 1)), 1, 3)
+	_combo_shake_dir = dir
+	_combo_shake_strength = 0.82 + 0.12 * strike
+	_combo_shake_left = combo_shake_seconds * (0.90 + 0.10 * strike)
 
 func _exit_tree() -> void:
 	Engine.time_scale = 1.0
@@ -294,9 +319,16 @@ func _process(delta: float) -> void:
 	var real_delta := float(now - _last_real_tick) / 1000000.0
 	_last_real_tick = now
 	_shake_left = maxf(_shake_left - real_delta, 0.0)
+	_combo_shake_left = maxf(_combo_shake_left - real_delta, 0.0)
 	var cam := player.get_node_or_null("LabCamera") as Camera2D
 	if cam != null:
-		cam.offset = Vector2(sin(float(now) * 0.00019), cos(float(now) * 0.00023)) * camera_shake_pixels * minf(_shake_left / 0.09, 1.0)
+		var offset := Vector2(sin(float(now) * 0.00019), cos(float(now) * 0.00023)) * camera_shake_pixels * minf(_shake_left / 0.09, 1.0)
+		if _combo_shake_left > 0.0:
+			var decay := clampf(_combo_shake_left / maxf(combo_shake_seconds, 0.001), 0.0, 1.0)
+			var amp := combo_shake_pixels * _combo_shake_strength * decay
+			# Push the frame away from the contact, with a smaller vertical ring.
+			offset += Vector2(-_combo_shake_dir * amp, sin(float(now) * 0.0011) * amp * 0.32)
+		cam.offset = offset
 	if _hitstop_deadline > 0:
 		if controller.is_selecting():
 			_hitstop_deadline = 0 # tactical controller now owns the clock

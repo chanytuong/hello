@@ -157,11 +157,18 @@ func _case(scenario: int, direction: int) -> void:
 		_check(part.filter(func(r): return r.state == "RUN").any(func(r): return r.frame > 5), "run advances without per-tick restart")
 	if scenario in [1, 2, 7, 9, 10, 11]:
 		_check("JUMP" in states, "airborne visual displayed")
+	if scenario in [1, 2]:
+		var jump_rows := part.filter(func(r): return r.state == "JUMP")
+		_check(jump_rows.all(func(r): return r.frame >= 3 and r.frame <= 24),
+			"V02 airborne drawings stay within frames 3..24")
+		_check("LAND" in states, "V02 landing drawing displayed")
 	if scenario == 1:
 		_check(states[-1] == "RUN", "landing returns to held run")
 	if scenario == 2:
 		_check(states[-1] == "IDLE", "standing jump returns idle")
 		_check(part[8].vy < -600.0, "jump impulse on press tick")
+		var land_frames: Array = part.filter(func(r): return r.state == "LAND").map(func(r): return r.frame)
+		_check(land_frames.min() == 0 and land_frames.max() == 4, "V02 landing sequence 25..29 displayed")
 	if scenario == 3:
 		_check("JUMP" in states and part.any(func(r): return r.vy > 0.0 and not r.floor), "ledge fall uses airborne visual")
 	if scenario in [4, 5, 8]:
@@ -174,11 +181,11 @@ func _case(scenario: int, direction: int) -> void:
 				exit_state = part[k].state
 				break
 		_check(exit_state == ("RUN" if scenario == 4 else "IDLE"), "roll exits using current input")
-		_check(part.filter(func(r): return r.state == "DODGE_ROLL").any(func(r): return r.frame == 17), "roll reaches last V2 drawing")
+		_check(part.filter(func(r): return r.state == "DODGE_ROLL").any(func(r): return r.frame == 14), "roll reaches last V03 drawing")
 	if scenario == 5:
 		var roll_rows := part.filter(func(r): return r.state == "DODGE_ROLL")
 		var travel: float = absf(roll_rows[-1].x - roll_rows[0].x) + player.roll_speed/60.0
-		_check(travel >= 95.0 and travel <= 105.0, "single final-roll trajectory stays within 95–105 px")
+		_check(travel >= 195.0 and travel <= 205.0, "single final-roll trajectory stays within 195–205 px")
 		for k in range(1, part.size()):
 			if part[k-1].state == "DODGE_ROLL" and part[k].state != "DODGE_ROLL":
 				_check(part[k].state == "IDLE", "no forced run flash at idle roll exit")

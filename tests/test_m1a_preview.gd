@@ -88,7 +88,7 @@ func run() -> void:
 			events.append({"kind":"cancel","index":rows.size()-1,"case":case_name})
 			Input.action_release(cancel_action)
 			await observe(18)
-	check(is_equal_approx(player.roll_duration,.29) and is_equal_approx(player.roll_speed,333.3333333),"approved roll tuning unchanged")
+	check(is_equal_approx(player.roll_duration,.50) and is_equal_approx(player.roll_speed,400.0),"approved roll tuning unchanged")
 	check(rows.all(func(r):return r.anchor_error<=0.708),"flame root within nearest-pixel rounding distance of the displayed pose neck")
 	check(rows.filter(func(r):return r.active).all(func(r):return r.sample in [2,3]),"all intended active updates display the authored contact/recoil-contact poses")
 	var failed := checks.filter(func(r):return not r.pass)

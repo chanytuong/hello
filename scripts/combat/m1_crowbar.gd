@@ -21,8 +21,9 @@ func _ready() -> void:
 	sprite.texture = ImageTexture.create_from_image(Image.load_from_file(ProjectSettings.globalize_path(metadata.texture)))
 	playback_rate = 1.0 # Retime is authored into this export's per-phase samples.
 	trails_enabled = false # The rejected line trail is never drawn or emitted.
-	stops = Vector3(.025,.033,.045)
-	buffer_seconds = .15
+	stops = Vector3(.03,.04,.05)
+	# One full strike of intent: covers M2's 0.20 s gate from its first frame.
+	buffer_seconds = .25
 	bounded_buffer = true
 	# Fill is behind body and actual weapon, so it cannot turn the crowbar into
 	# a luminous sword or hide its hook. Enemy telegraphs remain in front.
@@ -146,4 +147,4 @@ func _on_contact_feedback(event: Dictionary, victim: Node) -> void:
 	if victim != null:
 		var armor: Variant = victim.get("armor")
 		metal = armor != null and bool(armor)
-	impact_vfx.burst(event.position, attack_facing, int(event.strike), metal, int(event.hp_after) <= 0)
+	impact_vfx.burst(event.position, attack_facing, int(event.strike), metal, int(event.hp_after) <= 0, int(event.damage))

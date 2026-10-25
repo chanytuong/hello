@@ -30,7 +30,7 @@ const M1_SECONDS := 4.0
 const DONE_SECONDS := 1.0
 
 ## Relative offsets of the three fresh presses inside one combo, measured from
-## the first press. Chosen from the authored chain gates (0.15 s / 0.233 s).
+## the first press. Chosen from the authored chain gates (0.10 s / 0.15 s).
 const COMBO_STARTS := [0.0, 1.30, 2.60]
 const FOLLOWUP_AGES := [0.08, 0.15]
 

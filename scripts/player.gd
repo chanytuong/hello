@@ -25,7 +25,7 @@ enum MoveState { NORMAL, DASH }
 @export var m1_natural_enabled: bool = false
 @export var m1_crowbar_enabled: bool = false
 @export var roll_duration: float = 0.50
-@export var roll_speed: float = 200.0 # 100 px across 0.50s duration
+@export var roll_speed: float = 400.0 # 200 px across 0.50s duration
 @export var roll_cooldown: float = 0.35 # starts on completion or cancellation
 var roll_remaining: float = 0.0
 var roll_cooldown_remaining: float = 0.0
@@ -219,20 +219,19 @@ func impact_shake() -> float:
 @export var attack_startup: float = 0.05
 @export var attack_active: float = 0.12
 @export var attack_recovery: float = 0.08
-@export var attack_cooldown: float = 0.35
+# Legacy non-preview attack lockout. The full cycle is 0.05 + 0.25 = 0.30s,
+# which keeps a deliberate follow-up press from falling into the old 0.60s
+# dead zone. The live crowbar combo owns its own per-strike clock.
+@export var attack_cooldown: float = 0.05
 # PHASE 8 - INPUT TRUST. This must cover a FULL attack cycle
-# (attack_cooldown 0.35 + startup/active/recovery 0.25 = 0.60), because
-# `_atk_cd` is armed to 0.60 at swing start and `_atk_buf` is zeroed by
-# that same swing. With the old 0.20, a press registering anywhere from
-# 0.08s to 0.43s after swing start decayed to 0 BEFORE `_atk_cd` cleared:
-# a 0.35s dead hole covering the entire animation, measured by
-# tests/probe_input.gd. That is dropped input, not commitment - the swing
-# is already uninterruptible during that window, so animation priority
-# (not a swallowed press) is what enforces commitment.
-# At 0.60 every deliberate press is queued exactly one swing ahead; the
-# press that STARTS a swing is consumed by it, so this is still a queue
-# of one. Not an auto-combo: no swing fires without a new press, and
-# holding the button only counts as one press.
+# (attack_cooldown 0.05 + startup/active/recovery 0.25 = 0.30), because
+# `_atk_cd` is armed to 0.30 at swing start and `_atk_buf` is zeroed by
+# that same swing. The swing is already uninterruptible during its active
+# window, so animation priority - not a swallowed press - enforces
+# commitment. Every deliberate press is queued exactly one swing ahead;
+# the press that STARTS a swing is consumed by it, so this is still a
+# queue of one. Not an auto-combo: no swing fires without a new press,
+# and holding the button only counts as one press.
 @export var attack_buffer: float = 0.6
 @export var attack_step: float = 60.0  # forward slide on swing start
 @export var hit_brake: float = 0.55  # momentum kept on connect (bite)
@@ -363,8 +362,8 @@ func _ready() -> void:
 	if movement_preview:
 		body_vis.hide()
 		movement_visual = preload("res://scripts/iven_movement_visual.gd").new()
-		movement_visual.roll_duration = 0.50
-		movement_visual.roll_cooldown = 0.35
+		movement_visual.roll_duration = roll_duration
+		movement_visual.roll_cooldown = roll_cooldown
 		movement_visual.name = "IvenVisual"
 		add_child(movement_visual)
 		jumped.connect(_on_movement_jump)
@@ -465,6 +464,7 @@ func _physics_process(delta: float) -> void:
 
 func _on_movement_jump() -> void:
 	_movement_jumped = true
+	_air_time = 0.0
 	_end_movement_roll()
 
 func can_movement_roll() -> bool:
@@ -491,10 +491,13 @@ func _movement_physics(delta: float) -> void:
 	# Reuse existing input buffer/coyote/cut/gravity/acceleration/reversal.
 	_update_jump(delta, dir)
 	if roll_remaining > 0.0:
-		if roll_remaining <= delta:
-			_end_movement_roll()
-		else:
-			roll_remaining -= delta
+		# Subtract first: the accepting tick already moved, so this keeps the
+		# authored 0.50 s / 400 px/s roll at exactly 200 px instead of adding a
+		# full extra tick of travel at the tail.
+		roll_remaining -= delta
+		if roll_remaining <= 0.000001:
+			roll_remaining = 0.0
+			roll_cooldown_remaining = maxf(roll_cooldown_remaining, roll_cooldown)
 	if was_rolling and roll_remaining <= 0.0 and not _movement_jumped:
 		velocity.x = dir * run_speed # resume intended RUN / IDLE speed without overshoot or recovery
 	var fresh_roll := Input.is_action_just_pressed("dash")
@@ -526,10 +529,24 @@ func _movement_physics(delta: float) -> void:
 	move_and_slide()
 	if motion_swap_enabled:
 		NLBImpactResponse.solve_slides(self, incoming)
+	# The preview path returns before the legacy tracker, so the shared V02
+	# jump/land timing is advanced here. Landing is committed BEFORE the visual
+	# update so the touchdown tick can show frame 25; air time advances AFTER
+	# it so takeoff starts on the first airborne drawing (frame 3).
+	if not was_floor and is_on_floor():
+		_jump_land_t = 5.0 / 30.0
+	elif not is_on_floor():
+		_jump_land_t = 0.0
+	else:
+		_jump_land_t = maxf(0.0, _jump_land_t - delta)
 	var released_at_speed := not was_rolling and dir == 0.0 and _previous_input != 0.0 and absf(before_velocity.x) > 200.0
 	if is_instance_valid(movement_attack_preview) and movement_attack_preview.busy():
 		released_at_speed = false
 	movement_visual.advance(delta, dir, released_at_speed, before_velocity)
+	if not was_floor and is_on_floor():
+		_air_time = 0.0
+	elif not is_on_floor():
+		_air_time += delta
 	if is_instance_valid(movement_attack_preview):
 		movement_attack_preview.present()
 	_previous_input = dir

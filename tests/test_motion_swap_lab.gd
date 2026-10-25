@@ -42,7 +42,7 @@ func _run() -> void:
 	Input.action_release("dash")
 	check(player.roll_remaining > 0.0 and player.movement_visual.state == "DODGE_ROLL", "DODGE ROLL still enters approved clip")
 	await step(44)
-	check(player.roll_remaining == 0.0 and absf(player.global_position.x - x) >= 95.0 and absf(player.global_position.x - x) <= 105.0, "final dodge completes without motion lock")
+	check(player.roll_remaining == 0.0 and absf(player.global_position.x - x) >= 195.0 and absf(player.global_position.x - x) <= 205.0, "final dodge completes without motion lock")
 	# Machinery command exchange and the actual crate -> plate -> gate chain.
 	await fresh(Vector2(5900, 599))
 	var belt := lab.get_node("World/ZoneE/BeltE") as LabConveyor

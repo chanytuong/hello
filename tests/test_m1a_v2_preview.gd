@@ -148,7 +148,7 @@ func run() -> void:
 		check(punch.accepted==accepted+1 and not punch.busy(),case_name+": one held press is one attack")
 		Input.action_release("attack")
 	check(samples.filter(func(r):return r.busy).all(func(r):return r.anchor_error<=.708),"flame root follows displayed pose within nearest-pixel rounding")
-	check(is_equal_approx(player.roll_duration,.29) and is_equal_approx(player.roll_speed,333.3333333),"approved roll tuning preserved")
+	check(is_equal_approx(player.roll_duration,.50) and is_equal_approx(player.roll_speed,400.0),"approved roll tuning preserved")
 	var failures := checks.filter(func(r):return not r.pass)
 	FileAccess.open(OUT+"GODOT_VALIDATION.json",FileAccess.WRITE).store_string(JSON.stringify({"engine":Engine.get_version_info().string,"checks":checks,"failures":failures.size(),"samples":samples,"events":events,"captured_frames":frame_index,"scope":"Opt-in planted M1-A V2. Same real player physics; no live damage, hitstop or main-scene adoption."},"\t"))
 	print("M1A_V2: %d checks / %d failures / %d captured frames" % [checks.size(),failures.size(),frame_index])

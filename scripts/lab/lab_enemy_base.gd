@@ -31,11 +31,12 @@ var swapped_motion: Vector2 = Vector2.ZERO
 var spawn_position: Vector2 = Vector2.ZERO
 var spawned: bool = false
 
-var _kb: Vector2 = Vector2.ZERO
 var _flash_t: float = 0.0
+var _flash_frames: int = 0
 var _stagger_t: float = 0.0
 var _alive: bool = true
 var _combat_hitstop_left := 0.0
+var _punch_tween: Tween = null
 var _indicator: Line2D
 var _touch_box: NLBHitBox = null
 
@@ -53,6 +54,7 @@ func _ready() -> void:
 	if body_vis != null:
 		body_vis.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		body_vis.pivot_offset = body_vis.size * 0.5
+		body_vis.scale = Vector2.ONE
 	if health != null:
 		health.max_hp = hp
 		health.iframes = 0.35
@@ -120,8 +122,9 @@ func _physics_process(delta: float) -> void:
 	if _combat_hitstop_left>0.000001:
 		_combat_hitstop_left=maxf(0.0,_combat_hitstop_left-delta)
 		_update_body_visual()
+		# The impact freeze must not preserve the white hit flash forever.
+		_tick_flash(delta)
 		return
-	_flash_t = maxf(_flash_t - delta, 0.0)
 	_stagger_t = maxf(_stagger_t - delta, 0.0)
 	if swap_override_t > 0.0:
 		_drive_swapped_motion(delta)
@@ -133,15 +136,15 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0.0, 900.0 * delta)
 	else:
 		_ai_step(delta)
-	# Exchange knockback lives OUTSIDE the movement arms so a hit can always
-	# move the body, even while a swapped motion owns it.
-	_kb = _kb.move_toward(Vector2.ZERO, 1400.0 * delta)
-	velocity += _kb
+	# Knockback is a one-shot impulse added to velocity in apply_knockback().
+	# Do not add it again here: doing that turns a 240 px/s shove into runaway
+	# acceleration (the body accumulates every decaying tick).
 	var incoming := velocity
 	move_and_slide()
 	NLBImpactResponse.solve_slides(self, incoming)
 	_update_body_visual()
 	_update_indicator()
+	_tick_flash(delta)
 
 ## The override arm integrates received motion, with gravity and real collisions.
 func _drive_swapped_motion(delta: float) -> void:
@@ -184,7 +187,7 @@ func receive_motion_impact(speed: float, normal: Vector2, other: Object, incomin
 		swap_target.clear_overdrive()
 	if speed >= impact_stagger_speed:
 		_stagger_t = maxf(_stagger_t, impact_stun_duration)
-		_flash_t = 0.08
+		_flash_t = 2.0 / 60.0
 		impact.emit(speed)
 	var human_hit := other is NLBPlayer and (other as NLBPlayer).living_projectile
 	var damage_amount := 0
@@ -209,7 +212,6 @@ func reset_motion() -> void:
 	velocity = Vector2.ZERO
 	swapped_motion = Vector2.ZERO
 	swap_override_t = 0.0
-	_kb = Vector2.ZERO
 	_stagger_t = 0.0
 	if swap_target != null:
 		swap_target.clear_overdrive()
@@ -221,16 +223,40 @@ func fall_distance() -> float:
 # -------------------------------------------------------------- damage / life
 
 func apply_knockback(kb: Vector2) -> void:
-	_kb += kb
+	# A single impulse. The stagger arm decelerates it at 900 px/s^2; at the
+	# crowbar's authored 240 px/s that is a ~27 px slide before the AI resumes.
+	velocity += kb
 	_stagger_t = maxf(_stagger_t, 0.12)
 	if swap_override_t <= 0.0:
-		_flash_t = 0.05
+		_flash_t = 2.0 / 60.0
 
 func apply_combat_hitstop(seconds: float) -> void:
 	_combat_hitstop_left=maxf(_combat_hitstop_left,seconds)
 
+func flash_frames_left() -> int:
+	return _flash_frames
+
+func _tick_flash(delta: float) -> void:
+	_flash_t = maxf(_flash_t - delta, 0.0)
+	if _flash_frames > 0:
+		_flash_frames -= 1
+
 func _on_damaged(_cur: int, _maximum: int) -> void:
-	_flash_t = 0.06
+	# Two 60 Hz ticks of white, including ticks spent inside local hitstop.
+	_flash_frames = 2
+	_punch_body()
+
+## A short squash reads as the body absorbing the blow without changing the
+## collision shape. The tween keeps running during local hitstop, so the victim
+## visibly reacts on the same frame the hit is confirmed.
+func _punch_body() -> void:
+	if body_vis == null:
+		return
+	if _punch_tween != null and _punch_tween.is_valid():
+		_punch_tween.kill()
+	body_vis.scale = Vector2(1.22, 0.82)
+	_punch_tween = create_tween()
+	_punch_tween.tween_property(body_vis, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 func _on_health_died() -> void:
 	die()
@@ -249,7 +275,7 @@ func die() -> void:
 func _update_body_visual() -> void:
 	if body_vis == null:
 		return
-	if _flash_t > 0.0:
+	if _flash_frames > 0 or _flash_t > 0.0:
 		body_vis.color = Color.WHITE
 	elif swap_override_t > 0.0:
 		# Swapped state is a DIFFERENT colour, not a variation: at a glance you
@@ -288,14 +314,19 @@ func reset_state() -> void:
 	_combat_hitstop_left=0.0
 	if not is_instance_valid(self):
 		return
+	if _punch_tween != null and _punch_tween.is_valid():
+		_punch_tween.kill()
+	_punch_tween = null
+	if body_vis != null:
+		body_vis.scale = Vector2.ONE
 	global_position = spawn_position
 	if swap_target != null:
 		swap_target.clear_overdrive()
 	velocity = Vector2.ZERO
 	swapped_motion = Vector2.ZERO
 	swap_override_t = 0.0
-	_kb = Vector2.ZERO
 	_flash_t = 0.0
+	_flash_frames = 0
 	_stagger_t = 0.0
 	_alive = true
 	if swap_target != null:

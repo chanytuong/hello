@@ -12,9 +12,9 @@ func verify_results() -> void:
 		if event.kind in ["roll_entry", "air_entry"]:
 			check(row.roll > 0.0 and absf(row.velocity[0]) > 333.0, event.case + ": immediate movement")
 		elif event.kind == "cancel":
-			check(row.roll == 0.0 and row.state != "DODGE_ROLL", event.case + ": immediate logical cancel")
+			check(row.roll == 0.0 and row.state not in ["DODGE_ROLL", "AIR_ROLL"], event.case + ": immediate logical cancel")
 		elif event.kind == "ignored":
-			check(row.roll > 0.0 and row.state == "DODGE_ROLL", event.case + ": direction input ignored for the full clip")
+			check(row.roll > 0.0 and row.state in ["DODGE_ROLL", "AIR_ROLL"], event.case + ": direction input ignored for the full clip")
 		elif event.kind == "repeat":
 			check(row.roll <= rows[event.index-1].roll, event.case + ": repeated press cannot extend roll")
 		elif event.kind == "natural_exit":

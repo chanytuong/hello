@@ -36,7 +36,7 @@ const AIR_FRAMES := 7
 const ROLL_DURATION := 0.50 # locked production duration (player.gd roll_duration)
 const AIR_DURATION := 7.0 / ART_FPS
 const ROLL_COOLDOWN := 0.35
-const ROLL_TRAVEL := 100.0
+const ROLL_TRAVEL := 200.0
 const ROLL_SPEED := ROLL_TRAVEL / ROLL_DURATION
 
 const RUN_SPEED := 280.0
@@ -83,7 +83,7 @@ const AIR_PHASES := [
 const PASSES := [
 	{
 		"title": "PASS 01  /  RUN  >  ROLL  >  RUN",
-		"sub": "15 frames · 0.500 s · 100 px · held RUN resumes with no stop",
+		"sub": "15 frames · 0.500 s · 200 px · held RUN resumes with no stop",
 		"start_x": 260.0,
 		"face": 1,
 		"events": [[0.35, "run"], [1.05, "roll"], [2.05, "stop"]],
@@ -215,7 +215,7 @@ class Arena extends Node2D:
 	var font: Font
 
 	func _draw() -> void:
-		# Cold training-hall floor and a 100 px ruler.
+		# Cold training-hall floor and a 200 px ruler.
 		draw_rect(Rect2(0, 0, 2600, 200), Color(0.025, 0.037, 0.052, 0.28))
 		for i in 13:
 			var px := float(i) * 220.0 + 30.0
@@ -244,9 +244,9 @@ class Arena extends Node2D:
 		draw_rect(Rect2(252, 198, 16, 3), Color(0.92, 0.67, 0.38, 0.65))
 		draw_line(Vector2(252, 190), Vector2(252, 205), Color(0.92, 0.67, 0.38, 0.50), 1.0)
 		draw_string(font, Vector2(245, 184), "START", HORIZONTAL_ALIGNMENT_LEFT, -1, 6, Color(0.92, 0.67, 0.38, 0.60))
-		draw_line(Vector2(260, 226), Vector2(360, 226), Color(0.48, 0.82, 0.88, 0.30), 1.0)
+		draw_line(Vector2(260, 226), Vector2(460, 226), Color(0.48, 0.82, 0.88, 0.30), 1.0)
 		draw_line(Vector2(260, 223), Vector2(260, 229), Color(0.48, 0.82, 0.88, 0.50), 1.0)
-		draw_line(Vector2(360, 223), Vector2(360, 229), Color(0.48, 0.82, 0.88, 0.50), 1.0)
+		draw_line(Vector2(460, 223), Vector2(460, 229), Color(0.48, 0.82, 0.88, 0.50), 1.0)
 
 
 class Shadow extends Node2D:
@@ -468,7 +468,7 @@ func _build_hud() -> void:
 	_bar(root, Rect2(36, 68, 3, 94), ACCENT)
 	pass_beat = _label(root, "PASS 01 / 04", Vector2(52, 78), 10, ACCENT)
 	pass_title = _label(root, "PASS 01  /  RUN  >  ROLL  >  RUN", Vector2(52, 95), 20, INK)
-	pass_sub = _label(root, "15 frames · 0.500 s · 100 px · held RUN resumes with no stop", Vector2(52, 129), 9, MUTED)
+	pass_sub = _label(root, "15 frames · 0.500 s · 200 px · held RUN resumes with no stop", Vector2(52, 129), 9, MUTED)
 
 	_bar(root, Rect2(600, 68, 268, 94), PANEL)
 	_bar(root, Rect2(600, 68, 3, 94), CYAN)
@@ -509,7 +509,7 @@ func _build_hud() -> void:
 
 	_label(root, "A / D  MOVE   ·   SPACE  JUMP   ·   SHIFT  ROLL", Vector2(986, 628), 9, MUTED)
 	_label(root, "R  RESTART", Vector2(986, 646), 9, DIM)
-	_label(root, "engine travel: 100 px  ·  no root motion", Vector2(986, 670), 8, DIM)
+	_label(root, "engine travel: 200 px  ·  no root motion", Vector2(986, 670), 8, DIM)
 
 	# Intro title overlay.
 	title_root = Control.new()
@@ -520,7 +520,7 @@ func _build_hud() -> void:
 	_label(title_root, "ROLL", Vector2(450, 172), 78, INK)
 	_label(title_root, "REDESIGN", Vector2(454, 260), 27, ACCENT)
 	_label(title_root, "A full-body somersault, not a crouch-slide.", Vector2(454, 312), 17, INK)
-	_label(title_root, "15F GROUND  ·  6F AIR  ·  0.50 s ROLL  ·  0.35 s COOLDOWN  ·  PALETTE B", Vector2(454, 344), 10, MUTED)
+	_label(title_root, "15F GROUND  ·  7F AIR  ·  0.50 s ROLL  ·  0.35 s COOLDOWN  ·  PALETTE B", Vector2(454, 344), 10, MUTED)
 	_bar(title_root, Rect2(454, 372, 458, 1), LINE)
 	_label(title_root, "ROTATE THE MESH  ·  TUCK THE LIMBS  ·  PLANT THE EXIT", Vector2(454, 386), 9, DIM)
 
@@ -547,7 +547,7 @@ func _build_hud() -> void:
 	_label(outro_panel, "Full-body ground somersault  ·  air variant  ·  committed 0.500 s clip", Vector2(36, 110), 13, INK)
 	outro_metrics = _label(outro_panel, "", Vector2(36, 142), 11, INK)
 	_bar(outro_panel, Rect2(36, 196, 758, 1), LINE)
-	_label(outro_panel, "GROUND  15F / 0.500 s / 100 px     AIR  7F / 0.233 s / 360°", Vector2(36, 214), 10, MUTED)
+	_label(outro_panel, "GROUND  15F / 0.500 s / 200 px     AIR  7F / 0.233 s / 360°", Vector2(36, 214), 10, MUTED)
 	_label(outro_panel, "Cooldown 0.350 s from roll end     Palette B / 21 opaque colours", Vector2(36, 238), 10, MUTED)
 	_label(outro_panel, "source: IVEN_JUMP_V02.blend copy  ·  camera RESEARCH_Y75_P00", Vector2(36, 276), 9, DIM)
 	_label(outro_panel, "evidence: ROLL_LAB_TRACE.json  ·  ROLL_V01_QA_REPORT.md  ·  native sheets 82×82", Vector2(36, 296), 9, DIM)
