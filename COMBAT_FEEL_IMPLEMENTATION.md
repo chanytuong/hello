@@ -4,7 +4,7 @@
 
 **Live scene:** `res://labs/motion_swap_lab.tscn` is the project main scene and the live integration target (`movement_preview = true`, `m1_crowbar_enabled = true`, `M1Combo` mounted on the player). `res://scenes/main.tscn` is the legacy path; it still boots and now uses the same V02 jump and V03 roll sheets through `player._update_sprite()`.
 
-**No Blender assets were re-rendered.** The approved V02/V03 PNG sheets and anchors are loaded as-is. The roll color is applied at runtime with `modulate`.
+**No Blender assets were re-rendered.** The approved V02/V03 PNG sheets and anchors are loaded as-is. The V03 sheet’s lighter 21-colour B palette is normalised at runtime to the live RUN palette, then the explicit Palette B `modulate` is applied. Source pixels remain untouched.
 
 ---
 
@@ -13,7 +13,8 @@
 | File | Change |
 |---|---|
 | `scripts/player.gd` | `roll_speed = 400`, `roll_duration = 0.50` (200 px), `attack_cooldown = 0.05` (0.30 s total legacy lockout), full-clip roll commitment, preview `_air_time` / `_jump_land_t` tracking, V02/V03 legacy sprite path. |
-| `scripts/iven_movement_visual.gd` | Live preview state machine: V02 `JUMP`/`LAND`, V03 `DODGE_ROLL`/`AIR_ROLL`, runtime sheet loading, merged V02/V03 anchors, Palette B modulate, roll-family lock, direct roll exit, jump/land foot offset `-77`. |
+| `scripts/iven_movement_visual.gd` | Live preview state machine: V02 `JUMP`/`LAND`, V03 `DODGE_ROLL`/`AIR_ROLL`, runtime sheet loading, merged V02/V03 anchors, RUN-palette-normalised roll sheets, explicit Palette B modulate, hard state-entry frame reset, legacy-body exclusion, roll-family lock, direct roll exit, jump/land foot offset `-77`. |
+| `scripts/iven_roll_palette.gd` | Runtime-only palette normaliser: maps the V03 roll sheet’s opaque colours to the live RUN palette before the controller’s `modulate`. No source PNG, anchor, or combat data is changed. |
 | `scripts/combat/crowbar_feel_combo.gd` | Chain gates at the first recovery frame: M1 `0.10`, M2 `0.15`; M3 cancel `0.35`; `0.45 s` post-strike window; `0.25 s` full-strike buffer; local hitstop `0.03 / 0.04 / 0.05`. |
 | `scripts/combat/m1_crowbar.gd` | Live crowbar playback at `1.0`; stops overridden to `.03 / .04 / .05`; buffer `.25`; contact feedback forwards the accepted damage. |
 | `scripts/combat/impact_fx.gd` | Six-layer contact pool: blood/sparks, floating damage numbers, layered hit audio, existing motes. |
@@ -21,8 +22,8 @@
 | `art/iven/m1_crowbar/attack_metadata.json` | `chain` and `recovery_cancel`: M1 `0.10`; M2 `0.15`; M3 `0.35`; `kb`: `220 / 240 / 260`. The `art/` folder is gitignored, so this file is on disk but not tracked. |
 | `scripts/lab/motion_swap_lab.gd` | Connects `contact_feedback`; directional combo camera shake (`4.2 px` base, strike-scaled strength and duration) kept separate from Motion Swap shake. |
 | `scripts/lab/lab_enemy_base.gd` | Two-frame white hit flash, `1.22 × 0.82` squash punch, and a one-shot knockback impulse with stagger deceleration. |
-| `scripts/lab/roll_test_lab.gd` | 200 px ruler and V03/7F air-roll text. |
-| `tests/` | New `test_crowbar_combo_feel.gd`; V02/V03 expectations added to movement, roll-visual, replay, Motion Swap, and legacy combo tests. |
+| `scripts/lab/roll_test_lab.gd` | 200 px ruler, V03/7F air-roll text, and the same RUN-palette roll normalisation for visual QA. |
+| `tests/` | New `test_crowbar_combo_feel.gd` and `test_roll_visual_fixes.gd`; V02/V03 expectations added to movement, roll-visual, replay, Motion Swap, and legacy combo tests. |
 
 ---
 
@@ -106,13 +107,15 @@ No global `Engine.time_scale` freeze is used for a normal M1 hit. Motion Swap re
 | Speed | 400 px/s |
 | Travel | **200 px** |
 | Cooldown | 0.35 s, armed on completion or cancellation |
-| Color | `Color(0.84, 0.765, 0.739, 1.0)` applied as `modulate` |
+| Color | V03 sheet normalised to the RUN palette, then `Color(0.84, 0.765, 0.739, 1.0)` applied as `modulate` |
 
 - The roll family is chosen once at roll start (`DODGE_ROLL` grounded, `AIR_ROLL` airborne) and held for the whole roll, so landing mid-air-roll cannot pop the clip family.
 - The accepted roll plays its full clip. Direction changes, extra dash presses, and movement input no longer cancel it; jump and Motion Swap still interrupt.
 - Exit goes directly to RUN / IDLE / JUMP. V03’s final frame is run-ready, so the old V2 entry/exit bridge clips are no longer used.
 - Measured on the deterministic replay: `200.00244140625 px`, 30 active physics ticks, `0.50 s` movement, `0.516666666666667 s` including the exit update, 0.35 s cooldown.
-- `scripts/player.gd` also applies the same V03 sheets and Palette B modulate on the legacy `scenes/main.tscn` path.
+- The V03 sheet ships on a lighter grey/cool B palette. A plain warm `modulate` darkened it but did not turn its cloth into RUN’s navy/cloth colours, which is why the live roll still read pale. `iven_roll_palette.gd` now remaps every opaque roll colour to the nearest live RUN colour, pre-divided by the modulate so the final draw lands on the RUN palette. The explicit `modulate` line remains in both controllers.
+- State entry is explicit: `body.stop()` clears the previous drawing, the new roll starts on frame 0, the legacy `ColorRect` body is hidden, and nearest filtering is reasserted. The movement path leaves `body.visible` to the movement/combat owner, so an active M1/crowbar overlay is not overridden. Jump→air-roll and land→ground-roll therefore cannot leave a stale jump/land sprite visible.
+- `scripts/player.gd` also applies the normalised V03 sheets and the same Palette B modulate on the legacy `scenes/main.tscn` path; `roll_test_lab.gd` uses the same normalisation for visual QA.
 
 ---
 
@@ -133,6 +136,7 @@ $godot = "C:\Users\Aloha\Downloads\Godot_v4.7.2-stable_win64.exe\Godot_v4.7.2-st
 | `test_foundation_repair.gd` | 38 / 0 | Both `scenes/main.tscn` and `labs/motion_swap_lab.tscn` load; foundation and 200 px roll contracts intact. |
 | `test_movement_integration.gd` | 176 / 0, 2032 samples | V02 jump frames 3–24, LAND 25–29, RUN→JUMP→LAND→RUN, 195–205 px roll, wall/cooldown/transition contracts. |
 | `test_roll_visual_transitions.gd` | 31 / 0, 457 samples | V03 ground/air clips, Palette B modulate, 0.50 s / 400 px tuning, roll-family lock, full-clip input commitment, left/right, anchors. |
+| `test_roll_visual_fixes.gd` | 24 / 0, 66 samples | Live JUMP→AIR_ROLL and LAND→DODGE_ROLL entries: frame 0, exactly one visible body, no stale jump/land clip, nearest filter, exact Palette B modulate, and rendered roll palette matching RUN on both facings. |
 | `test_motion_swap_lab.gd` | 32 / 0 | Six-zone lab access/reset and Motion Swap lab contracts. |
 | `test_dodge_roll_v2.gd` | 34 / 0 | Roll cooldown, held input, wall stop, air roll, tactical time scale. |
 | `final_roll_feel_replay.gd` | 12 / 0 | Measured 200.0024 px / 0.50 s / 0.5167 s including exit; 30 active ticks; jump/air/held-run/repeat cases. |
@@ -158,6 +162,8 @@ Both exited `0` with no script errors.
   - ground roll mid (`DODGE_ROLL` frame 7)
   - natural exit (`RUN` restored)
   - air roll entry (`AIR_ROLL` frame 0)
+- Roll colour/transition close-ups: `artifacts/roll_visual_fixes/jump_to_air_roll_entry.png` and `land_to_ground_roll_entry.png`, captured non-headless at 4×. The roll frames now use RUN’s navy/cloth palette; no jump/land body is visible after the entry frame.
+- Focused results: `artifacts/roll_visual_fixes/results.json`.
 - Combo contact sheet: `artifacts/crowbar_combo_feel/capture/M1_M2_M3_CONTACT_SHEET.png`
   - M1 horizontal, M2 overhead, and M3 rising captured at contact with the floating `1 / 1 / 2` damage numbers and blood.
   - The enemy is a simple cyan lab block in this capture; the two-frame white flash is a separate tick and is asserted by the deterministic gate. The capture window favors the pose/number read so the sheet stays legible.
@@ -179,7 +185,7 @@ Both exited `0` with no script errors.
 
 **Weighty impact.** Contact is sold in six simultaneous layers: a `0.03–0.05 s` local stop, a `3.9–5.0 px` directional camera kick, 5–10 falling blood particles, a floating damage number, a two-frame white flash plus squash on the victim, and a `220–260 px/s` one-shot knockback. A layered `hit_1/2/3 + organic/metal` sound sits on top. The stop is short enough that control returns immediately; the flash decays during the stop, so it reads as a hit rather than a frozen error state. The finisher gets the longest stop, the widest kick, and gold damage text, which makes M3 feel heavier without slowing down M1.
 
-**Roll distance and color sync.** The roll is `400 px/s × 0.50 s = 200 px`, exactly matching the 15-frame V03 ground clip at 30 fps. The same 0.50 s physics budget drives the 7-frame air clip, which holds its last drawing for the remainder of the tumble. Palette B is applied as `modulate = Color(0.84, 0.765, 0.739, 1.0)` at draw time, so the approved V03 pixels are untouched and the roll stays in the same palette as the character. V03’s final frame is run-ready, so the roll exits directly into RUN/IDLE without an extra bridge clip or extra travel.
+**Roll distance and color sync.** The roll is `400 px/s × 0.50 s = 200 px`, exactly matching the 15-frame V03 ground clip at 30 fps. The same 0.50 s physics budget drives the 7-frame air clip, which holds its last drawing for the remainder of the tumble. The V03 sheet’s lighter B palette is remapped at load time to the live RUN palette, then the explicit `modulate = Color(0.84, 0.765, 0.739, 1.0)` is applied at draw time. The approved source pixels stay untouched, but the rendered roll now uses the same navy/cloth colours as RUN instead of a pale grey. State entry stops the old drawing and starts the new roll at frame 0, so jump→roll and land→roll cannot stack or leak a stale body. V03’s final frame is run-ready, so the roll exits directly into RUN/IDLE without an extra bridge clip or extra travel.
 
 ---
 

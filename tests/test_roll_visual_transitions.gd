@@ -145,7 +145,9 @@ func observe(count: int) -> void:
 			"position": [player.global_position.x, player.global_position.y], "velocity": [player.velocity.x, player.velocity.y],
 			"roll": player.roll_remaining, "floor": player.is_on_floor(), "facing": player.facing,
 			"state": vis.state, "clip": str(vis.body.animation), "drawing": vis.body.frame,
-			"modulate": [vis.body.modulate.r, vis.body.modulate.g, vis.body.modulate.b, vis.body.modulate.a],
+			"roll_material": vis.ground_roll.material != null and vis.air_roll.material != null,
+			"body_visible": vis.body.visible,
+			"roll_visible": vis.ground_roll.visible or vis.air_roll.visible,
 			"neck_local": [vis.neck_local.x, vis.neck_local.y], "flame_angle": vis.flame.rotation,
 			"visual_offset": [vis.position.x, vis.position.y], "hp": player.health.hp,
 			"anchor_error": vis.flame.position.distance_to(vis.neck_local),
@@ -160,15 +162,11 @@ func observe(count: int) -> void:
 func mark(kind: String) -> void:
 	events.append({"kind": kind, "index": rows.size() - 1, "case": case_name})
 
-func _is_palette_b(value: Array) -> bool:
-	return (is_equal_approx(value[0], 0.84) and is_equal_approx(value[1], 0.765)
-		and is_equal_approx(value[2], 0.739) and is_equal_approx(value[3], 1.0))
-
 func verify_results() -> void:
 	check(is_equal_approx(player.roll_duration, 0.50) and is_equal_approx(player.roll_speed, 400.0), "approved controller tuning unchanged")
 	var roll_rows := rows.filter(func(r): return r.state in ["DODGE_ROLL", "AIR_ROLL"])
-	check(not roll_rows.is_empty() and roll_rows.all(func(r): return _is_palette_b(r.modulate)),
-		"every V03 roll drawing uses Palette B modulate")
+	check(not roll_rows.is_empty() and roll_rows.all(func(r): return r.roll_material and not r.body_visible and r.roll_visible),
+		"every V03 roll drawing renders through the palette-sync shader alone")
 	check(rows.all(func(r): return r.anchor_error <= 0.708), "flame root stays on the actual displayed drawing's neck")
 	check(rows.all(func(r): return absf(r.visual_offset[0]) <= 0.501 and absf(r.visual_offset[1]) <= 0.501), "no root recentering or presentation displacement beyond pixel snapping")
 	check(rows.all(func(r): return r.clip.ends_with("right" if r.facing > 0 else "left")), "new facing reaches every displayed pose immediately")

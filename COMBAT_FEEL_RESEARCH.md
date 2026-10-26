@@ -100,9 +100,11 @@
 | Cooldown | 0.35 s | Unchanged; starts on completion or cancellation. |
 | Ground clip | `DODGE_ROLL` 15 frames | Approved V03 sheet. |
 | Air clip | `AIR_ROLL` 7 frames | Approved V03 air sheet; plays at 30 fps then holds its final frame while the 0.50 s physics roll continues. |
-| Color | `Color(0.84, 0.765, 0.739, 1.0)` | Palette B; applied as `modulate`, no re-render. |
+| Color | RUN-palette remap, then `Color(0.84, 0.765, 0.739, 1.0)` | Palette B modulate retained; the lighter V03 sheet is remapped to the RUN palette at load time, no re-render. |
 
-**Transition rule:** the roll family is chosen at roll start (ground vs air) and held for the whole roll, so landing mid-air-roll cannot pop the clip. On exit, the visual goes directly to RUN / IDLE / JUMP; V03's final frame is run-ready, so the old V2 entry/exit bridge clips are no longer used.
+**Transition rule:** the roll family is chosen at roll start (ground vs air) and held for the whole roll, so landing mid-air-roll cannot pop the clip. On exit, the visual goes directly to RUN / IDLE / JUMP; V03's final frame is run-ready, so the old V2 entry/exit bridge clips are no longer used. State entry explicitly stops the previous drawing and starts the new roll at frame 0, while the legacy body is hidden, so jump→roll and land→roll cannot stack or leak a stale jump/land drawing.
+
+**Colour rule:** the V03 sheet is a 21-colour B palette that is lighter and cooler than RUN. A warm modulate alone left the roll looking grey. `scripts/iven_roll_palette.gd` maps each opaque roll colour to the nearest RUN colour and pre-divides by the modulate, so the rendered pixels use RUN's navy/cloth palette. The source PNG and anchors are unchanged.
 
 ### 4.3 Impact feedback
 
@@ -123,7 +125,8 @@ Every accepted hit fires the six layers on the same frame:
 
 | File | Change |
 |---|---|
-| `scripts/iven_movement_visual.gd` | V02 JUMP/LAND clips, V03 DODGE_ROLL/AIR_ROLL clips, direct roll exit, per-state foot offset, V03 anchors. |
+| `scripts/iven_movement_visual.gd` | V02 JUMP/LAND clips, V03 DODGE_ROLL/AIR_ROLL clips, RUN-palette roll normalisation, explicit Palette B modulate, hard state-entry reset, legacy-body exclusion, direct roll exit, per-state foot offset, V03 anchors. |
+| `scripts/iven_roll_palette.gd` | Runtime-only V03-to-RUN palette remap; source art and anchors untouched. |
 | `scripts/player.gd` | `roll_speed = 400`, `attack_cooldown = 0.05`, preview-path `_air_time` / `_jump_land_t` tracking. |
 | `art/iven/m1_crowbar/attack_metadata.json` | Chain/recovery gates: M1 0.10 s, M2 0.15 s, M3 0.35 s; knockback `220 / 240 / 260`. |
 | `scripts/combat/crowbar_feel_combo.gd` | First-recovery-frame chain gate, full-strike buffered follow-up, 0.45 s post-strike combo window, queued M3 restart at 0.35 s, 0.03/0.04/0.05 stops. |
@@ -132,7 +135,7 @@ Every accepted hit fires the six layers on the same frame:
 | `scripts/combat/crowbar_fx.gd` | Brighter contact cross plus the shared six-layer package. |
 | `scripts/lab/motion_swap_lab.gd` | Connect `contact_feedback`, 4.2 px directional camera impulse, separate Motion Swap shake. |
 | `scripts/lab/lab_enemy_base.gd` | 2-frame white flash, squash punch, one-shot knockback with stagger deceleration. |
-| `tests/` | Roll expectations updated to 200 px / V03 frame 14 / AIR_ROLL; new 43-check crowbar combo/feel gate. |
+| `tests/` | Roll expectations updated to 200 px / V03 frame 14 / AIR_ROLL; new 43-check crowbar combo/feel gate and 24-check roll colour/transition gate. |
 
 ---
 
@@ -140,7 +143,7 @@ Every accepted hit fires the six layers on the same frame:
 
 1. `main.tscn` and `labs/motion_swap_lab.tscn` both load.
 2. RUN → JUMP → LAND → RUN uses the V02 30-frame sheet; landing shows frames 25–29 for 5/30 s.
-3. Roll travels 195–205 px in 0.50 s, plays V03 ground frames 0–14, and uses Palette B modulate.
+3. Roll travels 195–205 px in 0.50 s, plays V03 ground frames 0–14, uses Palette B modulate, and renders on the RUN palette.
 4. Air roll plays the 7-frame V03 air clip, then holds the final frame for the rest of the 0.50 s physics roll; state is `AIR_ROLL`.
 5. Three clicks at a natural cadence produce M1 → M2 → M3 without restarting M1; the sprite sample advances and the three steps render distinct authored atlas regions.
 6. A press during M1/M2 recovery starts the next step on the same update. A press during late active frames is buffered to the first recovery frame.
@@ -148,6 +151,7 @@ Every accepted hit fires the six layers on the same frame:
 8. Any press during M3 queues a restart, and M3 restarts M1 at its 0.35 s cancel point; a press at or after 0.35 s starts M1 immediately.
 9. Every confirmed hit produces a 0.03–0.05 s local stop, a 3.9–5.0 px directional camera impulse, 5–10 blood particles, a floating damage number, a 2-frame white flash plus squash, a 20–30 px one-shot knockback, and layered impact audio.
 10. Motion Swap still cancels the combo and still exchanges motion.
+11. Jump→air-roll and land→ground-roll enter on roll frame 0, with exactly one visible body and no stale jump/land clip; both facings match the RUN palette.
 
 ---
 

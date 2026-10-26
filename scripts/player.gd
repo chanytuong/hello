@@ -281,12 +281,14 @@ const ROLL_SHEET_RIGHT = preload("res://art/iven/movement/roll_v03/IVEN_ROLL_SHE
 const ROLL_SHEET_LEFT = preload("res://art/iven/movement/roll_v03/IVEN_ROLL_SHEET_LEFT.png")
 const AIR_ROLL_SHEET_RIGHT = preload("res://art/iven/movement/roll_v03/IVEN_AIR_ROLL_SHEET_V03.png")
 const AIR_ROLL_SHEET_LEFT = preload("res://art/iven/movement/roll_v03/IVEN_AIR_ROLL_SHEET_LEFT.png")
+const IvenRollPalette = preload("res://scripts/iven_roll_palette.gd")
+const ROLL_PALETTE_SHADER = preload("res://shaders/roll_palette_sync.gdshader")
 
 const CELL_SIZE := 82
 const IVEN_PIVOT := Vector2(40.499926203, 75.579576591)
 const FOOT_GROUND_OFFSET := 75.0
 const FOOT_JUMP_OFFSET := 77.0
-const ROLL_MODULATE := Color(0.84, 0.765, 0.739, 1.0)
+const PALETTE_SIZE := 32
 
 var _jump_frames_r: Array[Texture2D] = []
 var _jump_frames_l: Array[Texture2D] = []
@@ -294,6 +296,7 @@ var _roll_frames_r: Array[Texture2D] = []
 var _roll_frames_l: Array[Texture2D] = []
 var _air_roll_frames_r: Array[Texture2D] = []
 var _air_roll_frames_l: Array[Texture2D] = []
+var _roll_material: ShaderMaterial
 var _air_time: float = 0.0
 var _jump_land_t: float = 0.0
 
@@ -517,6 +520,11 @@ func _movement_physics(delta: float) -> void:
 		_dash_buf = 0.0
 		dashed.emit() # existing movement notification; no immunity or attack
 		velocity.x = float(roll_direction) * roll_speed
+		# Commit the visual switch on the accepting tick, before move_and_slide
+		# and before the next draw. advance() will resample the same frame after
+		# the physics step, but the old jump/land sprite is already hidden here.
+		if movement_visual != null and movement_visual.has_method("force_state_render"):
+			movement_visual.force_state_render("DODGE_ROLL" if is_on_floor() else "AIR_ROLL")
 	if is_instance_valid(movement_attack_preview) and movement_attack_preview.has_method("apply_attack_motion"):
 		movement_attack_preview.apply_attack_motion(delta)
 	# Carrier step FIRST, through the same collision solver: a belt can never
@@ -733,45 +741,36 @@ func _setup_sprite() -> void:
 		else:
 			push_error("[NLB] missing approved run frame: " + RUN_SE_DIR + rn)
 
-	_jump_frames_r.clear()
-	_jump_frames_l.clear()
-	for i in 30:
-		var ar := AtlasTexture.new()
-		ar.atlas = JUMP_SHEET_RIGHT
-		ar.region = Rect2(i * CELL_SIZE, 0, CELL_SIZE, CELL_SIZE)
-		_jump_frames_r.append(ar)
-		var al := AtlasTexture.new()
-		al.atlas = JUMP_SHEET_LEFT
-		al.region = Rect2(i * CELL_SIZE, 0, CELL_SIZE, CELL_SIZE)
-		_jump_frames_l.append(al)
+	# The legacy path uses the same palette-sync shader as the live movement
+	# visual. Keep the raw V03 textures and let the shader emit exact RUN
+	# colours; the old modulate path made the roll visibly grey.
+	var run_palette := IvenRollPalette.from_textures(_run_cache.values())
+	_build_legacy_roll_material(run_palette)
 
-	_roll_frames_r.clear()
-	_roll_frames_l.clear()
-	for i in 15:
-		var ar := AtlasTexture.new()
-		ar.atlas = ROLL_SHEET_RIGHT
-		ar.region = Rect2(i * CELL_SIZE, 0, CELL_SIZE, CELL_SIZE)
-		_roll_frames_r.append(ar)
-		var al := AtlasTexture.new()
-		al.atlas = ROLL_SHEET_LEFT
-		al.region = Rect2(i * CELL_SIZE, 0, CELL_SIZE, CELL_SIZE)
-		_roll_frames_l.append(al)
-
-	_air_roll_frames_r.clear()
-	_air_roll_frames_l.clear()
-	for i in 7:
-		var ar := AtlasTexture.new()
-		ar.atlas = AIR_ROLL_SHEET_RIGHT
-		ar.region = Rect2(i * CELL_SIZE, 0, CELL_SIZE, CELL_SIZE)
-		_air_roll_frames_r.append(ar)
-		var al := AtlasTexture.new()
-		al.atlas = AIR_ROLL_SHEET_LEFT
-		al.region = Rect2(i * CELL_SIZE, 0, CELL_SIZE, CELL_SIZE)
-		_air_roll_frames_l.append(al)
+	_jump_frames_r = _sheet_frames(JUMP_SHEET_RIGHT, 30)
+	_jump_frames_l = _sheet_frames(JUMP_SHEET_LEFT, 30)
+	_roll_frames_r = _sheet_frames(ROLL_SHEET_RIGHT, 15)
+	_roll_frames_l = _sheet_frames(ROLL_SHEET_LEFT, 15)
+	_air_roll_frames_r = _sheet_frames(AIR_ROLL_SHEET_RIGHT, 7)
+	_air_roll_frames_l = _sheet_frames(AIR_ROLL_SHEET_LEFT, 7)
 
 	_show_frame("neutral.png")
 	if body_vis != null:
 		body_vis.visible = false   # hidden, NOT skipped: the pose math still runs
+
+func _sheet_frames(sheet: Texture2D, count: int, start: int = 0) -> Array[Texture2D]:
+	var frames: Array[Texture2D] = []
+	for i in count:
+		var cell := AtlasTexture.new()
+		cell.atlas = sheet
+		cell.region = Rect2((start + i) * CELL_SIZE, 0, CELL_SIZE, CELL_SIZE)
+		frames.append(cell)
+	return frames
+
+func _build_legacy_roll_material(run_palette: Array[Color]) -> void:
+	_roll_material = IvenRollPalette.build_material(ROLL_PALETTE_SHADER, run_palette, [
+		ROLL_SHEET_RIGHT, ROLL_SHEET_LEFT, AIR_ROLL_SHEET_RIGHT, AIR_ROLL_SHEET_LEFT,
+	], PALETTE_SIZE)
 
 ## Visual-only compare toggle (review tooling, not gameplay): V swaps the
 ## A2 production set against the baseline set on the next frame pick.
@@ -954,11 +953,21 @@ func _update_visuals(delta: float) -> void:
 func _update_sprite(delta: float) -> void:
 	if sprite == null:
 		return
+	# Legacy path has one body Sprite2D and the old ColorRect body. Keep the
+	# authored sprite visible and the old rectangle hidden on every update so
+	# jump/land/dash state changes can never stack two bodies.
+	sprite.visible = true
+	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	if body_vis != null:
+		body_vis.visible = false
 
 	# ROLL / DASH (15 frames grounded, 7 frames air, 0.50s duration)
 	if move_state == MoveState.DASH:
 		var e: float = clampf(dash_duration - _dash_t, 0.0, dash_duration)
-		sprite.modulate = ROLL_MODULATE
+		# Palette-sync shader only on roll frames. Run/jump/attack frames keep
+		# their authored colours and the default material.
+		sprite.material = _roll_material
+		sprite.modulate = Color.WHITE
 		sprite.offset = -IVEN_PIVOT
 		if is_on_floor():
 			var f_idx := clampi(int(e / dash_duration * 15.0), 0, 14)
@@ -970,6 +979,7 @@ func _update_sprite(delta: float) -> void:
 		_frame_shown = "roll"
 		return
 
+	sprite.material = null
 	sprite.modulate = Color.WHITE
 
 	# JUMP (30 frames, 4-phase: Takeoff f1-4, Apex f5-17, Fall f18-24)

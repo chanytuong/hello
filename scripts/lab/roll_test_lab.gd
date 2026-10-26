@@ -23,6 +23,7 @@ const AIR_SHEET_L := preload("res://art/iven/movement/roll_v03/IVEN_AIR_ROLL_SHE
 const JUMP_SHEET_R := preload("res://art/iven/movement/jump_v02/IVEN_JUMP_V02_SHEET.png")
 const JUMP_SHEET_L := preload("res://art/iven/movement/jump_v02/IVEN_JUMP_V02_SHEET_LEFT.png")
 const BODY_FRAMES := preload("res://art/iven/movement/body_frames.tres")
+const IvenRollPalette = preload("res://scripts/iven_roll_palette.gd")
 const UI_FONT := preload("res://art/iven/movement/jump_v02/Roboto-Regular.ttf")
 
 const CELL := 82
@@ -342,16 +343,17 @@ func _ready() -> void:
 
 
 func _build_assets() -> void:
+	var run_palette := IvenRollPalette.from_sprite_frames(BODY_FRAMES, ["RUN_right", "RUN_left"])
 	ground_frames = SpriteFrames.new()
 	if ground_frames.has_animation("default"):
 		ground_frames.remove_animation("default")
-	_add_anim(ground_frames, "roll_right", SHEET_R, ROLL_FRAMES)
-	_add_anim(ground_frames, "roll_left", SHEET_L, ROLL_FRAMES)
+	_add_anim(ground_frames, "roll_right", SHEET_R, ROLL_FRAMES, run_palette)
+	_add_anim(ground_frames, "roll_left", SHEET_L, ROLL_FRAMES, run_palette)
 	air_frames = SpriteFrames.new()
 	if air_frames.has_animation("default"):
 		air_frames.remove_animation("default")
-	_add_anim(air_frames, "air_roll_right", AIR_SHEET_R, AIR_FRAMES)
-	_add_anim(air_frames, "air_roll_left", AIR_SHEET_L, AIR_FRAMES)
+	_add_anim(air_frames, "air_roll_right", AIR_SHEET_R, AIR_FRAMES, run_palette)
+	_add_anim(air_frames, "air_roll_left", AIR_SHEET_L, AIR_FRAMES, run_palette)
 
 	jump_r.clear()
 	jump_l.clear()
@@ -366,10 +368,17 @@ func _build_assets() -> void:
 		jump_l.append(al)
 
 
-func _add_anim(sf: SpriteFrames, anim: String, sheet: Texture2D, count: int) -> void:
+func _add_anim(sf: SpriteFrames, anim: String, sheet: Texture2D, count: int, palette: Array = []) -> void:
 	sf.add_animation(anim)
 	sf.set_animation_speed(anim, ART_FPS)
 	sf.set_animation_loop(anim, false)
+	var recolored: Array[Texture2D] = []
+	if not palette.is_empty():
+		recolored = IvenRollPalette.recolor_sheet(sheet, palette, count, CELL)
+	if recolored.size() == count:
+		for texture in recolored:
+			sf.add_frame(anim, texture)
+		return
 	for i in count:
 		var at := AtlasTexture.new()
 		at.atlas = sheet
